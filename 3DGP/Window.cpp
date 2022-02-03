@@ -57,7 +57,7 @@ bool Window::Update()
 void Window::Draw()
 {
 	glClearColor(1, 0, 0, 1);
-
+	glClear(GL_COLOR_BUFFER_BIT);
 	m_triangle->Draw();
 
 	SDL_GL_SwapWindow(m_window);
