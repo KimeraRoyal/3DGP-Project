@@ -3,6 +3,7 @@
 #include <stdexcept>
 
 #include <gl/glew.h>
+#include <iostream>
 
 Window::Window()
 {
@@ -17,6 +18,8 @@ Window::Window()
 	{
 		throw std::runtime_error("Failed to initialize OpenGL.");
 	}
+
+	m_time = std::make_unique<Time>();
 
 	m_triangle = std::make_unique<Triangle>();
 }
@@ -51,6 +54,8 @@ bool Window::PollEvents()
 
 bool Window::Update()
 {
+	m_time->Update();
+
 	return true;
 }
 
@@ -58,7 +63,22 @@ void Window::Draw()
 {
 	glClearColor(1, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
-	m_triangle->Draw();
+	m_triangle->Draw(m_time);
 
 	SDL_GL_SwapWindow(m_window);
+}
+
+glm::ivec2 Window::GetWindowSize()
+{
+	return c_defaultWindowSize;
+}
+
+int Window::GetWindowScale()
+{
+	return c_defaultWindowScale;
+}
+
+glm::ivec2 Window::GetScaledWindowSize()
+{
+	return c_defaultWindowSize * c_defaultWindowScale;
 }

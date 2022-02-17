@@ -6,6 +6,7 @@
 
 #include <glm/vec2.hpp>
 
+#include "Time.h"
 #include "Triangle.h"
 
 class Window
@@ -15,6 +16,8 @@ private:
 	static constexpr int c_defaultWindowScale = 4;
 
 	SDL_Window* m_window;
+
+	std::unique_ptr<Time> m_time;
 
 	std::unique_ptr<Triangle> m_triangle;
 
@@ -26,5 +29,9 @@ public:
 	~Window();
 
 	void GameLoop();
+
+	static glm::ivec2 GetWindowSize();
+	static int GetWindowScale();
+	static glm::ivec2 GetScaledWindowSize();
 };
 
