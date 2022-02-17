@@ -182,7 +182,7 @@ void Triangle::Draw(std::unique_ptr<Time>& _time)
 	model = glm::translate(model, glm::vec3(0, 0, -2.5f));
 	model = glm::rotate(model, glm::radians(m_angle), glm::vec3(0, 1, 0));
 
-	m_angle += 15 * _time->GetDeltaTime();
+	m_angle += 60 * _time->GetDeltaTime();
 
 	glUseProgram(m_programId);
 	glBindVertexArray(m_vaoId);
@@ -191,7 +191,12 @@ void Triangle::Draw(std::unique_ptr<Time>& _time)
 	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_CULL_FACE);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDisable(GL_CULL_FACE);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);
