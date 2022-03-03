@@ -8,8 +8,10 @@ private:
 	Uint64 m_lastCounterValue = 0;
 
 	float m_deltaTime = 0;
+	float m_time = 0;
 public:
 	void Update();
 
 	float GetDeltaTime() const;
+	float GetTime() const;
 };

@@ -4,6 +4,8 @@
 
 #include <gl/glew.h>
 
+#include <wavefront/wavefront.h>
+
 #include "Time.h"
 
 class Triangle
@@ -19,6 +21,8 @@ private:
 
 	GLint m_modelLoc;
 	GLint m_projectionLoc;
+
+	WfModel m_curuthers;
 
 	float m_angle;
 

@@ -6,7 +6,6 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
 #include "Window.h"
@@ -35,6 +34,12 @@ Triangle::Triangle()
 	if (!data)
 	{
 		throw std::runtime_error("Failed to load texture \"image.png\"");
+	}
+
+	m_curuthers = { 0 };
+	if (WfModelLoad("models/curuthers/curuthers.obj", &m_curuthers) != 0)
+	{
+		throw std::runtime_error("Failed to load model.");
 	}
 
 	// VBO
@@ -177,16 +182,21 @@ Triangle::~Triangle()
 
 void Triangle::Draw(std::unique_ptr<Time>& _time)
 {
+	float scale = sin(_time->GetTime() * 0.1f) * 0.02f + 0.20f;
+	float angleScale = sin(_time->GetTime() * 0.1f) * 30.0f;
+
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)Window::GetWindowSize().x / (float)Window::GetWindowSize().y, 0.1f, 100.0f);
 	glm::mat4 model(1.0f);
-	model = glm::translate(model, glm::vec3(0, 0, -2.5f));
+	model = glm::translate(model, glm::vec3(0, -0.2f, -2.5f));
+	model = glm::rotate(model, glm::radians(angleScale), glm::vec3(1, 0, 0));
 	model = glm::rotate(model, glm::radians(m_angle), glm::vec3(0, 1, 0));
+	model = glm::scale(model, glm::vec3(scale, scale, scale));
 
-	m_angle += 60 * _time->GetDeltaTime();
+	m_angle += 10 * _time->GetDeltaTime();
 
 	glUseProgram(m_programId);
-	glBindVertexArray(m_vaoId);
-	glBindTexture(GL_TEXTURE_2D, m_textureId);
+	glBindVertexArray(m_curuthers.vaoId);
+	glBindTexture(GL_TEXTURE_2D, m_curuthers.textureId);
 
 	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
@@ -194,9 +204,13 @@ void Triangle::Draw(std::unique_ptr<Time>& _time)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+	glDrawArrays(GL_TRIANGLES, 0, m_curuthers.vertexCount);
+
 	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);

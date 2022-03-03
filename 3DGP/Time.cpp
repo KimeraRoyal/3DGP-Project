@@ -8,6 +8,7 @@ void Time::Update()
 	{
 		m_deltaTime = static_cast<float>((currentCounterValue - m_lastCounterValue) * 1000) / static_cast<float>(SDL_GetPerformanceFrequency()) * 0.001f;
 	}
+	m_time += m_deltaTime;
 
 	m_lastCounterValue = currentCounterValue;
 }
@@ -15,4 +16,9 @@ void Time::Update()
 float Time::GetDeltaTime() const
 {
 	return m_deltaTime;
+}
+
+float Time::GetTime() const
+{
+	return m_time;
 }
