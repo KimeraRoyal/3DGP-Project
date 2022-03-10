@@ -1,6 +1,8 @@
 #include "Triangle.h"
 
 #include <stdexcept>
+#include <iostream>
+#include <vector>
 
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/mat4x4.hpp>
@@ -104,7 +106,9 @@ Triangle::Triangle()
 
 	// Vertex Shader
 	const GLchar* vertexShaderSrc =
+		"#version 120\n"														\
 		"attribute vec3 in_Position;"											\
+		"attribute vec3 in_Normal;"												\
 		"attribute vec2 in_TexCoord;"											\
 		""																		\
 		"uniform mat4 in_Projection;"											\
@@ -112,10 +116,16 @@ Triangle::Triangle()
 		""																		\
 		"varying vec2 out_TexCoord;"											\
 		""																		\
+		"varying vec3 out_Normal;"												\
+		"varying vec3 out_FragPos;"												\
+		""																		\
 		"void main()"															\
 		"{"																		\
 		"	gl_Position = in_Projection * in_Model * vec4(in_Position, 1.0);"	\
 		"	out_TexCoord = in_TexCoord;"										\
+		""																		\
+		"	out_Normal = mat3(in_Model) * in_Normal;"							\
+		"	out_FragPos = vec3(in_Model * vec4(in_Position, 1.0));"				\
 		"}";
 
 	m_vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
@@ -126,19 +136,48 @@ Triangle::Triangle()
 	glGetShaderiv(m_vertexShaderId, GL_COMPILE_STATUS, &success);
 	if (!success)
 	{
-		throw std::runtime_error("Failed to compile vertex shader!");
+		GLint maxLength = 0;
+		glGetShaderiv(m_vertexShaderId, GL_INFO_LOG_LENGTH,
+			&maxLength);
+		std::vector<GLchar> errorLog(maxLength);
+		glGetShaderInfoLog(m_vertexShaderId, maxLength,
+			&maxLength, &errorLog[0]);
+		std::cout << &errorLog.at(0) << std::endl;
+		throw std::exception();
 	}
 
 	const GLchar* fragmentShaderSrc =
-		"varying sampler2D in_Texture;"							\
-		""														\
-		"varying vec2 out_TexCoord;"							\
-		""														\
-		"void main()"											\
-		"{"														\
-		"	vec4 tex = texture2D(in_Texture, out_TexCoord);"	\
-		"	gl_FragColor = tex;"								\
+		"#version 120\n"													\
+		"uniform sampler2D in_Texture;"										\
+		""																	\
+		"varying vec2 out_TexCoord;"										\
+		""																	\
+		"varying vec3 out_Normal;"											\
+		"varying vec3 out_FragPos;"											\
+		""																	\
+		"void main()"														\
+		"{"																	\
+		"	vec3 lightPos = vec3(5, 10, 10);"								\
+		"	vec3 ambientColor = vec3(0.1, 0, 0.3);"							\
+		"	vec3 diffuseColor = vec3(1, 1, 1);"								\
+		"	vec3 specularColor = vec3(1, 0, 0);"							\
+		""																	\
+		"	vec3 normal = normalize(out_Normal);"							\
+		"	vec3 lightDir = normalize(lightPos - out_FragPos);"				\
+		"	float diff = max(dot(normal, lightDir), 0.0);"					\
+		"	vec3 diffuse = diffuseColor * diff;"							\
+		""																	\
+		"	vec3 viewPos = vec3(0, 0, 0);"									\
+		"	vec3 viewDir = normalize(viewPos - out_FragPos);"				\
+		"	vec3 reflectDir = reflect(-lightDir, normal);"					\
+		"	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);"		\
+		"	vec3 specular = spec * specularColor;"							\
+		""																	\
+		"	vec3 lighting = min(ambientColor + diffuse + specular, 1.0);"	\
+		"	vec4 tex = texture2D(in_Texture, out_TexCoord);"				\
+		"	gl_FragColor = vec4(lighting, 1) * tex;"						\
 		"}";
+	//TODO: Use camera position to calculate view pos in code
 
 	m_fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(m_fragmentShaderId, 1, &fragmentShaderSrc, nullptr);
@@ -146,7 +185,14 @@ Triangle::Triangle()
 	glGetShaderiv(m_fragmentShaderId, GL_COMPILE_STATUS, &success);
 	if (!success)
 	{
-		throw std::runtime_error("Failed to compile fragment shader!");
+		GLint maxLength = 0;
+		glGetShaderiv(m_fragmentShaderId, GL_INFO_LOG_LENGTH,
+			&maxLength);
+		std::vector<GLchar> errorLog(maxLength);
+		glGetShaderInfoLog(m_fragmentShaderId, maxLength,
+			&maxLength, &errorLog[0]);
+		std::cout << &errorLog.at(0) << std::endl;
+		throw std::exception();
 	}
 
 	m_programId = glCreateProgram();
@@ -155,6 +201,7 @@ Triangle::Triangle()
 
 	glBindAttribLocation(m_programId, 0, "in_Position");
 	glBindAttribLocation(m_programId, 1, "in_TexCoord");
+	glBindAttribLocation(m_programId, 2, "in_Normal");
 
 	glLinkProgram(m_programId);
 	glGetProgramiv(m_programId, GL_LINK_STATUS, &success);
@@ -192,7 +239,7 @@ void Triangle::Draw(std::unique_ptr<Time>& _time)
 	model = glm::rotate(model, glm::radians(m_angle), glm::vec3(0, 1, 0));
 	model = glm::scale(model, glm::vec3(scale, scale, scale));
 
-	m_angle += 10 * _time->GetDeltaTime();
+	m_angle += 11 * _time->GetDeltaTime();
 
 	glUseProgram(m_programId);
 	glBindVertexArray(m_curuthers.vaoId);
