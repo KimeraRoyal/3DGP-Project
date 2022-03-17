@@ -1,0 +1,54 @@
+#include "Shader.h"
+
+#include <iostream>
+#include <vector>
+
+Shader::Shader()
+{
+	m_shaderId = 0;
+	m_attachedProgramId = 0;
+}
+
+Shader::~Shader()
+{
+	if (m_attachedProgramId) { Detach(m_attachedProgramId); }
+	glDeleteShader(m_shaderId);
+}
+
+void Shader::CompileShader(const GLchar* _source)
+{
+	// Create and compile shader from source code.
+	m_shaderId = CreateShader();
+	glShaderSource(m_shaderId, 1, &_source, nullptr);
+	glCompileShader(m_shaderId);
+
+	// Check if shader compilation was successful.
+	GLint success;
+	glGetShaderiv(m_shaderId, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		GLint maxLength = 0;
+		glGetShaderiv(m_shaderId, GL_INFO_LOG_LENGTH, &maxLength);
+
+		std::vector<GLchar> errorLog(maxLength);
+		glGetShaderInfoLog(m_shaderId, maxLength, &maxLength, &errorLog[0]);
+
+		std::cout << &errorLog.at(0) << std::endl;
+		throw std::exception();
+	}
+}
+
+void Shader::Attach(const GLuint _programId)
+{
+	// Ensure the shader is only attached to one program at a time.
+	if (m_attachedProgramId) { Detach(m_attachedProgramId); }
+	
+	glAttachShader(_programId, m_shaderId);
+	m_attachedProgramId = _programId;
+}
+
+void Shader::Detach(const GLuint _programId)
+{
+	glDetachShader(_programId, m_shaderId);
+	m_attachedProgramId = 0;
+}

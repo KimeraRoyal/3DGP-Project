@@ -23,7 +23,6 @@ private:
 
 	float m_angle;
 
-	//TODO: Move into Window
 	GLuint m_programId;
 public:
 	Curuthers();

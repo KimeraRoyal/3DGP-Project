@@ -45,14 +45,13 @@ Curuthers::Curuthers()
 
 	// Create and bind texture coordinate vertex buffer
 
-	// Assign texure coordinate buffer's data
+	// Assign texture coordinate buffer's data
 	glBufferData(GL_ARRAY_BUFFER, sizeof(textureCoordinates), textureCoordinates, GL_STATIC_DRAW);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (void*)0);
 	glEnableVertexAttribArray(1);
 	// Unbind texture coordinate VBO
 	
 	// Unbind vertex array
-
 
 	m_renderTexture = std::make_unique<RenderTexture>(150, 150);
 
@@ -79,24 +78,6 @@ Curuthers::Curuthers()
 		"	out_Normal = mat3(in_Model) * in_Normal;"							\
 		"	out_FragPos = vec3(in_Model * vec4(in_Position, 1.0));"				\
 		"}";
-
-	m_vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(m_vertexShaderId, 1, &vertexShaderSrc, nullptr);
-	glCompileShader(m_vertexShaderId);
-
-	GLint success;
-	glGetShaderiv(m_vertexShaderId, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		GLint maxLength = 0;
-		glGetShaderiv(m_vertexShaderId, GL_INFO_LOG_LENGTH,
-			&maxLength);
-		std::vector<GLchar> errorLog(maxLength);
-		glGetShaderInfoLog(m_vertexShaderId, maxLength,
-			&maxLength, &errorLog[0]);
-		std::cout << &errorLog.at(0) << std::endl;
-		throw std::exception();
-	}
 
 	const GLchar* fragmentShaderSrc =
 		"#version 120\n"													\
@@ -131,43 +112,26 @@ Curuthers::Curuthers()
 		"}";
 	//TODO: Use camera position to calculate view pos in code
 
-	m_fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(m_fragmentShaderId, 1, &fragmentShaderSrc, nullptr);
-	glCompileShader(m_fragmentShaderId);
-	glGetShaderiv(m_fragmentShaderId, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		GLint maxLength = 0;
-		glGetShaderiv(m_fragmentShaderId, GL_INFO_LOG_LENGTH,
-			&maxLength);
-		std::vector<GLchar> errorLog(maxLength);
-		glGetShaderInfoLog(m_fragmentShaderId, maxLength,
-			&maxLength, &errorLog[0]);
-		std::cout << &errorLog.at(0) << std::endl;
-		throw std::exception();
-	}
+	// Create vertex shader and compile
+	
+	// Create fragment shader and compile
 
 	m_programId = glCreateProgram();
-	glAttachShader(m_programId, m_vertexShaderId);
-	glAttachShader(m_programId, m_fragmentShaderId);
 
 	glBindAttribLocation(m_programId, 0, "in_Position");
 	glBindAttribLocation(m_programId, 1, "in_TexCoord");
 	glBindAttribLocation(m_programId, 2, "in_Normal");
 
 	glLinkProgram(m_programId);
+
+	GLint success;
 	glGetProgramiv(m_programId, GL_LINK_STATUS, &success);
 	if (!success)
 	{
 		throw std::runtime_error("Failed to link GL program!");
 	}
 
-	glDetachShader(m_programId, m_vertexShaderId);
-	glDeleteShader(m_vertexShaderId);
-
-	glDetachShader(m_programId, m_fragmentShaderId);
-	glDeleteShader(m_fragmentShaderId);
-
+	// Set uniforms
 	m_modelLoc = glGetUniformLocation(m_programId, "in_Model");
 	m_projectionLoc = glGetUniformLocation(m_programId, "in_Projection");
 

@@ -5,6 +5,7 @@
 VertexBuffer::VertexBuffer()
 {
 	// Generate new vertex buffer object.
+	m_vboId = 0;
 	glGenBuffers(1, &m_vboId);
 	if (!m_vboId)
 	{
@@ -19,12 +20,12 @@ VertexBuffer::~VertexBuffer()
 	glDeleteBuffers(1, &m_vboId);
 }
 
-void VertexBuffer::Bind()
+void VertexBuffer::Bind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
 }
 
-void VertexBuffer::Unbind()
+void VertexBuffer::Unbind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

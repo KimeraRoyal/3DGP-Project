@@ -4,7 +4,7 @@
 
 #include <stb/stb_image.h>
 
-Texture::Texture(std::string _path)
+Texture::Texture(const std::string& _path)
 {
 	// Load texture from file.
 	m_textureSize = glm::ivec2(0, 0);
@@ -15,6 +15,7 @@ Texture::Texture(std::string _path)
 	}
 	
 	// Generate and bind texture.
+	m_textureId = 0;
 	glGenTextures(1, &m_textureId);
 	if (!m_textureId) { throw std::runtime_error("Failed to create texture."); }
 	glBindTexture(GL_TEXTURE_2D, m_textureId);

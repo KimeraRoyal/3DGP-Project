@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gl/glew.h>
+#include <GL/glew.h>
 
 class VertexArray
 {
@@ -12,9 +12,12 @@ public:
 	VertexArray();
 	~VertexArray();
 
-	void Bind();
-	void Unbind();
+	VertexArray(const VertexArray& _copy) = delete;
+	VertexArray& operator=(const VertexArray& _other) = delete;
 
-	inline GLuint GetId() { return m_vaoId; }
+	void Bind() const;
+	void Unbind() const;
+
+	GLuint GetId() const { return m_vaoId; }
 };
 

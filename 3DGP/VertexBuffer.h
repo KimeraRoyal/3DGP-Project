@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gl/glew.h>
+#include <GL/glew.h>
 
 class VertexBuffer
 {
@@ -12,9 +12,12 @@ public:
 	VertexBuffer();
 	~VertexBuffer();
 
-	void Bind();
-	void Unbind();
+	VertexBuffer(const VertexBuffer& _copy) = delete;
+	VertexBuffer& operator=(const VertexBuffer& _other) = delete;
 
-	inline GLuint GetId() { return m_vboId; }
+	void Bind() const;
+	void Unbind() const;
+
+	GLuint GetId() const { return m_vboId; }
 };
 

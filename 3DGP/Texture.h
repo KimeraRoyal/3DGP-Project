@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include <gl/glew.h>
+#include <GL/glew.h>
 #include <glm/vec2.hpp>
 
 class Texture
@@ -10,14 +10,14 @@ class Texture
 private:
 	GLuint m_textureId;
 	glm::ivec2 m_textureSize;
+public:
+	Texture(const std::string& _path);
+	~Texture();
 
 	Texture(const Texture& _copy) = delete;
 	Texture& operator=(const Texture& _other) = delete;
-public:
-	Texture(std::string _path);
-	~Texture();
 
-	inline GLuint GetId() { return m_textureId; }
-	inline glm::ivec2 GetSize() { return m_textureSize; }
+	GLuint GetId() const { return m_textureId; }
+	glm::ivec2 GetSize() const { return m_textureSize; }
 };
 
