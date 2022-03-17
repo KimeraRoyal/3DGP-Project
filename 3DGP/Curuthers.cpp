@@ -1,4 +1,4 @@
-#include "Triangle.h"
+#include "Curuthers.h"
 
 #include <stdexcept>
 #include <iostream>
@@ -8,11 +8,9 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <stb/stb_image.h>
-
 #include "Window.h"
 
-Triangle::Triangle()
+Curuthers::Curuthers()
 {
 	const GLfloat positions[] =
 	{
@@ -28,16 +26,7 @@ Triangle::Triangle()
 		1.0f, 1.0f,
 	};
 
-	// Load in texture file
-	int w = 0;
-	int h = 0;
-
-	unsigned char* data = stbi_load("image.png", &w, &h, nullptr, 4);
-	if (!data)
-	{
-		throw std::runtime_error("Failed to load texture \"image.png\"");
-	}
-
+	// Loading model
 	m_curuthers = { 0 };
 	if (WfModelLoad("models/curuthers/curuthers.obj", &m_curuthers) != 0)
 	{
@@ -71,7 +60,7 @@ Triangle::Triangle()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	// Texture
+	// Texture VBO
 	GLuint textureCoordVboId = 0;
 
 	glGenBuffers(1, &textureCoordVboId);
@@ -88,21 +77,8 @@ Triangle::Triangle()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	// Texture
-	m_textureId = 0;
-	
-	glGenTextures(1, &m_textureId);
-	if (!m_textureId)
-	{
-		throw std::runtime_error("Failed to create texture.");
-	}
 
-	glBindTexture(GL_TEXTURE_2D, m_textureId);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-	free(data);
-
-	glGenerateMipmap(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	m_renderTexture = std::make_unique<RenderTexture>(150, 150);
 
 	// Vertex Shader
 	const GLchar* vertexShaderSrc =
@@ -222,12 +198,12 @@ Triangle::Triangle()
 	m_angle = 0;
 }
 
-Triangle::~Triangle()
+Curuthers::~Curuthers()
 {
 	glDeleteProgram(m_programId);
 }
 
-void Triangle::Draw(std::unique_ptr<Time>& _time)
+void Curuthers::Draw(std::unique_ptr<Time>& _time)
 {
 	float scale = sin(_time->GetTime() * 0.1f) * 0.02f + 0.20f;
 	float angleScale = sin(_time->GetTime() * 0.1f) * 30.0f;
@@ -254,6 +230,9 @@ void Triangle::Draw(std::unique_ptr<Time>& _time)
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
+	m_renderTexture->Bind();
+	glDrawArrays(GL_TRIANGLES, 0, m_curuthers.vertexCount);
+	m_renderTexture->Unbind();
 	glDrawArrays(GL_TRIANGLES, 0, m_curuthers.vertexCount);
 
 	glDisable(GL_CULL_FACE);

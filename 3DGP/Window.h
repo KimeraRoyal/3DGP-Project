@@ -7,7 +7,7 @@
 #include <glm/vec2.hpp>
 
 #include "Time.h"
-#include "Triangle.h"
+#include "Curuthers.h"
 
 class Window
 {
@@ -19,7 +19,7 @@ private:
 
 	std::unique_ptr<Time> m_time;
 
-	std::unique_ptr<Triangle> m_triangle;
+	std::unique_ptr<Curuthers> m_triangle;
 
 	bool PollEvents();
 	bool Update();

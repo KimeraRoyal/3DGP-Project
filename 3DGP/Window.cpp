@@ -21,7 +21,7 @@ Window::Window()
 
 	m_time = std::make_unique<Time>();
 
-	m_triangle = std::make_unique<Triangle>();
+	m_triangle = std::make_unique<Curuthers>();
 }
 
 Window::~Window()

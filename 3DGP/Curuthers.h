@@ -5,10 +5,11 @@
 #include <gl/glew.h>
 
 #include <wavefront/wavefront.h>
+#include "RenderTexture.h"
 
 #include "Time.h"
 
-class Triangle
+class Curuthers
 {
 private:
 
@@ -17,20 +18,19 @@ private:
 	GLuint m_vertexShaderId;
 	GLuint m_fragmentShaderId;
 
-	GLuint m_textureId;
-
 	GLint m_modelLoc;
 	GLint m_projectionLoc;
 
 	WfModel m_curuthers;
+	std::unique_ptr<RenderTexture> m_renderTexture;
 
 	float m_angle;
 
 	//TODO: Move into Window
 	GLuint m_programId;
 public:
-	Triangle();
-	~Triangle();
+	Curuthers();
+	~Curuthers();
 
 	void Draw(std::unique_ptr<Time>& _time);
 };
