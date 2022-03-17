@@ -155,13 +155,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="Time.cpp" />
-    <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="Curuthers.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="Time.h" />
-    <ClInclude Include="Triangle.h" />
+    <ClInclude Include="Curuthers.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
