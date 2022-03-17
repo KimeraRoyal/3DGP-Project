@@ -12,9 +12,6 @@
 class Curuthers
 {
 private:
-
-	GLuint m_vaoId;
-	
 	GLuint m_vertexShaderId;
 	GLuint m_fragmentShaderId;
 

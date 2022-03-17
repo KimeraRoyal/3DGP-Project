@@ -33,49 +33,25 @@ Curuthers::Curuthers()
 		throw std::runtime_error("Failed to load model.");
 	}
 
-	// VBO
-	GLuint positionsVboId = 0;
+	// Create and bind vertex array
 
-	glGenBuffers(1, &positionsVboId);
-	if (!positionsVboId)
-	{
-		throw std::runtime_error("Failed to generate vertex buffer.");
-	}
+	// Create and bind position vertex buffer
 
-	glBindBuffer(GL_ARRAY_BUFFER, positionsVboId);
+	// Assign position buffer's data
 	glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	// VAO
-	m_vaoId = 0;
-
-	glGenVertexArrays(1, &m_vaoId);
-	if (!m_vaoId)
-	{
-		throw std::runtime_error("Failed to create vertex array.");
-	}
-
-	glBindVertexArray(m_vaoId);
-	glBindBuffer(GL_ARRAY_BUFFER, positionsVboId);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
 	glEnableVertexAttribArray(0);
+	// Unbind position VBO
 
-	// Texture VBO
-	GLuint textureCoordVboId = 0;
+	// Create and bind texture coordinate vertex buffer
 
-	glGenBuffers(1, &textureCoordVboId);
-	if (!textureCoordVboId)
-	{
-		throw std::runtime_error("Failed to generate texture coordinate buffer.");
-	}
-
-	glBindBuffer(GL_ARRAY_BUFFER, textureCoordVboId);
+	// Assign texure coordinate buffer's data
 	glBufferData(GL_ARRAY_BUFFER, sizeof(textureCoordinates), textureCoordinates, GL_STATIC_DRAW);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (void*)0);
 	glEnableVertexAttribArray(1);
+	// Unbind texture coordinate VBO
 	
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	// Unbind vertex array
 
 
 	m_renderTexture = std::make_unique<RenderTexture>(150, 150);
