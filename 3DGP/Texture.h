@@ -17,10 +17,7 @@ public:
 	Texture(std::string _path);
 	~Texture();
 
-	void Bind();
-	void Unbind();
-
-	inline GLuint GetTexture() { return m_textureId; }
+	inline GLuint GetId() { return m_textureId; }
 	inline glm::ivec2 GetSize() { return m_textureSize; }
 };
 
