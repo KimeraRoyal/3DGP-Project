@@ -2,28 +2,26 @@
 
 #include <memory>
 
-#include <gl/glew.h>
-
-#include <wavefront/wavefront.h>
-#include "RenderTexture.h"
+#include "Texture.h"
+#include "VertexArray.h"
+#include "Shader.h"
+#include "Program.h"
 
 #include "Time.h"
 
 class Curuthers
 {
 private:
-	GLuint m_vertexShaderId;
-	GLuint m_fragmentShaderId;
+	std::shared_ptr<Texture> m_texture;
+
+	std::shared_ptr<VertexArray> m_vao;
+
+	std::shared_ptr<Program> m_program;
 
 	GLint m_modelLoc;
 	GLint m_projectionLoc;
 
-	WfModel m_curuthers;
-	std::unique_ptr<RenderTexture> m_renderTexture;
-
 	float m_angle;
-
-	GLuint m_programId;
 public:
 	Curuthers();
 	~Curuthers();

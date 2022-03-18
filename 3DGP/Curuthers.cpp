@@ -1,8 +1,6 @@
 #include "Curuthers.h"
 
-#include <stdexcept>
 #include <iostream>
-#include <vector>
 
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/mat4x4.hpp>
@@ -12,51 +10,23 @@
 
 Curuthers::Curuthers()
 {
-	const GLfloat positions[] =
-	{
-		0.0f, 0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f
-	};
-
-	const GLfloat textureCoordinates[] =
-	{
-		0.0f, 0.0f,
-		0.0, 1.0f,
-		1.0f, 1.0f,
-	};
-
-	// Loading model
-	m_curuthers = { 0 };
-	if (WfModelLoad("models/curuthers/curuthers.obj", &m_curuthers) != 0)
-	{
-		throw std::runtime_error("Failed to load model.");
-	}
-
-	// Create and bind vertex array
-
-	// Create and bind position vertex buffer
-
-	// Assign position buffer's data
-	glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
-	glEnableVertexAttribArray(0);
-	// Unbind position VBO
-
-	// Create and bind texture coordinate vertex buffer
-
-	// Assign texture coordinate buffer's data
-	glBufferData(GL_ARRAY_BUFFER, sizeof(textureCoordinates), textureCoordinates, GL_STATIC_DRAW);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (void*)0);
-	glEnableVertexAttribArray(1);
-	// Unbind texture coordinate VBO
-	
-	// Unbind vertex array
-
-	m_renderTexture = std::make_unique<RenderTexture>(150, 150);
-
-	// Vertex Shader
+	// Vertex shaders
 	const GLchar* vertexShaderSrc =
+		"attribute vec3 in_Position;            " 													\
+		"attribute vec2 in_TexCoord;"																				\
+		""																																	\
+		"uniform mat4 in_Projection;"																				\
+		"uniform mat4 in_Model;"																						\
+		"                                       "													  \
+		"varying vec2 out_TexCoord;"																				\
+		"                                       "														\
+		"void main()                            "														\
+		"{                                      "														\
+		"	gl_Position = in_Projection * in_Model * vec4(in_Position, 1.0);"	\
+		"	out_TexCoord = in_TexCoord;"																			\
+		"}                                      ";
+	
+	const GLchar* vertexShaderSrc2 =
 		"#version 120\n"														\
 		"attribute vec3 in_Position;"											\
 		"attribute vec3 in_Normal;"												\
@@ -79,7 +49,19 @@ Curuthers::Curuthers()
 		"	out_FragPos = vec3(in_Model * vec4(in_Position, 1.0));"				\
 		"}";
 
+	// Fragment shaders
 	const GLchar* fragmentShaderSrc =
+		"uniform sampler2D in_Texture;"										\
+		""																								\
+		"varying vec2 out_TexCoord;"											\
+		""																								\
+		"void main()                       "							\
+		"{                                 "							\
+		"	vec4 tex = texture2D(in_Texture, out_TexCoord);"\
+		" gl_FragColor = tex; "														\
+		"}                                 ";
+	
+	const GLchar* fragmentShaderSrc2 =
 		"#version 120\n"													\
 		"uniform sampler2D in_Texture;"										\
 		""																	\
@@ -110,45 +92,61 @@ Curuthers::Curuthers()
 		"	vec4 tex = texture2D(in_Texture, out_TexCoord);"				\
 		"	gl_FragColor = vec4(lighting, 1) * tex;"						\
 		"}";
-	//TODO: Use camera position to calculate view pos in code
 
-	// Create vertex shader and compile
-	
-	// Create fragment shader and compile
+	m_texture = std::make_unique<Texture>("image.png");
 
-	m_programId = glCreateProgram();
+	// Create program
+	m_program = std::make_unique<Program>();
 
-	glBindAttribLocation(m_programId, 0, "in_Position");
-	glBindAttribLocation(m_programId, 1, "in_TexCoord");
-	glBindAttribLocation(m_programId, 2, "in_Normal");
+	// Create vertex array object
+	m_vao = std::make_unique<VertexArray>();
 
-	glLinkProgram(m_programId);
+	// Create vertex buffer object for positions
+	std::shared_ptr<VertexBuffer> vboPosition = std::make_unique<VertexBuffer>();
+	vboPosition->Add(glm::vec3(0.0f, 0.5f, 0.0f));
+	vboPosition->Add(glm::vec3(-0.5f, -0.5f, 0.0f));
+	vboPosition->Add(glm::vec3(0.5f, -0.5f, 0.0f));
 
-	GLint success;
-	glGetProgramiv(m_programId, GL_LINK_STATUS, &success);
-	if (!success)
-	{
-		throw std::runtime_error("Failed to link GL program!");
-	}
+	// Create vertex buffer object for texture coordinates
+	std::shared_ptr<VertexBuffer> vboTexcoords = std::make_unique<VertexBuffer>();
+	vboTexcoords->Add(glm::vec2(0.0f, 0.0f));
+	vboTexcoords->Add(glm::vec2(0.0f, 1.0f));
+	vboTexcoords->Add(glm::vec2(1.0f, 1.0f));
+
+	// Add VBOs to VAO
+	m_vao->AddBuffer(m_program->GetId(), "in_Position", vboPosition);
+	m_vao->AddBuffer(m_program->GetId(), "in_Texcoord", vboTexcoords);
+	glBindAttribLocation(m_program->GetId(), 2, "in_Normal");
+
+	// Create and compile shaders
+	std::shared_ptr<Shader> vertexShader = std::make_unique<Shader>(GL_VERTEX_SHADER, vertexShaderSrc);
+	std::shared_ptr<Shader> fragmentShader = std::make_unique<Shader>(GL_FRAGMENT_SHADER, fragmentShaderSrc);
+
+	// Attach shaders to program
+	vertexShader->Attach(m_program->GetId());
+	fragmentShader->Attach(m_program->GetId());
+
+	// Link program
+	m_program->Link();
 
 	// Set uniforms
-	m_modelLoc = glGetUniformLocation(m_programId, "in_Model");
-	m_projectionLoc = glGetUniformLocation(m_programId, "in_Projection");
+	m_modelLoc = glGetUniformLocation(m_program->GetId(), "in_Model");
+	m_projectionLoc = glGetUniformLocation(m_program->GetId(), "in_Projection");
 
 	m_angle = 0;
 }
 
 Curuthers::~Curuthers()
 {
-	glDeleteProgram(m_programId);
+	
 }
 
 void Curuthers::Draw(std::unique_ptr<Time>& _time)
 {
-	float scale = sin(_time->GetTime() * 0.1f) * 0.02f + 0.20f;
+	float scale = sin(_time->GetTime() * 0.1f) * 0.2f + 0.20f;
 	float angleScale = sin(_time->GetTime() * 0.1f) * 30.0f;
 
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)Window::GetWindowSize().x / (float)Window::GetWindowSize().y, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), 0.1f, 100.0f);
 	glm::mat4 model(1.0f);
 	model = glm::translate(model, glm::vec3(0, -0.2f, -2.5f));
 	model = glm::rotate(model, glm::radians(angleScale), glm::vec3(1, 0, 0));
@@ -157,9 +155,9 @@ void Curuthers::Draw(std::unique_ptr<Time>& _time)
 
 	m_angle += 11 * _time->GetDeltaTime();
 
-	glUseProgram(m_programId);
-	glBindVertexArray(m_curuthers.vaoId);
-	glBindTexture(GL_TEXTURE_2D, m_curuthers.textureId);
+	glUseProgram(m_program->GetId());
+	glBindVertexArray(m_vao->GetId());
+	glBindTexture(GL_TEXTURE_2D, m_texture->GetId());
 
 	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
@@ -168,15 +166,12 @@ void Curuthers::Draw(std::unique_ptr<Time>& _time)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 
-	m_renderTexture->Bind();
-	glDrawArrays(GL_TRIANGLES, 0, m_curuthers.vertexCount);
-	m_renderTexture->Unbind();
-	glDrawArrays(GL_TRIANGLES, 0, m_curuthers.vertexCount);
+	glDrawArrays(GL_TRIANGLES, 0, m_vao->GetVertexCount());
 
 	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);
