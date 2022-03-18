@@ -1,11 +1,17 @@
 #pragma once
 
-#include <GL/glew.h>
+#include <memory>
+#include <string>
+
+
+#include "VertexBuffer.h"
 
 class VertexArray
 {
 private:
 	GLuint m_vaoId;
+
+	std::vector<std::shared_ptr<VertexBuffer>> m_buffers;
 
 	bool m_dirty;
 public:
@@ -15,9 +21,9 @@ public:
 	VertexArray(const VertexArray& _copy) = delete;
 	VertexArray& operator=(const VertexArray& _other) = delete;
 
-	void Bind() const;
-	void Unbind() const;
+	void AddBuffer(GLuint _programId, const std::string& _attributeName, const std::shared_ptr<VertexBuffer>& _buffer);
 
-	GLuint GetId() const { return m_vaoId; }
+	GLuint GetId();
+	unsigned int GetVertexCount();
 };
 

@@ -17,15 +17,51 @@ VertexArray::VertexArray()
 
 VertexArray::~VertexArray()
 {
+	glBindVertexArray(0);
 	glDeleteVertexArrays(1, &m_vaoId);
 }
 
-void VertexArray::Bind() const
+void VertexArray::AddBuffer(const GLuint _programId, const std::string& _attributeName, const std::shared_ptr<VertexBuffer>& _buffer)
 {
-	glBindVertexArray(m_vaoId);
+	glBindAttribLocation(_programId, m_buffers.size(), _attributeName.c_str());
+	m_buffers.push_back(_buffer);
+
+	m_dirty = true;
 }
 
-void VertexArray::Unbind() const
+GLuint VertexArray::GetId()
 {
-	glBindVertexArray(0);
+	if(m_dirty)
+	{
+		// Bind the VBO (using the variable vaoId to avoid recursion)
+		glBindVertexArray(m_vaoId);
+
+		// Loop through each VBO, assigning them to the VAO
+		for(unsigned int i = 0; i < m_buffers.size(); i++)
+		{
+			const unsigned int dataTypeSize = m_buffers.at(i)->GetDataTypeSize();
+
+			// Bind the VBO
+			glBindBuffer(GL_ARRAY_BUFFER, m_buffers.at(i)->GetId());
+
+			// Assign the VBO to position i on the VAO
+			glVertexAttribPointer(i, dataTypeSize, GL_FLOAT, GL_FALSE, dataTypeSize * sizeof(GLfloat), static_cast<void*>(nullptr));
+			glEnableVertexAttribArray(i);
+
+			// Unbind the VBO
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
+
+		// Unbind the VAO
+		glBindVertexArray(0);
+		
+		m_dirty = false;
+	}
+
+	return m_vaoId;
+}
+
+unsigned VertexArray::GetVertexCount()
+{
+	return m_buffers.at(0)->GetDataSize();
 }
