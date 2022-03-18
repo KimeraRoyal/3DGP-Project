@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include <wavefront/wavefront.h> 
+
 #include "Texture.h"
 #include "VertexArray.h"
 #include "Shader.h"
@@ -21,7 +23,7 @@ private:
 	GLint m_modelLoc;
 	GLint m_projectionLoc;
 
-	float m_angle;
+	WfModel m_curuthers;
 public:
 	Curuthers();
 	~Curuthers();
