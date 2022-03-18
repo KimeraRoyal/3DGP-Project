@@ -7,13 +7,12 @@ class Shader
 private:
 	GLuint m_shaderId;
 	GLuint m_attachedProgramId;
-
-	virtual GLuint CreateShader() = 0;
 public:
-	Shader();
+	Shader(int _shaderType, const GLchar* _source);
 	virtual ~Shader();
-	
-	void CompileShader(const GLchar* _source);
+
+	Shader(const Shader& _copy) = delete;
+	Shader& operator=(const Shader& _other) = delete;
 
 	void Attach(GLuint _programId);
 	void Detach(GLuint _programId);

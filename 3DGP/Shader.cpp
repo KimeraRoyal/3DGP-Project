@@ -3,22 +3,10 @@
 #include <iostream>
 #include <vector>
 
-Shader::Shader()
-{
-	m_shaderId = 0;
-	m_attachedProgramId = 0;
-}
-
-Shader::~Shader()
-{
-	if (m_attachedProgramId) { Detach(m_attachedProgramId); }
-	glDeleteShader(m_shaderId);
-}
-
-void Shader::CompileShader(const GLchar* _source)
+Shader::Shader(const int _shaderType, const GLchar* _source)
 {
 	// Create and compile shader from source code.
-	m_shaderId = CreateShader();
+	m_shaderId = glCreateShader(_shaderType);
 	glShaderSource(m_shaderId, 1, &_source, nullptr);
 	glCompileShader(m_shaderId);
 
@@ -36,6 +24,14 @@ void Shader::CompileShader(const GLchar* _source)
 		std::cout << &errorLog.at(0) << std::endl;
 		throw std::exception();
 	}
+
+	m_attachedProgramId = 0;
+}
+
+Shader::~Shader()
+{
+	if (m_attachedProgramId) { Detach(m_attachedProgramId); }
+	glDeleteShader(m_shaderId);
 }
 
 void Shader::Attach(const GLuint _programId)
