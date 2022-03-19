@@ -159,6 +159,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="File.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
@@ -173,6 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="File.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="Shader.h" />
