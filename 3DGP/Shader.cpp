@@ -3,11 +3,16 @@
 #include <iostream>
 #include <vector>
 
-Shader::Shader(const int _shaderType, const GLchar* _source)
+#include "File.h"
+
+Shader::Shader(const int _shaderType, const std::string& _fileName)
 {
+	const std::string sourceText = File::LoadTextFile(_fileName);
+	const GLchar* source = sourceText.c_str();
+	
 	// Create and compile shader from source code.
 	m_shaderId = glCreateShader(_shaderType);
-	glShaderSource(m_shaderId, 1, &_source, nullptr);
+	glShaderSource(m_shaderId, 1, &source, nullptr);
 	glCompileShader(m_shaderId);
 
 	// Check if shader compilation was successful.
