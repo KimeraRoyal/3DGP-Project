@@ -13,7 +13,7 @@ class Window
 {
 private:
 	static constexpr glm::ivec2 c_defaultWindowSize = glm::ivec2(240, 160);
-	static constexpr int c_defaultWindowScale = 4;
+	static constexpr int c_defaultWindowScale = 2;
 
 	SDL_Window* m_window;
 

@@ -11,35 +11,6 @@
 
 Scene::Scene()
 {
-	// Vertex shaders
-	const GLchar* vertexShaderSrc =
-		"attribute vec3 in_Position;            " 													\
-		"attribute vec2 in_TexCoord;"																				\
-		""																																	\
-		"uniform mat4 in_View;"																							\
-		"uniform mat4 in_Projection;"																				\
-		"uniform mat4 in_Model;"																						\
-		"                                       "													  \
-		"varying vec2 out_TexCoord;"																				\
-		"                                       "														\
-		"void main()                            "														\
-		"{                                      "														\
-		"	gl_Position = in_Projection * in_View * in_Model * vec4(in_Position, 1.0);"	\
-		"	out_TexCoord = in_TexCoord;"																			\
-		"}                                      ";
-
-	// Fragment shaders
-	const GLchar* fragmentShaderSrc =
-		"uniform sampler2D in_Texture;"										\
-		""																								\
-		"varying vec2 out_TexCoord;"											\
-		""																								\
-		"void main()                       "							\
-		"{                                 "							\
-		"	vec4 tex = texture2D(in_Texture, out_TexCoord);"\
-		" gl_FragColor = tex; "														\
-		"}                                 ";
-
 	m_texture = std::make_unique<Texture>("live_cat_reaction.png");
 
 	m_curuthers = { 0 };
@@ -48,11 +19,8 @@ Scene::Scene()
 		throw std::runtime_error("Failed to load model.");
 	}
 
-	// Create program
-	m_program = std::make_unique<Program>();
-
 	// Create vertex array object
-	m_vao = std::make_unique<VertexArray>();
+	/*m_vao = std::make_unique<VertexArray>();
 
 	// Create vertex buffer object for positions
 	std::shared_ptr<VertexBuffer> vboPosition = std::make_unique<VertexBuffer>();
@@ -74,12 +42,18 @@ Scene::Scene()
 
 	// Add VBOs to VAO
 	m_vao->AddBuffer(m_program->GetId(), "in_Position", vboPosition);
-	m_vao->AddBuffer(m_program->GetId(), "in_Texcoord", vboTexcoords);
-	glBindAttribLocation(m_program->GetId(), 2, "in_Normal");
+	m_vao->AddBuffer(m_program->GetId(), "in_Texcoord", vboTexcoords);*/
+
+	// Create program
+	m_program = std::make_unique<Program>();
+
+	m_program->BindAttribute("in_Position");
+	m_program->BindAttribute("in_Texcoord");
+	m_program->BindAttribute("in_Normal");
 
 	// Create and compile shaders
-	std::shared_ptr<Shader> vertexShader = std::make_unique<Shader>(GL_VERTEX_SHADER, vertexShaderSrc);
-	std::shared_ptr<Shader> fragmentShader = std::make_unique<Shader>(GL_FRAGMENT_SHADER, fragmentShaderSrc);
+	std::shared_ptr<Shader> vertexShader = std::make_unique<Shader>(GL_VERTEX_SHADER, "shaders/phong.vert");
+	std::shared_ptr<Shader> fragmentShader = std::make_unique<Shader>(GL_FRAGMENT_SHADER, "shaders/phong.frag");
 
 	// Attach shaders to program
 	vertexShader->Attach(m_program->GetId());
@@ -89,9 +63,32 @@ Scene::Scene()
 	m_program->Link();
 
 	// Set uniforms
-	m_viewLoc = glGetUniformLocation(m_program->GetId(), "in_View");
-	m_modelLoc = glGetUniformLocation(m_program->GetId(), "in_Model");
-	m_projectionLoc = glGetUniformLocation(m_program->GetId(), "in_Projection");
+	m_viewLoc = m_program->GetUniformLocation("in_View");
+	m_modelLoc = m_program->GetUniformLocation("in_Model");
+	m_projectionLoc = m_program->GetUniformLocation("in_Projection");
+
+	// Create program
+	m_program2 = std::make_unique<Program>();
+
+	m_program2->BindAttribute("in_Position");
+	m_program2->BindAttribute("in_Texcoord");
+	m_program2->BindAttribute("in_Normal");
+
+	// Create and compile shaders
+	std::shared_ptr<Shader> vertexShader2 = std::make_unique<Shader>(GL_VERTEX_SHADER, "shaders/simple.vert");
+	std::shared_ptr<Shader> fragmentShader2 = std::make_unique<Shader>(GL_FRAGMENT_SHADER, "shaders/simple.frag");
+
+	// Attach shaders to program
+	vertexShader2->Attach(m_program2->GetId());
+	fragmentShader2->Attach(m_program2->GetId());
+
+	// Link program
+	m_program2->Link();
+
+	// Set uniforms
+	m_viewLoc2 = m_program2->GetUniformLocation("in_View");
+	m_modelLoc2 = m_program2->GetUniformLocation("in_Model");
+	m_projectionLoc2 = m_program2->GetUniformLocation("in_Projection");
 }
 
 Scene::~Scene()
@@ -99,22 +96,16 @@ Scene::~Scene()
 	
 }
 
-void Scene::Draw(const std::weak_ptr<Time>& _time)
+void Scene::Draw(const std::shared_ptr<Time>& _time)
 {
 	glm::mat4 viewMatrix = m_camera.GetTransform()->GetModelMatrix();
 	viewMatrix = glm::inverse(viewMatrix);
 	
-	glm::mat4 persProjection = glm::perspective(glm::radians(45.0f), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), 0.1f, 100.0f);
-	glm::mat4 persModel(1.0f);
-	persModel = glm::translate(persModel, glm::vec3(0, -3.0f, -10.0f));
-	persModel = glm::rotate(persModel, glm::radians(-30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	persModel = glm::scale(persModel, glm::vec3(1.0f, 1.0f, 1.0f));
-	
-	glm::mat4 orthoProjection = glm::ortho(0.0f, static_cast<float>(Window::GetScaledWindowSize().x), 0.0f, static_cast<float>(Window::GetScaledWindowSize().y), 0.0f, 1.0f);
-	glm::mat4 orthoModel(1.0f);
-	orthoModel = glm::translate(orthoModel, glm::vec3(Window::GetScaledWindowSize().x / 2, Window::GetScaledWindowSize().y / 2, 0));
-	orthoModel = glm::scale(orthoModel, glm::vec3(m_texture->GetSize().x, m_texture->GetSize().y, 1));
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), 0.1f, 100.0f);
+	m_curuthersTransform.Rotate(glm::vec3(0, 10, 0) * _time->GetDeltaTime());
 
+	m_curuthersTransform.SetPosition(glm::vec3(-2.0f, -1.0f, -10.0f));
+	
 	glUseProgram(m_program->GetId());
 
 	// Render Curuthers
@@ -122,9 +113,8 @@ void Scene::Draw(const std::weak_ptr<Time>& _time)
 	glBindTexture(GL_TEXTURE_2D, m_curuthers.textureId);
 
 	glUniformMatrix4fv(m_viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
-
-	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(persModel));
-	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(persProjection));
+	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(m_curuthersTransform.GetModelMatrix()));
+	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -135,16 +125,6 @@ void Scene::Draw(const std::weak_ptr<Time>& _time)
 	glDrawArrays(GL_TRIANGLES, 0, m_curuthers.vertexCount);
 
 	glDisable(GL_CULL_FACE);
-
-	// Render GUI
-	glBindVertexArray(m_vao->GetId());
-	glBindTexture(GL_TEXTURE_2D, m_texture->GetId());
-
-	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(orthoModel));
-	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(orthoProjection));
-
-	glDrawArrays(GL_TRIANGLES, 0, m_vao->GetVertexCount());
-
 	glDisable(GL_DEPTH_TEST);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
