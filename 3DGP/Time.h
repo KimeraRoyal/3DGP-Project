@@ -10,6 +10,8 @@ private:
 	float m_deltaTime = 0;
 	float m_time = 0;
 public:
+	Time() = default;
+	
 	Time(const Time& _copy) = delete;
 	Time& operator=(const Time& _other) = delete;
 	
