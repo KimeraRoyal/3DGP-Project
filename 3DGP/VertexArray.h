@@ -20,7 +20,7 @@ public:
 	VertexArray(const VertexArray& _copy) = delete;
 	VertexArray& operator=(const VertexArray& _other) = delete;
 
-	void AddBuffer(GLuint _programId, const std::string& _attributeName, const std::shared_ptr<VertexBuffer>& _buffer);
+	void AddBuffer(const std::shared_ptr<VertexBuffer>& _buffer);
 
 	[[nodiscard]] GLuint GetId();
 	[[nodiscard]] unsigned int GetVertexCount();

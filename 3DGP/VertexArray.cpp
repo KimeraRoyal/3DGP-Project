@@ -21,9 +21,8 @@ VertexArray::~VertexArray()
 	glDeleteVertexArrays(1, &m_vaoId);
 }
 
-void VertexArray::AddBuffer(const GLuint _programId, const std::string& _attributeName, const std::shared_ptr<VertexBuffer>& _buffer)
+void VertexArray::AddBuffer(const std::shared_ptr<VertexBuffer>& _buffer)
 {
-	glBindAttribLocation(_programId, m_buffers.size(), _attributeName.c_str());
 	m_buffers.push_back(_buffer);
 
 	m_dirty = true;
