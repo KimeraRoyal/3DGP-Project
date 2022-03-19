@@ -27,6 +27,6 @@ public:
 	Curuthers();
 	~Curuthers();
 
-	void Draw(std::unique_ptr<Time>& _time);
+	void Draw(std::weak_ptr<Time> _time);
 };
 

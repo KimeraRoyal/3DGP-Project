@@ -17,7 +17,7 @@ private:
 
 	SDL_Window* m_window;
 
-	std::unique_ptr<Time> m_time;
+	std::shared_ptr<Time> m_time;
 
 	std::unique_ptr<Curuthers> m_triangle;
 

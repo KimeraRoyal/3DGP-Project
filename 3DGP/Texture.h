@@ -17,7 +17,7 @@ public:
 	Texture(const Texture& _copy) = delete;
 	Texture& operator=(const Texture& _other) = delete;
 
-	GLuint GetId() const { return m_textureId; }
-	glm::ivec2 GetSize() const { return m_textureSize; }
+	[[nodiscard]] GLuint GetId() const { return m_textureId; }
+	[[nodiscard]] glm::ivec2 GetSize() const { return m_textureSize; }
 };
 

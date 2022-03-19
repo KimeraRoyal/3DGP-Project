@@ -22,7 +22,7 @@ public:
 
 	void AddBuffer(GLuint _programId, const std::string& _attributeName, const std::shared_ptr<VertexBuffer>& _buffer);
 
-	GLuint GetId();
-	unsigned int GetVertexCount();
+	[[nodiscard]] GLuint GetId();
+	[[nodiscard]] unsigned int GetVertexCount();
 };
 

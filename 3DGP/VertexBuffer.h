@@ -30,8 +30,8 @@ public:
 	void Add(glm::vec3 _value);
 	void Add(glm::vec4 _value);
 
-	GLuint GetId();
-	unsigned int GetDataSize() const;
-	unsigned int GetDataTypeSize() const;
+	[[nodiscard]] GLuint GetId();
+	[[nodiscard]] unsigned int GetDataSize() const;
+	[[nodiscard]] unsigned int GetDataTypeSize() const;
 };
 

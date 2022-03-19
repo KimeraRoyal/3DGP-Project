@@ -15,6 +15,6 @@ public:
 	RenderTexture(const RenderTexture& _copy) = delete;
 	RenderTexture& operator=(const RenderTexture& _other) = delete;
 
-	GLuint GetTexture() const { return m_textureId; }
+	[[nodiscard]] GLuint GetTexture() const { return m_textureId; }
 };
 

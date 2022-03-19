@@ -10,8 +10,11 @@ private:
 	float m_deltaTime = 0;
 	float m_time = 0;
 public:
+	Time(const Time& _copy) = delete;
+	Time& operator=(const Time& _other) = delete;
+	
 	void Update();
 
-	float GetDeltaTime() const;
-	float GetTime() const;
+	[[nodiscard]] float GetDeltaTime() const;
+	[[nodiscard]] float GetTime() const;
 };

@@ -97,7 +97,7 @@ Curuthers::~Curuthers()
 	
 }
 
-void Curuthers::Draw(std::unique_ptr<Time>& _time)
+void Curuthers::Draw(std::weak_ptr<Time> _time)
 {
 	glm::mat4 persProjection = glm::perspective(glm::radians(45.0f), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), 0.1f, 100.0f);
 	glm::mat4 persModel(1.0f);

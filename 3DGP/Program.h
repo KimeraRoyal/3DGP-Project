@@ -15,6 +15,6 @@ public:
 
 	void Link() const;
 
-	GLuint GetId() const { return m_programId; }
+	[[nodiscard]] GLuint GetId() const { return m_programId; }
 };
 
