@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include <gl/glew.h>
+#include <GL/glew.h>
 #include <iostream>
 
 Window::Window()

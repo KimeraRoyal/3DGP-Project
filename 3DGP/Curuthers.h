@@ -6,7 +6,6 @@
 
 #include "Texture.h"
 #include "VertexArray.h"
-#include "Shader.h"
 #include "Program.h"
 
 #include "Time.h"

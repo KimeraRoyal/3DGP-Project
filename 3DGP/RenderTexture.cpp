@@ -41,13 +41,3 @@ RenderTexture::~RenderTexture()
 	glDeleteTextures(1, &m_textureId);
 	glDeleteFramebuffers(1, &m_fboId);
 }
-
-void RenderTexture::Bind()
-{
-	glBindFramebuffer(GL_FRAMEBUFFER, m_fboId);
-}
-
-void RenderTexture::Unbind()
-{
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
