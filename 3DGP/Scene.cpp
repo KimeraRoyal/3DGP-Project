@@ -80,9 +80,6 @@ Scene::~Scene()
 
 void Scene::Draw(const std::shared_ptr<Time>& _time)
 {
-	glm::mat4 viewMatrix = m_camera.GetTransform()->GetModelMatrix();
-	viewMatrix = glm::inverse(viewMatrix);
-	
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), 0.1f, 100.0f);
 	m_curuthersTransform.Rotate(glm::vec3(0, 10, 0) * _time->GetDeltaTime());
 
@@ -94,7 +91,7 @@ void Scene::Draw(const std::shared_ptr<Time>& _time)
 	glBindVertexArray(m_curuthers.vaoId);
 	glBindTexture(GL_TEXTURE_2D, m_curuthers.textureId);
 
-	glUniformMatrix4fv(m_viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+	glUniformMatrix4fv(m_viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera.GetViewMatrix()));
 	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(m_curuthersTransform.GetModelMatrix()));
 	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
