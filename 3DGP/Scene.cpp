@@ -52,8 +52,8 @@ Scene::Scene()
 	m_program->BindAttribute("in_Normal");
 
 	// Create and compile shaders
-	std::shared_ptr<Shader> vertexShader = std::make_unique<Shader>(GL_VERTEX_SHADER, "shaders/phong.vert");
-	std::shared_ptr<Shader> fragmentShader = std::make_unique<Shader>(GL_FRAGMENT_SHADER, "shaders/phong.frag");
+	std::shared_ptr<Shader> vertexShader = std::make_unique<Shader>(GL_VERTEX_SHADER, "data/shaders/phong.vert");
+	std::shared_ptr<Shader> fragmentShader = std::make_unique<Shader>(GL_FRAGMENT_SHADER, "data/shaders/phong.frag");
 
 	// Attach shaders to program
 	vertexShader->Attach(m_program->GetId());

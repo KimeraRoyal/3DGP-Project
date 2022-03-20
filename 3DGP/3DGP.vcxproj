@@ -95,7 +95,8 @@
       <AdditionalLibraryDirectories>../Libraries/libs/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)Libraries\dlls\x86\*.*" "$(OutDir)"</Command>
+      <Command>copy "$(SolutionDir)Libraries\dlls\x86\*.*" "$(OutDir)"
+xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -112,7 +113,8 @@
       <AdditionalLibraryDirectories>../Libraries/libs/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)Libraries\dlls\x64\*.*" "$(OutDir)"</Command>
+      <Command>copy "$(SolutionDir)Libraries\dlls\x64\*.*" "$(OutDir)"
+xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -133,7 +135,8 @@
       <AdditionalLibraryDirectories>../Libraries/libs/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)Libraries\dlls\x86\*.*" "$(OutDir)"</Command>
+      <Command>copy "$(SolutionDir)Libraries\dlls\x86\*.*" "$(OutDir)"
+xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -154,7 +157,8 @@
       <AdditionalLibraryDirectories>../Libraries/libs/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)Libraries\dlls\x64\*.*" "$(OutDir)"</Command>
+      <Command>copy "$(SolutionDir)Libraries\dlls\x64\*.*" "$(OutDir)"
+xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
