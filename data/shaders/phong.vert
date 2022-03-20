@@ -1,4 +1,4 @@
-#version 120
+#version 330 core
 attribute vec3 in_Position;
 attribute vec3 in_Normal;
 attribute vec2 in_TexCoord;

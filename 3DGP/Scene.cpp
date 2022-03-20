@@ -67,28 +67,10 @@ Scene::Scene()
 	m_modelLoc = m_program->GetUniformLocation("in_Model");
 	m_projectionLoc = m_program->GetUniformLocation("in_Projection");
 
-	// Create program
-	m_program2 = std::make_unique<Program>();
+	m_lightPosLoc = m_program->GetUniformLocation("in_LightPos");
 
-	m_program2->BindAttribute("in_Position");
-	m_program2->BindAttribute("in_Texcoord");
-	m_program2->BindAttribute("in_Normal");
-
-	// Create and compile shaders
-	std::shared_ptr<Shader> vertexShader2 = std::make_unique<Shader>(GL_VERTEX_SHADER, "shaders/simple.vert");
-	std::shared_ptr<Shader> fragmentShader2 = std::make_unique<Shader>(GL_FRAGMENT_SHADER, "shaders/simple.frag");
-
-	// Attach shaders to program
-	vertexShader2->Attach(m_program2->GetId());
-	fragmentShader2->Attach(m_program2->GetId());
-
-	// Link program
-	m_program2->Link();
-
-	// Set uniforms
-	m_viewLoc2 = m_program2->GetUniformLocation("in_View");
-	m_modelLoc2 = m_program2->GetUniformLocation("in_Model");
-	m_projectionLoc2 = m_program2->GetUniformLocation("in_Projection");
+	m_light.GetTransform()->SetPosition(glm::vec3(-10.0f, 5.0f, -8.0f));
+	m_curuthersTransform.SetPosition(glm::vec3(0.0f, -1.0f, -10.0f));
 }
 
 Scene::~Scene()
@@ -104,7 +86,7 @@ void Scene::Draw(const std::shared_ptr<Time>& _time)
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), 0.1f, 100.0f);
 	m_curuthersTransform.Rotate(glm::vec3(0, 10, 0) * _time->GetDeltaTime());
 
-	m_curuthersTransform.SetPosition(glm::vec3(-2.0f, -1.0f, -10.0f));
+	m_light.GetTransform()->SetPosition(glm::vec3(10.0f, 0.0f, 0.0f) * sin(_time->GetTime()));
 	
 	glUseProgram(m_program->GetId());
 
@@ -115,6 +97,8 @@ void Scene::Draw(const std::shared_ptr<Time>& _time)
 	glUniformMatrix4fv(m_viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(m_curuthersTransform.GetModelMatrix()));
 	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
+	glUniform3fv(m_lightPosLoc, 1, glm::value_ptr(m_light.GetTransform()->GetPosition()));
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

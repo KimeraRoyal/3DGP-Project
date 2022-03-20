@@ -11,6 +11,7 @@
 #include "Time.h"
 
 #include "Camera.h"
+#include "Light.h"
 
 class Scene
 {
@@ -26,13 +27,13 @@ private:
 	GLint m_projectionLoc;
 	GLint m_viewLoc;
 
-	GLint m_modelLoc2;
-	GLint m_projectionLoc2;
-	GLint m_viewLoc2;
+	GLint m_lightPosLoc;
 
 	WfModel m_curuthers;
 
 	Camera m_camera;
+	Light m_light;
+	
 	Transform m_curuthersTransform;
 public:
 	Scene();

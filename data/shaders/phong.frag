@@ -1,5 +1,7 @@
-#version 120
+#version 330 core
 uniform sampler2D in_Texture;
+
+uniform vec3 in_LightPos;
 
 varying vec2 out_TexCoord;
 
@@ -8,13 +10,12 @@ varying vec3 out_FragPos;
 
 void main()
 {
-	vec3 lightPos = vec3(5, 10, 10);
 	vec3 ambientColor = vec3(0.1, 0, 0.3);
 	vec3 diffuseColor = vec3(1, 1, 1);
 	vec3 specularColor = vec3(1, 0, 0);
 
 	vec3 normal = normalize(out_Normal);
-	vec3 lightDir = normalize(lightPos - out_FragPos);
+	vec3 lightDir = normalize(in_LightPos - out_FragPos);
 	float diff = max(dot(normal, lightDir), 0.0);
 	vec3 diffuse = diffuseColor * diff;
 

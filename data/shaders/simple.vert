@@ -1,3 +1,4 @@
+#version 330 core
 attribute vec3 in_Position;
 attribute vec2 in_TexCoord;
 
