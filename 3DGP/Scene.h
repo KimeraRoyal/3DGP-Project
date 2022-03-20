@@ -26,6 +26,7 @@ private:
 	GLint m_projectionLoc;
 	GLint m_viewLoc;
 
+	GLint m_viewPosLoc;
 	GLint m_lightPosLoc;
 
 	std::unique_ptr<IModel> m_curuthers;
