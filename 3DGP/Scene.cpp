@@ -6,15 +6,16 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "File.h"
 #include "Window.h"
 #include "Shader.h"
 
 Scene::Scene()
 {
-	m_texture = std::make_unique<Texture>("live_cat_reaction.png");
+	m_texture = std::make_unique<Texture>("data/live_cat_reaction.png");
 
 	m_curuthers = { 0 };
-	if (WfModelLoad("models/curuthers/curuthers.obj", &m_curuthers) != 0)
+	if (WfModelLoad((File::GetBasePath() + "data/models/curuthers/curuthers.obj").c_str(), &m_curuthers) != 0)
 	{
 		throw std::runtime_error("Failed to load model.");
 	}

@@ -11,7 +11,7 @@ private:
 	GLuint m_textureId;
 	glm::ivec2 m_textureSize;
 public:
-	Texture(const std::string& _path);
+	Texture(const std::string& _fileName);
 	~Texture();
 
 	Texture(const Texture& _copy) = delete;

@@ -4,14 +4,16 @@
 
 #include <stb/stb_image.h>
 
-Texture::Texture(const std::string& _path)
+#include "File.h"
+
+Texture::Texture(const std::string& _fileName)
 {
 	// Load texture from file.
 	m_textureSize = glm::ivec2(0, 0);
-	unsigned char* data = stbi_load(_path.c_str(), &m_textureSize.x, &m_textureSize.y, nullptr, 4);
+	unsigned char* data = stbi_load((File::GetBasePath() + _fileName).c_str(), &m_textureSize.x, &m_textureSize.y, nullptr, 4);
 	if (!data)
 	{
-		throw std::runtime_error("Failed to load texture \"" + _path + "\"");
+		throw std::runtime_error("Failed to load texture \"" + _fileName + "\"");
 	}
 	
 	// Generate and bind texture.
