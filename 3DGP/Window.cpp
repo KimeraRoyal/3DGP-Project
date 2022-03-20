@@ -21,7 +21,7 @@ Window::Window()
 
 	m_time = std::make_unique<Time>();
 
-	m_triangle = std::make_unique<Scene>();
+	m_scene = std::make_unique<Scene>();
 }
 
 Window::~Window()
@@ -55,6 +55,7 @@ bool Window::PollEvents()
 bool Window::Update()
 {
 	m_time->Update();
+	m_scene->Update(m_time);
 
 	return true;
 }
@@ -63,7 +64,7 @@ void Window::Draw()
 {
 	glClearColor(0.7f, 0.5f, 0.8f, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	m_triangle->Draw(m_time);
+	m_scene->Draw(m_time);
 
 	SDL_GL_SwapWindow(m_window);
 }

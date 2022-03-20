@@ -19,7 +19,7 @@ private:
 
 	std::shared_ptr<Time> m_time;
 
-	std::unique_ptr<Scene> m_triangle;
+	std::unique_ptr<Scene> m_scene;
 
 	bool PollEvents();
 	bool Update();

@@ -31,6 +31,12 @@
     <Filter Include="Header Files\World">
       <UniqueIdentifier>{3519b1ec-bdc6-4ed1-82e1-9e56385d4ebe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Rendering\Model">
+      <UniqueIdentifier>{0b362309-945f-4f5d-a4e8-d074c6584922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Rendering\Model">
+      <UniqueIdentifier>{0b41e111-07ff-426f-8048-b50305a15613}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -75,6 +81,12 @@
     <ClCompile Include="Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IModel.cpp">
+      <Filter>Source Files\Rendering\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="WavefrontModel.cpp">
+      <Filter>Source Files\Rendering\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -115,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IModel.h">
+      <Filter>Header Files\Rendering\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="WavefrontModel.h">
+      <Filter>Header Files\Rendering\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

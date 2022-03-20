@@ -6,19 +6,16 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "File.h"
 #include "Window.h"
 #include "Shader.h"
+
+#include "WavefrontModel.h"
 
 Scene::Scene()
 {
 	m_texture = std::make_unique<Texture>("data/live_cat_reaction.png");
 
-	m_curuthers = { 0 };
-	if (WfModelLoad((File::GetBasePath() + "data/models/curuthers/curuthers.obj").c_str(), &m_curuthers) != 0)
-	{
-		throw std::runtime_error("Failed to load model.");
-	}
+	m_curuthers = std::make_unique<WavefrontModel>("data/models/curuthers/curuthers.obj");
 
 	// Create vertex array object
 	/*m_vao = std::make_unique<VertexArray>();
@@ -79,19 +76,20 @@ Scene::~Scene()
 	
 }
 
-void Scene::Draw(const std::shared_ptr<Time>& _time)
+void Scene::Update(const std::shared_ptr<Time>& _time)
 {
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), 0.1f, 100.0f);
 	m_curuthersTransform.Rotate(glm::vec3(0, 10, 0) * _time->GetDeltaTime());
 
 	m_light.GetTransform()->SetPosition(glm::vec3(10.0f, 0.0f, 0.0f) * sin(_time->GetTime()));
+}
+
+void Scene::Draw(const std::shared_ptr<Time>& _time)
+{
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), 0.1f, 100.0f);
 	
 	glUseProgram(m_program->GetId());
 
 	// Render Curuthers
-	glBindVertexArray(m_curuthers.vaoId);
-	glBindTexture(GL_TEXTURE_2D, m_curuthers.textureId);
-
 	glUniformMatrix4fv(m_viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera.GetViewMatrix()));
 	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(m_curuthersTransform.GetModelMatrix()));
 	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
@@ -104,12 +102,10 @@ void Scene::Draw(const std::shared_ptr<Time>& _time)
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
-	glDrawArrays(GL_TRIANGLES, 0, m_curuthers.vertexCount);
+	m_curuthers->Draw();
 
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glBindVertexArray(0);
 	glUseProgram(0);
 }
