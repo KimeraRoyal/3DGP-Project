@@ -196,6 +196,9 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="WavefrontModel.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
+  <ItemGroup>
+	<UpToDateCheckInput Include="../data/**/*.*"/>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
