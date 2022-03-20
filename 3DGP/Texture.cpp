@@ -11,10 +11,7 @@ Texture::Texture(const std::string& _fileName)
 	// Load texture from file.
 	m_textureSize = glm::ivec2(0, 0);
 	unsigned char* data = stbi_load((File::GetBasePath() + _fileName).c_str(), &m_textureSize.x, &m_textureSize.y, nullptr, 4);
-	if (!data)
-	{
-		throw std::runtime_error("Failed to load texture \"" + _fileName + "\"");
-	}
+	if (!data) { throw std::runtime_error("Failed to load texture \"" + _fileName + "\""); }
 	
 	// Generate and bind texture.
 	m_textureId = 0;

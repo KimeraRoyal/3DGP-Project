@@ -9,6 +9,7 @@ RenderTexture::RenderTexture(const int _width, const int _height, const unsigned
 	if (!m_fboId) { throw std::runtime_error("Failed to load frame buffer object in render texture."); }
 	glBindFramebuffer(GL_FRAMEBUFFER, m_fboId);
 
+	// Ensure the user isn't doing anything stupid.
 	if (_colorBufferCount < 1) { throw std::runtime_error("Tried to generate an amount of color buffers exceeding the minimum."); }
 	if (_colorBufferCount > c_maxBuffers) { throw std::runtime_error("Tried to generate an amount of color buffers exceeding the maximum."); }
 	

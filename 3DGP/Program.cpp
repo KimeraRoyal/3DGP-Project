@@ -25,10 +25,7 @@ void Program::Link() const
 
 	GLint success;
 	glGetProgramiv(m_programId, GL_LINK_STATUS, &success);
-	if (!success)
-	{
-		throw std::runtime_error("Failed to link GL program!");
-	}
+	if (!success) { throw std::runtime_error("Failed to link GL program!"); }
 }
 
 GLuint Program::GetUniformLocation(const std::string& _uniformName) const
