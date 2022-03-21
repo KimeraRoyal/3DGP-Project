@@ -87,6 +87,9 @@
     <ClCompile Include="WavefrontModel.cpp">
       <Filter>Source Files\Rendering\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="WavefrontModel.h">
       <Filter>Header Files\Rendering\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

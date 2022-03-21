@@ -6,6 +6,7 @@
 
 #include <glm/vec2.hpp>
 
+#include "Audio.h"
 #include "Time.h"
 #include "Scene.h"
 
@@ -18,6 +19,7 @@ private:
 	SDL_Window* m_window;
 
 	std::shared_ptr<Time> m_time;
+	std::shared_ptr<Audio> m_audio;
 
 	std::unique_ptr<Scene> m_scene;
 

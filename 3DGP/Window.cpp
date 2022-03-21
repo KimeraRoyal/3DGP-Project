@@ -20,12 +20,19 @@ Window::Window()
 	}
 
 	m_time = std::make_unique<Time>();
-
+	
+	m_audio = std::make_unique<Audio>();
+	m_audio->LoadBank("data/banks/Desktop/Master.bank");
+	m_audio->LoadBank("data/banks/Desktop/Master.strings.bank");
+	
 	m_scene = std::make_unique<Scene>();
 }
 
 Window::~Window()
 {
+	m_song->stop(FMOD_STUDIO_STOP_ALLOWFADEOUT);
+	m_song->release();
+	
 	SDL_DestroyWindow(m_window);
 	SDL_Quit();
 }
@@ -56,6 +63,7 @@ bool Window::Update()
 {
 	m_time->Update();
 	m_scene->Update(m_time);
+	m_audio->Update();
 
 	return true;
 }

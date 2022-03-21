@@ -2,7 +2,6 @@
 
 #include <stdexcept>
 
-
 #include "File.h"
 
 WavefrontModel::WavefrontModel(const std::string& _fileName)
