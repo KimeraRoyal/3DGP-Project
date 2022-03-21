@@ -37,6 +37,12 @@
     <Filter Include="Header Files\Rendering\Model">
       <UniqueIdentifier>{0b41e111-07ff-426f-8048-b50305a15613}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Audio">
+      <UniqueIdentifier>{56124900-2ed7-4cc2-97f0-97d9d37f3606}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Audio">
+      <UniqueIdentifier>{ccce65a2-3185-49c0-9865-fa8a71f6962b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -88,7 +94,10 @@
       <Filter>Source Files\Rendering\Model</Filter>
     </ClCompile>
     <ClCompile Include="Audio.cpp">
-      <Filter>Source Files\Util</Filter>
+      <Filter>Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioEvent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +147,10 @@
       <Filter>Header Files\Rendering\Model</Filter>
     </ClInclude>
     <ClInclude Include="Audio.h">
-      <Filter>Header Files\Util</Filter>
+      <Filter>Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioEvent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

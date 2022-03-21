@@ -36,34 +36,31 @@ void Audio::LoadBank(const std::string& _fileName)
 	m_banks.push_back(bank);
 }
 
-FMOD::Studio::EventDescription* Audio::GetEventDescription(const std::string& _eventName) const
+std::shared_ptr<AudioEvent> Audio::CreateAudioEvent(const std::string& _path) const
+{
+	FMOD::Studio::EventDescription* eventDescription = GetEventDescription(_path);
+	std::shared_ptr<AudioEvent> audioEvent = std::make_unique<AudioEvent>(eventDescription);
+
+	return audioEvent;
+}
+
+void Audio::PlayOneShot(const std::string& _path) const
+{
+	FMOD::Studio::EventDescription* eventDescription = GetEventDescription(_path);
+	
+	FMOD::Studio::EventInstance* eventInstance;
+	ErrorCheck(eventDescription->createInstance(&eventInstance));
+	
+	ErrorCheck(eventInstance->start());
+	ErrorCheck(eventInstance->release());
+}
+
+FMOD::Studio::EventDescription* Audio::GetEventDescription(const std::string& _path) const
 {
 	FMOD::Studio::EventDescription* eventDescription;
-	ErrorCheck(m_fmodSystem->getEvent(_eventName.c_str(), &eventDescription));
+	ErrorCheck(m_fmodSystem->getEvent(_path.c_str(), &eventDescription));
 
 	return eventDescription;
-}
-
-FMOD::Studio::EventInstance* Audio::CreateEventInstance(FMOD::Studio::EventDescription* _eventDescription) const
-{
-	FMOD::Studio::EventInstance* eventInstance;
-	ErrorCheck(_eventDescription->createInstance(&eventInstance));
-
-	return eventInstance;
-}
-
-FMOD::Studio::EventInstance* Audio::CreateEventInstance(const std::string& _eventName) const
-{
-	FMOD::Studio::EventDescription* eventDescription = GetEventDescription(_eventName);
-	return CreateEventInstance(eventDescription);
-}
-
-void Audio::PlayOneShot(const std::string& _eventName) const
-{
-	FMOD::Studio::EventInstance* eventInstance = CreateEventInstance(_eventName);
-	ErrorCheck(eventInstance->start());
-	
-	ErrorCheck(eventInstance->release());
 }
 
 void Audio::ErrorCheck(const FMOD_RESULT _result)

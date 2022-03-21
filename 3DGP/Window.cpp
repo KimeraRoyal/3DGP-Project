@@ -30,9 +30,6 @@ Window::Window()
 
 Window::~Window()
 {
-	m_song->stop(FMOD_STUDIO_STOP_ALLOWFADEOUT);
-	m_song->release();
-	
 	SDL_DestroyWindow(m_window);
 	SDL_Quit();
 }

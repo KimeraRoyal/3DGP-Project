@@ -2,8 +2,11 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include <FMOD/fmod_studio.hpp>
+
+#include "AudioEvent.h"
 
 class Audio
 {
@@ -12,7 +15,7 @@ private:
 
 	std::vector<FMOD::Studio::Bank*> m_banks;
 
-	static void ErrorCheck(FMOD_RESULT _result);
+	[[nodiscard]] FMOD::Studio::EventDescription* GetEventDescription(const std::string& _path) const;
 public:
 	Audio();
 	~Audio();
@@ -21,11 +24,9 @@ public:
 
 	void LoadBank(const std::string& _fileName);
 
-	[[nodiscard]] FMOD::Studio::EventDescription* GetEventDescription(const std::string& _eventName) const;
-	
-	[[nodiscard]] FMOD::Studio::EventInstance* CreateEventInstance(FMOD::Studio::EventDescription* _eventDescription) const;
-	[[nodiscard]] FMOD::Studio::EventInstance* CreateEventInstance(const std::string& _eventName) const;
-	
-	void PlayOneShot(const std::string& _eventName) const;
+	[[nodiscard]] std::shared_ptr<AudioEvent> CreateAudioEvent(const std::string& _path) const;
+	void PlayOneShot(const std::string& _path) const;
+
+	static void ErrorCheck(FMOD_RESULT _result);
 };
 
