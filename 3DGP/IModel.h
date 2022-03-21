@@ -14,6 +14,6 @@ public:
 	
 	[[nodiscard]] virtual GLuint GetVaoId() = 0;
 	[[nodiscard]] virtual GLuint GetTextureId() = 0;
-	[[nodiscard]] virtual int GetVertexCount() = 0;
+	[[nodiscard]] virtual unsigned int GetVertexCount() = 0;
 };
 

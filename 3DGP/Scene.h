@@ -11,16 +11,15 @@
 #include "IModel.h"
 #include "Camera.h"
 #include "Light.h"
+#include "RenderTexture.h"
+#include "Screen.h"
 
 class Scene
 {
 private:
 	std::shared_ptr<Texture> m_texture;
-
-	std::shared_ptr<VertexArray> m_vao;
-
+	
 	std::shared_ptr<Program> m_program;
-	std::shared_ptr<Program> m_program2;
 
 	GLint m_modelLoc;
 	GLint m_projectionLoc;
@@ -35,6 +34,8 @@ private:
 	Light m_light;
 	
 	Transform m_curuthersTransform;
+
+	std::shared_ptr<Screen> m_screen;
 public:
 	Scene();
 	~Scene();

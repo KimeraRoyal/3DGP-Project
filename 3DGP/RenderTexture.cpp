@@ -61,7 +61,7 @@ void RenderTexture::Bind() const
 	glDrawBuffers(m_bufferCount, m_attachments);
 }
 
-void RenderTexture::Unbind()
+void RenderTexture::Unbind() const
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDrawBuffer(GL_COLOR_ATTACHMENT0);

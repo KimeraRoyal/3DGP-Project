@@ -97,7 +97,13 @@
       <Filter>Source Files\Audio</Filter>
     </ClCompile>
     <ClCompile Include="AudioEvent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Source Files\Rendering\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.cpp">
+      <Filter>Source Files\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,7 +156,13 @@
       <Filter>Header Files\Audio</Filter>
     </ClInclude>
     <ClInclude Include="AudioEvent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Header Files\Rendering\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>Header Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

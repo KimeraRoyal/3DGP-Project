@@ -13,10 +13,10 @@ private:
 	
 public:
 	explicit WavefrontModel(const std::string& _fileName);
-	~WavefrontModel();
+	~WavefrontModel() override;
 	
 	[[nodiscard]] GLuint GetVaoId() override { return m_model.vaoId; }
 	[[nodiscard]] GLuint GetTextureId() override { return m_model.textureId; }
-	[[nodiscard]] int GetVertexCount() override { return m_model.vertexCount; }
+	[[nodiscard]] unsigned int GetVertexCount() override { return m_model.vertexCount; }
 };
 

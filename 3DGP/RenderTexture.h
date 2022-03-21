@@ -22,8 +22,8 @@ public:
 	RenderTexture& operator=(const RenderTexture& _other) = delete;
 
 	void Bind() const;
-	static void Unbind();
+	void Unbind() const;
 
-	[[nodiscard]] GLuint GetTexture(unsigned int _index) const { return m_textureIds[_index]; }
+	[[nodiscard]] GLuint GetTexture(const unsigned int _index) const { return m_textureIds[_index]; }
 };
 

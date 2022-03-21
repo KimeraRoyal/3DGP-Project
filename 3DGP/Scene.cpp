@@ -10,37 +10,13 @@
 #include "Shader.h"
 
 #include "WavefrontModel.h"
+#include "Plane.h"
 
 Scene::Scene()
 {
 	m_texture = std::make_unique<Texture>("data/live_cat_reaction.png");
 
 	m_curuthers = std::make_unique<WavefrontModel>("data/models/curuthers/curuthers.obj");
-
-	// Create vertex array object
-	/*m_vao = std::make_unique<VertexArray>();
-
-	// Create vertex buffer object for positions
-	std::shared_ptr<VertexBuffer> vboPosition = std::make_unique<VertexBuffer>();
-	vboPosition->Add(glm::vec3(-0.5f, 0.5f, 0.0f));
-	vboPosition->Add(glm::vec3(-0.5f, -0.5f, 0.0f));
-	vboPosition->Add(glm::vec3(0.5f, 0.5f, 0.0f));
-	vboPosition->Add(glm::vec3(-0.5f, -0.5f, 0.0f));
-	vboPosition->Add(glm::vec3(0.5f, -0.5f, 0.0f));
-	vboPosition->Add(glm::vec3(0.5f, 0.5f, 0.0f));
-
-	// Create vertex buffer object for texture coordinates
-	std::shared_ptr<VertexBuffer> vboTexcoords = std::make_unique<VertexBuffer>();
-	vboTexcoords->Add(glm::vec2(0.0f, 0.0f));
-	vboTexcoords->Add(glm::vec2(0.0f, 1.0f));
-	vboTexcoords->Add(glm::vec2(1.0f, 0.0f));
-	vboTexcoords->Add(glm::vec2(0.0f, 1.0f));
-	vboTexcoords->Add(glm::vec2(1.0f, 1.0f));
-	vboTexcoords->Add(glm::vec2(1.0f, 0.0f));
-
-	// Add VBOs to VAO
-	m_vao->AddBuffer(m_program->GetId(), "in_Position", vboPosition);
-	m_vao->AddBuffer(m_program->GetId(), "in_Texcoord", vboTexcoords);*/
 
 	// Create program
 	m_program = std::make_unique<Program>();
@@ -68,8 +44,12 @@ Scene::Scene()
 	m_viewPosLoc = m_program->GetUniformLocation("in_ViewPos");
 	m_lightPosLoc = m_program->GetUniformLocation("in_LightPos");
 
+	m_camera.SetClearColor(glm::vec3(0.65f, 0.5f, 0.9f));
+	
 	m_light.GetTransform()->SetPosition(glm::vec3(-10.0f, 5.0f, -8.0f));
 	m_curuthersTransform.SetPosition(glm::vec3(0.0f, -1.0f, -10.0f));
+
+	m_screen = std::make_unique<Screen>("data/shaders/screen.vert", "data/shaders/screen.frag");
 }
 
 Scene::~Scene()
@@ -89,6 +69,9 @@ void Scene::Update(const std::shared_ptr<Time>& _time)
 
 void Scene::Draw(const std::shared_ptr<Time>& _time)
 {
+	m_screen->Bind();
+	m_camera.Clear();
+	
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), 0.1f, 100.0f);
 	
 	glUseProgram(m_program->GetId());
@@ -106,13 +89,19 @@ void Scene::Draw(const std::shared_ptr<Time>& _time)
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	glEnable(GL_FRAMEBUFFER_SRGB);
 
 	m_curuthers->Draw();
+	m_screen->Unbind();
 
+	glDisable(GL_DEPTH_TEST);
+
+	glClearColor(1, 1, 1, 1);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glEnable(GL_FRAMEBUFFER_SRGB);
+	m_screen->Draw();
 	glDisable(GL_FRAMEBUFFER_SRGB);
 	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
 
 	glUseProgram(0);
 }
