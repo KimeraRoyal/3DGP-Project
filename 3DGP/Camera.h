@@ -13,6 +13,8 @@ public:
 	
 	Transform* GetTransform() { return &m_transform; }
 
+	void Clear() const;
+
 	[[nodiscard]] glm::mat4 GetViewMatrix() const { return glm::inverse(m_transform.GetModelMatrix()); }
 	[[nodiscard]] glm::vec3 GetClearColor() const { return m_clearColor; }
 
