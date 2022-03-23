@@ -166,6 +166,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="AudioEvent.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="File.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="IModel.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
@@ -188,6 +189,8 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="AudioEvent.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="File.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="IComponent.h" />
     <ClInclude Include="IModel.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Plane.h" />
