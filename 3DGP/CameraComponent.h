@@ -2,12 +2,12 @@
 
 #include "IComponent.h"
 
-class Camera : public IComponent
+class CameraComponent final : public IComponent
 {
 private:
 	glm::vec3 m_clearColor;
 public:
-	Camera();
+	CameraComponent();
 
 	void Update(const std::shared_ptr<Time>& _time) override;
 

@@ -14,8 +14,6 @@
 
 Scene::Scene()
 {
-	m_texture = std::make_unique<Texture>("data/live_cat_reaction.png");
-
 	m_curuthers = std::make_unique<WavefrontModel>("data/models/curuthers/curuthers.obj");
 
 	// Create program
@@ -44,7 +42,11 @@ Scene::Scene()
 	m_viewPosLoc = m_program->GetUniformLocation("in_ViewPos");
 	m_lightPosLoc = m_program->GetUniformLocation("in_LightPos");
 
-	m_camera.SetClearColor(glm::vec3(0.65f, 0.5f, 0.9f));
+	m_cameraObject = std::make_unique<GameObject>();
+	m_camera = std::make_unique<CameraComponent>();
+	m_cameraObject->AddComponent(m_camera);
+	
+	m_camera->SetClearColor(glm::vec3(0.65f, 0.5f, 0.9f));
 	
 	m_light.GetTransform()->SetPosition(glm::vec3(-10.0f, 5.0f, -8.0f));
 	m_curuthersTransform.SetPosition(glm::vec3(0.0f, -1.0f, -10.0f));
@@ -61,8 +63,8 @@ void Scene::Update(const std::shared_ptr<Time>& _time)
 {
 	//m_curuthersTransform.Rotate(glm::vec3(0, 10, 0) * _time->GetDeltaTime());
 
-	m_camera.GetTransform()->SetPosition(glm::vec3(6.0f, 0.0f, 0.0f) * cos(_time->GetTime() / 2.0f));
-	m_camera.GetTransform()->SetRotation(glm::vec3(0.0, 30.0f, 0.0f) * cos(_time->GetTime() / 2.0f));
+	m_cameraObject->GetTransform().SetPosition(glm::vec3(6.0f, 0.0f, 0.0f) * cos(_time->GetTime() / 2.0f));
+	m_cameraObject->GetTransform().SetRotation(glm::vec3(0.0, 30.0f, 0.0f) * cos(_time->GetTime() / 2.0f));
 	
 	m_light.GetTransform()->SetPosition(glm::vec3(10.0f, 0.0f, 0.0f) * sin(_time->GetTime()));
 }
@@ -70,18 +72,18 @@ void Scene::Update(const std::shared_ptr<Time>& _time)
 void Scene::Draw(const std::shared_ptr<Time>& _time)
 {
 	m_screen->Bind();
-	m_camera.Clear();
+	m_camera->Clear();
 	
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), 0.1f, 100.0f);
 	
 	glUseProgram(m_program->GetId());
 	
 	// Render Curuthers
-	glUniformMatrix4fv(m_viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera.GetViewMatrix()));
+	glUniformMatrix4fv(m_viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->GetViewMatrix()));
 	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(m_curuthersTransform.GetModelMatrix()));
 	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-	glUniform3fv(m_viewPosLoc, 1, glm::value_ptr(m_camera.GetTransform()->GetPosition()));
+	glUniform3fv(m_viewPosLoc, 1, glm::value_ptr(m_cameraObject->GetTransform().GetPosition()));
 	glUniform3fv(m_lightPosLoc, 1, glm::value_ptr(m_light.GetTransform()->GetPosition()));
 
 	glEnable(GL_BLEND);

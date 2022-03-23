@@ -9,7 +9,7 @@
 #include "Time.h"
 
 #include "IModel.h"
-#include "Camera.h"
+#include "CameraComponent.h"
 #include "Light.h"
 #include "RenderTexture.h"
 #include "Screen.h"
@@ -17,8 +17,6 @@
 class Scene
 {
 private:
-	std::shared_ptr<Texture> m_texture;
-	
 	std::shared_ptr<Program> m_program;
 
 	GLint m_modelLoc;
@@ -30,7 +28,9 @@ private:
 
 	std::unique_ptr<IModel> m_curuthers;
 
-	Camera m_camera;
+	std::shared_ptr<GameObject> m_cameraObject;
+	std::shared_ptr<CameraComponent> m_camera;
+	
 	Light m_light;
 	
 	Transform m_curuthersTransform;
