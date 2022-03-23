@@ -9,12 +9,13 @@
 #include "Time.h"
 
 #include "IModel.h"
-#include "CameraComponent.h"
-#include "Light.h"
-#include "RenderTexture.h"
 #include "Screen.h"
+#include "Transform.h"
 
-class Scene
+class GameObject;
+class IComponent;
+
+class Scene : public std::enable_shared_from_this<Scene>
 {
 private:
 	std::shared_ptr<Program> m_program;
@@ -28,19 +29,24 @@ private:
 
 	std::unique_ptr<IModel> m_curuthers;
 
-	std::shared_ptr<GameObject> m_cameraObject;
-	std::shared_ptr<CameraComponent> m_camera;
-	
-	Light m_light;
+	std::vector<std::weak_ptr<GameObject>> m_gameObjects;
+
+	std::shared_ptr<IComponent> m_camera;
+	std::shared_ptr<IComponent> m_light;
 	
 	Transform m_curuthersTransform;
 
 	std::shared_ptr<Screen> m_screen;
+
+	std::shared_ptr<GameObject> AccessGameObject(unsigned int _index);
 public:
 	Scene();
 	~Scene();
 
+	void Start();
 	void Update(const std::shared_ptr<Time>& _time);
-	void Draw(const std::shared_ptr<Time>& _time);
+	void Draw();
+
+	std::shared_ptr<GameObject> CreateGameObject();
 };
 

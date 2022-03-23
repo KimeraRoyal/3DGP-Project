@@ -26,6 +26,7 @@ Window::Window()
 	m_audio->LoadBank("data/banks/Desktop/Master.strings.bank");
 	
 	m_scene = std::make_unique<Scene>();
+	m_scene->Start();
 }
 
 Window::~Window()
@@ -67,7 +68,7 @@ bool Window::Update()
 
 void Window::Draw()
 {
-	m_scene->Draw(m_time);
+	m_scene->Draw();
 
 	SDL_GL_SwapWindow(m_window);
 }

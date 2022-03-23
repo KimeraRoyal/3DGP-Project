@@ -21,7 +21,7 @@ private:
 	std::shared_ptr<Time> m_time;
 	std::shared_ptr<Audio> m_audio;
 
-	std::unique_ptr<Scene> m_scene;
+	std::shared_ptr<Scene> m_scene;
 
 	bool PollEvents();
 	bool Update();

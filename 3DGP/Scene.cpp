@@ -12,6 +12,10 @@
 #include "WavefrontModel.h"
 #include "Plane.h"
 
+#include "GameObject.h"
+#include "LightComponent.h"
+#include "CameraComponent.h"
+
 Scene::Scene()
 {
 	m_curuthers = std::make_unique<WavefrontModel>("data/models/curuthers/curuthers.obj");
@@ -42,15 +46,6 @@ Scene::Scene()
 	m_viewPosLoc = m_program->GetUniformLocation("in_ViewPos");
 	m_lightPosLoc = m_program->GetUniformLocation("in_LightPos");
 
-	m_cameraObject = std::make_unique<GameObject>();
-	m_camera = std::make_unique<CameraComponent>();
-	m_cameraObject->AddComponent(m_camera);
-	
-	m_camera->SetClearColor(glm::vec3(0.65f, 0.5f, 0.9f));
-	
-	m_light.GetTransform()->SetPosition(glm::vec3(-10.0f, 5.0f, -8.0f));
-	m_curuthersTransform.SetPosition(glm::vec3(0.0f, -1.0f, -10.0f));
-
 	m_screen = std::make_unique<Screen>("data/shaders/screen.vert", "data/shaders/screen.frag");
 }
 
@@ -59,32 +54,45 @@ Scene::~Scene()
 	
 }
 
-void Scene::Update(const std::shared_ptr<Time>& _time)
+void Scene::Start()
 {
-	//m_curuthersTransform.Rotate(glm::vec3(0, 10, 0) * _time->GetDeltaTime());
+	m_camera = CreateGameObject()->AddComponent<CameraComponent>();
+	m_light = CreateGameObject()->AddComponent<LightComponent>();
 
-	m_cameraObject->GetTransform().SetPosition(glm::vec3(6.0f, 0.0f, 0.0f) * cos(_time->GetTime() / 2.0f));
-	m_cameraObject->GetTransform().SetRotation(glm::vec3(0.0, 30.0f, 0.0f) * cos(_time->GetTime() / 2.0f));
-	
-	m_light.GetTransform()->SetPosition(glm::vec3(10.0f, 0.0f, 0.0f) * sin(_time->GetTime()));
+	m_light->GetGameObject()->GetTransform()->SetPosition(glm::vec3(-10.0f, 5.0f, -8.0f));
+
+	m_curuthersTransform.SetPosition(glm::vec3(0.0f, -1.0f, -10.0f));
+
+	for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+	{
+		AccessGameObject(i)->Start();
+	}
 }
 
-void Scene::Draw(const std::shared_ptr<Time>& _time)
+void Scene::Update(const std::shared_ptr<Time>& _time)
+{
+	for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+	{
+		AccessGameObject(i)->Update(_time);
+	}
+}
+
+void Scene::Draw()
 {
 	m_screen->Bind();
-	m_camera->Clear();
+	std::static_pointer_cast<CameraComponent>(m_camera)->Clear();
 	
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), 0.1f, 100.0f);
 	
 	glUseProgram(m_program->GetId());
 	
 	// Render Curuthers
-	glUniformMatrix4fv(m_viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->GetViewMatrix()));
+	glUniformMatrix4fv(m_viewLoc, 1, GL_FALSE, glm::value_ptr(std::static_pointer_cast<CameraComponent>(m_camera)->GetViewMatrix()));
 	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(m_curuthersTransform.GetModelMatrix()));
 	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-	glUniform3fv(m_viewPosLoc, 1, glm::value_ptr(m_cameraObject->GetTransform().GetPosition()));
-	glUniform3fv(m_lightPosLoc, 1, glm::value_ptr(m_light.GetTransform()->GetPosition()));
+	glUniform3fv(m_viewPosLoc, 1, glm::value_ptr(m_camera->GetGameObject()->GetTransform()->GetPosition()));
+	glUniform3fv(m_lightPosLoc, 1, glm::value_ptr(m_light->GetGameObject()->GetTransform()->GetPosition()));
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -93,6 +101,11 @@ void Scene::Draw(const std::shared_ptr<Time>& _time)
 	glEnable(GL_CULL_FACE);
 
 	m_curuthers->Draw();
+
+	for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+	{
+		AccessGameObject(i)->Draw();
+	}
 	m_screen->Unbind();
 
 	glDisable(GL_DEPTH_TEST);
@@ -106,4 +119,21 @@ void Scene::Draw(const std::shared_ptr<Time>& _time)
 	glDisable(GL_CULL_FACE);
 
 	glUseProgram(0);
+}
+
+std::shared_ptr<GameObject> Scene::CreateGameObject()
+{
+	std::shared_ptr<GameObject> gameObject = std::make_unique<GameObject>();
+
+	gameObject->SetScene(shared_from_this());
+	m_gameObjects.push_back(gameObject);
+	
+	return gameObject;
+}
+
+std::shared_ptr<GameObject> Scene::AccessGameObject(const unsigned int _index)
+{
+	std::shared_ptr<GameObject> gameObject = m_gameObjects[_index].lock();
+	if (!gameObject) { throw std::runtime_error("Tried to access scene's game object which no longer exists."); }
+	return gameObject;
 }

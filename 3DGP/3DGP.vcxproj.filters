@@ -99,13 +99,13 @@
     <ClCompile Include="Screen.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Source Files\World</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
     <ClCompile Include="CameraComponent.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="LightComponent.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
   </ItemGroup>
@@ -161,9 +161,6 @@
     <ClInclude Include="Screen.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Header Files\World</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
@@ -171,6 +168,9 @@
       <Filter>Header Files\World</Filter>
     </ClInclude>
     <ClInclude Include="CameraComponent.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="LightComponent.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
   </ItemGroup>

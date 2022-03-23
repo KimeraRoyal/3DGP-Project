@@ -1,18 +1,16 @@
 #pragma once
 
-#include "Transform.h"
+#include "IComponent.h"
 
-class Light
+class LightComponent : public IComponent
 {
 private:
-	Transform m_transform;
-
 	glm::vec3 m_lightColor;
 	float m_lightStrength;
 public:
-	Light();
+	LightComponent();
 
-	Transform* GetTransform() { return &m_transform; }
+	void Update(const std::shared_ptr<Time>& _time) override;
 
 	[[nodiscard]] glm::vec3 GetLightColor() const { return m_lightColor; }
 	[[nodiscard]] float GetLightStrength() const { return m_lightStrength; }
