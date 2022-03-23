@@ -11,7 +11,7 @@
 class Screen
 {
 private:
-	std::shared_ptr<IModel> m_screenModel;
+	std::shared_ptr<IModel> m_screenQuad;
 
 	std::shared_ptr<Program> m_program;
 

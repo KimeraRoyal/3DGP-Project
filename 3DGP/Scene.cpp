@@ -10,7 +10,7 @@
 #include "Shader.h"
 
 #include "WavefrontModel.h"
-#include "Plane.h"
+#include "Quad.h"
 
 #include "GameObject.h"
 #include "LightComponent.h"

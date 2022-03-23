@@ -1,12 +1,12 @@
 #include "Screen.h"
 
-#include "Plane.h"
+#include "Quad.h"
 #include "Shader.h"
 #include "Window.h"
 
 Screen::Screen(const std::string& _vertShader, const std::string& _fragShader, const unsigned int _colorBufferCount)
 {
-	m_screenModel = std::make_unique<Plane>(nullptr);
+	m_screenQuad = std::make_unique<Quad>(nullptr);
 
 	// Create program
 	m_program = std::make_unique<Program>();
@@ -45,10 +45,10 @@ void Screen::Draw() const
 	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
-	glBindVertexArray(m_screenModel->GetVaoId());
+	glBindVertexArray(m_screenQuad->GetVaoId());
 	glBindTexture(GL_TEXTURE_2D, m_renderTexture->GetTexture(0));
 
-	glDrawArrays(GL_TRIANGLES, 0, m_screenModel->GetVertexCount());
+	glDrawArrays(GL_TRIANGLES, 0, m_screenQuad->GetVertexCount());
 	
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);

@@ -6,7 +6,7 @@
 #include "Texture.h"
 #include "VertexArray.h"
 
-class Plane final : public IModel
+class Quad final : public IModel
 {
 private:
 	static constexpr int c_vertexCount = 6;
@@ -31,7 +31,7 @@ private:
 	std::shared_ptr<VertexArray> m_vao;
 	
 public:
-	explicit Plane(const std::shared_ptr<Texture>& _texture);
+	explicit Quad(const std::shared_ptr<Texture>& _texture);
 	
 	[[nodiscard]] GLuint GetVaoId() override { return m_vao->GetId(); }
 	[[nodiscard]] GLuint GetTextureId() override { return m_texture->GetId(); }

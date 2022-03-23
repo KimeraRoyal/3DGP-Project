@@ -1,6 +1,6 @@
-#include "Plane.h"
+#include "Quad.h"
 
-Plane::Plane(const std::shared_ptr<Texture>& _texture)
+Quad::Quad(const std::shared_ptr<Texture>& _texture)
 {
 	m_texture = _texture;
 
