@@ -123,7 +123,7 @@ void Scene::Draw()
 
 std::shared_ptr<GameObject> Scene::CreateGameObject()
 {
-	std::shared_ptr<GameObject> gameObject = std::make_unique<GameObject>();
+	std::shared_ptr<GameObject> gameObject = GameObject::Create();
 
 	gameObject->SetScene(shared_from_this());
 	m_gameObjects.push_back(gameObject);
