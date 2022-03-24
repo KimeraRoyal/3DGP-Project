@@ -10,6 +10,7 @@ private:
 public:
 	LightComponent();
 
+	void Start() override;
 	void Update(const std::shared_ptr<Time>& _time) override;
 
 	[[nodiscard]] glm::vec3 GetLightColor() const { return m_lightColor; }

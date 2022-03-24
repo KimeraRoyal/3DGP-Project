@@ -170,8 +170,9 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="IModel.cpp" />
     <ClCompile Include="LightComponent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModelComponent.cpp" />
     <ClCompile Include="Quad.cpp" />
-    <ClCompile Include="Program.cpp" />
+    <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -193,8 +194,9 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="IModel.h" />
     <ClInclude Include="LightComponent.h" />
+    <ClInclude Include="ModelComponent.h" />
     <ClInclude Include="Quad.h" />
-    <ClInclude Include="Program.h" />
+    <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Shader.h" />

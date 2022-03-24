@@ -1,6 +1,8 @@
-#include "Program.h"
+#include "ShaderProgram.h"
 
 #include <stdexcept>
+
+#include "Shader.h"
 
 ShaderProgram::ShaderProgram()
 {

@@ -15,25 +15,26 @@
 #include "GameObject.h"
 #include "LightComponent.h"
 #include "CameraComponent.h"
+#include "ModelComponent.h"
 
 Scene::Scene()
 {
 	m_curuthers = std::make_unique<WavefrontModel>("data/models/curuthers/curuthers.obj");
 
 	// Create program
-	m_program = std::make_unique<Program>();
+	m_program = std::make_unique<ShaderProgram>();
+
+	// Create and compile shaders
+	Shader vertexShader = Shader(GL_VERTEX_SHADER, "data/shaders/phong.vert");
+	Shader fragmentShader = Shader(GL_FRAGMENT_SHADER, "data/shaders/phong.frag");
+
+	// Attach shaders to program
+	vertexShader.Attach(m_program->GetId());
+	fragmentShader.Attach(m_program->GetId());
 
 	m_program->BindAttribute("in_Position");
 	m_program->BindAttribute("in_Texcoord");
 	m_program->BindAttribute("in_Normal");
-
-	// Create and compile shaders
-	std::shared_ptr<Shader> vertexShader = std::make_unique<Shader>(GL_VERTEX_SHADER, "data/shaders/phong.vert");
-	std::shared_ptr<Shader> fragmentShader = std::make_unique<Shader>(GL_FRAGMENT_SHADER, "data/shaders/phong.frag");
-
-	// Attach shaders to program
-	vertexShader->Attach(m_program->GetId());
-	fragmentShader->Attach(m_program->GetId());
 
 	// Link program
 	m_program->Link();
@@ -58,10 +59,7 @@ void Scene::Start()
 {
 	m_camera = CreateGameObject()->AddComponent<CameraComponent>();
 	m_light = CreateGameObject()->AddComponent<LightComponent>();
-
-	m_light->GetGameObject()->GetTransform()->SetPosition(glm::vec3(-10.0f, 5.0f, -8.0f));
-
-	m_curuthersTransform.SetPosition(glm::vec3(0.0f, -1.0f, -10.0f));
+	m_curuthersModel = CreateGameObject()->AddComponent<ModelComponent>();
 
 	for (unsigned int i = 0; i < m_gameObjects.size(); i++)
 	{
@@ -88,7 +86,7 @@ void Scene::Draw()
 	
 	// Render Curuthers
 	glUniformMatrix4fv(m_viewLoc, 1, GL_FALSE, glm::value_ptr(std::static_pointer_cast<CameraComponent>(m_camera)->GetViewMatrix()));
-	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(m_curuthersTransform.GetModelMatrix()));
+	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(m_curuthersModel->GetGameObject()->GetTransform()->GetModelMatrix()));
 	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
 	glUniform3fv(m_viewPosLoc, 1, glm::value_ptr(m_camera->GetGameObject()->GetTransform()->GetPosition()));
@@ -123,7 +121,7 @@ void Scene::Draw()
 
 std::shared_ptr<GameObject> Scene::CreateGameObject()
 {
-	std::shared_ptr<GameObject> gameObject = GameObject::Create();
+	std::shared_ptr<GameObject> gameObject = std::shared_ptr<GameObject>(new GameObject);
 
 	gameObject->SetScene(shared_from_this());
 	m_gameObjects.push_back(gameObject);

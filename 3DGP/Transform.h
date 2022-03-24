@@ -12,6 +12,9 @@ private:
 	glm::vec3 m_position;
 	glm::vec3 m_rotation;
 	glm::vec3 m_scale;
+
+	mutable glm::mat4 m_model;
+	mutable bool m_dirty;
 public:
 	explicit Transform(glm::vec3 _position = glm::vec3(0.0f), glm::vec3 _rotation = glm::vec3(0.0f), glm::vec3 _scale = glm::vec3(1.0f));
 	
@@ -27,8 +30,22 @@ public:
 
 	[[nodiscard]] glm::mat4 GetModelMatrix() const;
 	
-	void SetPosition(const glm::vec3 _position) { m_position = _position; }
-	void SetRotation(const glm::vec3 _rotation) { m_rotation = _rotation; }
-	void SetScale(const glm::vec3 _scale) { m_scale = _scale; }
+	void SetPosition(const glm::vec3 _position)
+	{
+		m_position = _position;
+		m_dirty = true;
+	}
+
+	void SetRotation(const glm::vec3 _rotation)
+	{
+		m_rotation = _rotation;
+		m_dirty = true;
+	}
+
+	void SetScale(const glm::vec3 _scale)
+	{
+		m_scale = _scale;
+		m_dirty = true;
+	}
 };
 

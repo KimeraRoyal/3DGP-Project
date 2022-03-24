@@ -3,9 +3,8 @@
 #include <memory>
 #include <string>
 
-
 #include "IModel.h"
-#include "Program.h"
+#include "ShaderProgram.h"
 #include "RenderTexture.h"
 
 class Screen
@@ -13,7 +12,7 @@ class Screen
 private:
 	std::shared_ptr<IModel> m_screenQuad;
 
-	std::shared_ptr<Program> m_program;
+	std::shared_ptr<ShaderProgram> m_program;
 
 	std::shared_ptr<RenderTexture> m_renderTexture;
 

@@ -21,7 +21,6 @@ private:
 	std::vector<std::weak_ptr<IComponent>> m_components;
 
 	GameObject() = default;
-	static std::shared_ptr<GameObject> Create() { return std::shared_ptr<GameObject>(new GameObject); }
 
 	std::shared_ptr<IComponent> AccessComponent(unsigned int _index);
 	

@@ -4,7 +4,7 @@
 
 #include "Texture.h"
 #include "VertexArray.h"
-#include "Program.h"
+#include "ShaderProgram.h"
 
 #include "Time.h"
 
@@ -18,7 +18,7 @@ class IComponent;
 class Scene : public std::enable_shared_from_this<Scene>
 {
 private:
-	std::shared_ptr<Program> m_program;
+	std::shared_ptr<ShaderProgram> m_program;
 
 	GLint m_modelLoc;
 	GLint m_projectionLoc;
@@ -33,8 +33,7 @@ private:
 
 	std::shared_ptr<IComponent> m_camera;
 	std::shared_ptr<IComponent> m_light;
-	
-	Transform m_curuthersTransform;
+	std::shared_ptr<IComponent> m_curuthersModel;
 
 	std::shared_ptr<Screen> m_screen;
 

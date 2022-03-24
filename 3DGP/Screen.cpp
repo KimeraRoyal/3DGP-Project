@@ -9,7 +9,7 @@ Screen::Screen(const std::string& _vertShader, const std::string& _fragShader, c
 	m_screenQuad = std::make_unique<Quad>(nullptr);
 
 	// Create program
-	m_program = std::make_unique<Program>();
+	m_program = std::make_unique<ShaderProgram>();
 
 	m_program->BindAttribute("in_Position");
 	m_program->BindAttribute("in_Texcoord");
