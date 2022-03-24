@@ -25,12 +25,6 @@
     <Filter Include="Source Files\Util">
       <UniqueIdentifier>{a022043d-051d-4eab-818d-af003b7f925a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\World">
-      <UniqueIdentifier>{0c76a43f-45fc-4ce3-ba39-ae5e7fe74ae1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\World">
-      <UniqueIdentifier>{3519b1ec-bdc6-4ed1-82e1-9e56385d4ebe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Rendering\Model">
       <UniqueIdentifier>{0b362309-945f-4f5d-a4e8-d074c6584922}</UniqueIdentifier>
     </Filter>
@@ -42,6 +36,12 @@
     </Filter>
     <Filter Include="Source Files\Audio">
       <UniqueIdentifier>{ccce65a2-3185-49c0-9865-fa8a71f6962b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{0c76a43f-45fc-4ce3-ba39-ae5e7fe74ae1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{3519b1ec-bdc6-4ed1-82e1-9e56385d4ebe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -70,10 +70,10 @@
       <Filter>Source Files\Util</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Source Files\World</Filter>
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Source Files\World</Filter>
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="File.cpp">
       <Filter>Source Files\Util</Filter>
@@ -94,13 +94,13 @@
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\World</Filter>
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="CameraComponent.cpp">
-      <Filter>Source Files\World</Filter>
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="LightComponent.cpp">
-      <Filter>Source Files\World</Filter>
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Quad.cpp">
       <Filter>Source Files\Rendering\Model</Filter>
@@ -109,7 +109,7 @@
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="ModelComponent.cpp">
-      <Filter>Source Files\World</Filter>
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,10 +135,10 @@
       <Filter>Header Files\Util</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
-      <Filter>Header Files\World</Filter>
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Header Files\World</Filter>
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="File.h">
       <Filter>Header Files\Util</Filter>
@@ -159,16 +159,16 @@
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Header Files\World</Filter>
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="IComponent.h">
-      <Filter>Header Files\World</Filter>
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="CameraComponent.h">
-      <Filter>Header Files\World</Filter>
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="LightComponent.h">
-      <Filter>Header Files\World</Filter>
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Quad.h">
       <Filter>Header Files\Rendering\Model</Filter>
@@ -177,7 +177,7 @@
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="ModelComponent.h">
-      <Filter>Header Files\World</Filter>
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

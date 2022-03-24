@@ -11,6 +11,24 @@ ShaderProgram::ShaderProgram()
 	m_attributeCount = 0;
 }
 
+ShaderProgram::ShaderProgram(const std::string& _vertShader, const std::string& _fragShader) : ShaderProgram()
+{
+	BindAttribute("in_Position");
+	BindAttribute("in_Texcoord");
+	BindAttribute("in_Normal");
+
+	// Create and compile shaders
+	Shader vertexShader = Shader(GL_VERTEX_SHADER, _vertShader);
+	Shader fragmentShader = Shader(GL_FRAGMENT_SHADER, _fragShader);
+
+	// Attach shaders to program
+	vertexShader.Attach(GetId());
+	fragmentShader.Attach(GetId());
+
+	// Link program
+	Link();
+}
+
 ShaderProgram::~ShaderProgram()
 {
 	glDeleteProgram(m_programId);

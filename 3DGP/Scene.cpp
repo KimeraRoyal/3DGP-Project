@@ -10,7 +10,6 @@
 #include "Shader.h"
 
 #include "WavefrontModel.h"
-#include "Quad.h"
 
 #include "GameObject.h"
 #include "LightComponent.h"
@@ -22,22 +21,7 @@ Scene::Scene()
 	m_curuthers = std::make_unique<WavefrontModel>("data/models/curuthers/curuthers.obj");
 
 	// Create program
-	m_program = std::make_unique<ShaderProgram>();
-
-	// Create and compile shaders
-	Shader vertexShader = Shader(GL_VERTEX_SHADER, "data/shaders/phong.vert");
-	Shader fragmentShader = Shader(GL_FRAGMENT_SHADER, "data/shaders/phong.frag");
-
-	// Attach shaders to program
-	vertexShader.Attach(m_program->GetId());
-	fragmentShader.Attach(m_program->GetId());
-
-	m_program->BindAttribute("in_Position");
-	m_program->BindAttribute("in_Texcoord");
-	m_program->BindAttribute("in_Normal");
-
-	// Link program
-	m_program->Link();
+	m_program = std::make_unique<ShaderProgram>("data/shaders/phong.vert", "data/shaders/phong.frag");
 
 	// Set uniforms
 	m_viewLoc = m_program->GetUniformLocation("in_View");

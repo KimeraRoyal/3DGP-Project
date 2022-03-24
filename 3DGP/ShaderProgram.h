@@ -11,6 +11,7 @@ private:
 	int m_attributeCount;
 public:
 	ShaderProgram();
+	ShaderProgram(const std::string& _vertShader, const std::string& _fragShader);
 	~ShaderProgram();
 
 	ShaderProgram(const ShaderProgram& _copy) = delete;

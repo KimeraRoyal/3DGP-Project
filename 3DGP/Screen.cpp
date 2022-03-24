@@ -9,22 +9,7 @@ Screen::Screen(const std::string& _vertShader, const std::string& _fragShader, c
 	m_screenQuad = std::make_unique<Quad>(nullptr);
 
 	// Create program
-	m_program = std::make_unique<ShaderProgram>();
-
-	m_program->BindAttribute("in_Position");
-	m_program->BindAttribute("in_Texcoord");
-	m_program->BindAttribute("in_Normal");
-
-	// Create and compile shaders
-	std::shared_ptr<Shader> vertexShader = std::make_unique<Shader>(GL_VERTEX_SHADER, _vertShader);
-	std::shared_ptr<Shader> fragmentShader = std::make_unique<Shader>(GL_FRAGMENT_SHADER, _fragShader);
-
-	// Attach shaders to program
-	vertexShader->Attach(m_program->GetId());
-	fragmentShader->Attach(m_program->GetId());
-
-	// Link program
-	m_program->Link();
+	m_program = std::make_unique<ShaderProgram>(_vertShader, _fragShader);
 
 	m_projectionLoc = m_program->GetUniformLocation("in_Projection");
 	m_modelLoc = m_program->GetUniformLocation("in_Model");
