@@ -52,13 +52,14 @@ void Scene::Start()
 		m_gameObject.Start();
 	}
 
-	for (auto& m_gameObject : m_gameObjects)
+	const std::shared_ptr<ModelComponent> model = FindComponent<ModelComponent>();
+	if(model)
 	{
-		glm::vec3 val = m_gameObject.GetTransform()->GetPosition();
+		glm::vec3 val = model->GetTransform()->GetPosition();
 		std::printf("pX: %f pY: %f pZ: %f ", val.x, val.y, val.z);
-		val = m_gameObject.GetTransform()->GetScale();
+		val = model->GetTransform()->GetScale();
 		std::printf("sX: %f sY: %f sZ: %f ", val.x, val.y, val.z);
-		val = m_gameObject.GetTransform()->GetRotation();
+		val = model->GetTransform()->GetRotation();
 		std::printf("rX: %f rY: %f rZ: %f\n", val.x, val.y, val.z);
 	}
 }
