@@ -1,5 +1,7 @@
 #include "Transform.h"
 
+
+#include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
 
@@ -11,6 +13,8 @@ Transform::Transform(const glm::vec3 _position, const glm::vec3 _rotation, const
 
 	m_model = glm::mat4(1.0f);
 	m_dirty = false;
+
+	std::cout << "Transform Constructor\n";
 }
 
 glm::mat4 Transform::GetModelMatrix() const

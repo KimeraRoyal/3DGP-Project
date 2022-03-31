@@ -6,20 +6,24 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+class GameObject;
+
 class Transform
 {
 private:
+	friend GameObject;
+	
 	glm::vec3 m_position;
 	glm::vec3 m_rotation;
 	glm::vec3 m_scale;
 
 	mutable glm::mat4 m_model;
 	mutable bool m_dirty;
+
+	Transform(const Transform& _copy) = default;
+	Transform& operator=(const Transform& _other) = default;
 public:
 	explicit Transform(glm::vec3 _position = glm::vec3(0.0f), glm::vec3 _rotation = glm::vec3(0.0f), glm::vec3 _scale = glm::vec3(1.0f));
-	
-	Transform(const Transform& _copy) = delete;
-	Transform& operator=(const Transform& _other) = delete;
 
 	void Move(const glm::vec3 _amount) { m_position += _amount; }
 	void Rotate(const glm::vec3 _amount) { m_rotation += _amount; }

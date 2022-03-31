@@ -4,39 +4,51 @@
 
 #include "IComponent.h"
 
+uint32_t GameObject::s_globalId = 0;
+
 void GameObject::Start()
 {
-	for (unsigned int i = 0; i < m_components.size(); i++)
+	for (std::shared_ptr<IComponent>& component : m_components)
 	{
-		AccessComponent(i)->Start();
+		component->Start();
 	}
 }
 
 void GameObject::Update(const std::shared_ptr<Time>& _time)
 {
-	for (unsigned int i = 0; i < m_components.size(); i++)
+	for (std::shared_ptr<IComponent>& component : m_components)
 	{
-		AccessComponent(i)->Update(_time);
+		component->Update(_time);
 	}
 }
 
 void GameObject::Draw()
 {
-	for (unsigned int i = 0; i < m_components.size(); i++)
+	for (std::shared_ptr<IComponent>& component : m_components)
 	{
-		AccessComponent(i)->Draw();
+		component->Draw();
 	}
 }
 
-void GameObject::AddComponent(const std::shared_ptr<IComponent>& _component)
+void GameObject::Disable()
 {
-	_component->SetGameObject(shared_from_this());
-	m_components.push_back(_component);
+	for (std::shared_ptr<IComponent>& component : m_components)
+	{
+		component->Disable();
+	}
+	m_components.clear();
 }
 
-std::shared_ptr<IComponent> GameObject::AccessComponent(const unsigned int _index)
+std::shared_ptr<IComponent> GameObject::AddComponent(const std::shared_ptr<IComponent>& _component)
 {
-	std::shared_ptr<IComponent> component = m_components[_index].lock();
-	if (!component) { throw std::runtime_error("Tried to access game object's component which no longer exists."); }
-	return component;
+	_component->SetGameObject(this);
+	m_components.push_back(_component);
+	return _component;
+}
+
+std::shared_ptr<Scene> GameObject::AccessScene() const
+{
+	std::shared_ptr<Scene> scene = m_scene.lock();
+	if (!scene) { throw std::runtime_error("Tried to access game object's component which no longer exists."); }
+	return scene;
 }

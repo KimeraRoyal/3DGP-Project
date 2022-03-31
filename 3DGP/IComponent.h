@@ -8,11 +8,11 @@ class IComponent
 private:
 	friend GameObject;
 
-	std::shared_ptr<GameObject> m_gameObject;
+	GameObject* m_gameObject;
 
-	void SetGameObject(const std::shared_ptr<GameObject>& _gameObject) { m_gameObject = _gameObject; }
+	void SetGameObject(GameObject* _gameObject) { m_gameObject = _gameObject; }
 protected:
-	IComponent() = default;
+	IComponent() : m_gameObject(nullptr) {}
 public:
 	virtual ~IComponent() = default;
 
@@ -20,5 +20,9 @@ public:
 	virtual void Update(const std::shared_ptr<Time>& _time) {}
 	virtual void Draw() {}
 
-	[[nodiscard]] std::shared_ptr<GameObject> GetGameObject() const { return m_gameObject; }
+	virtual void Enable() {}
+	virtual void Disable() {}
+
+	[[nodiscard]] GameObject* GetGameObject() const { return m_gameObject; }
+	[[nodiscard]] Transform* GetTransform() const { return m_gameObject->GetTransform(); }
 };

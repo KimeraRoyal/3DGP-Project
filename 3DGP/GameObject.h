@@ -5,30 +5,39 @@
 
 #include "Time.h"
 #include "Transform.h"
-#include "Scene.h"
 
+class Scene;
 class IComponent;
 
-class GameObject : public std::enable_shared_from_this<GameObject>
+class GameObject
 {
 private:
 	friend Scene;
 
-	std::shared_ptr<Scene> m_scene;
-	
+	static uint32_t s_globalId;
+
+	std::weak_ptr<Scene> m_scene;
+
+	std::vector<std::shared_ptr<IComponent>> m_components;
+
 	Transform m_transform;
 
-	std::vector<std::weak_ptr<IComponent>> m_components;
+	uint32_t m_id;
 
-	GameObject() = default;
+	GameObject() : m_id(s_globalId++) {}
 
-	std::shared_ptr<IComponent> AccessComponent(unsigned int _index);
+	std::shared_ptr<Scene> AccessScene() const;
 	
 	void SetScene(const std::shared_ptr<Scene>& _scene) { m_scene = _scene; }
+
 public:
+	bool operator==(const GameObject& _gameObject) const { return m_id == _gameObject.m_id; }
+	
 	void Start();
 	void Update(const std::shared_ptr<Time>& _time);
 	void Draw();
+
+	void Disable();
 	
 	template<typename T, typename std::enable_if<std::is_base_of<IComponent, T>::value>::type* = nullptr>
 	std::shared_ptr<T> AddComponent()
@@ -38,8 +47,8 @@ public:
 		return component;
 	}
 	
-	void AddComponent(const std::shared_ptr<IComponent>& _component);
+	std::shared_ptr<IComponent> AddComponent(const std::shared_ptr<IComponent>& _component);
 
-	[[nodiscard]] std::shared_ptr<Scene> GetScene() const { return m_scene; }
+	[[nodiscard]] std::shared_ptr<Scene> GetScene() const { return AccessScene(); }
 	[[nodiscard]] Transform* GetTransform() { return &m_transform; }
 };
