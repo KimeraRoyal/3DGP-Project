@@ -51,4 +51,15 @@ public:
 
 	[[nodiscard]] std::shared_ptr<Scene> GetScene() const { return AccessScene(); }
 	[[nodiscard]] Transform* GetTransform() { return &m_transform; }
+
+	template<typename T, typename std::enable_if<std::is_base_of<IComponent, T>::value>::type* = nullptr>
+	std::shared_ptr<T> GetComponent()
+	{
+		for(std::shared_ptr<IComponent> component : m_components)
+		{
+			std::shared_ptr<T> castComponent = std::dynamic_pointer_cast<T>(component);
+			if (castComponent) { return castComponent; }
+		}
+		return nullptr;
+	}
 };

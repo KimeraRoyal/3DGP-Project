@@ -43,5 +43,16 @@ public:
 
 	GameObject* CreateGameObject();
 	void DestroyGameObject(GameObject* _gameObject);
+
+	template<typename T, typename std::enable_if<std::is_base_of<IComponent, T>::value>::type* = nullptr>
+	std::shared_ptr<T> FindComponent()
+	{
+		for(GameObject& gameObject : m_gameObjects)
+		{
+			std::shared_ptr<T> component = gameObject.GetComponent<T>();
+			if (component) { return component; }
+		}
+		return nullptr;
+	}
 };
 
