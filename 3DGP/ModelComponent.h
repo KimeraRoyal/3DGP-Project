@@ -10,11 +10,11 @@
 class ModelComponent : public IComponent, public IRenderable
 {
 private:
+	static size_t s_modelMatrixKey;
+	
 	std::shared_ptr<IModel> m_model;
 
 	std::shared_ptr<ShaderProgram> m_program;
-
-	GLuint m_modelMatrixLoc;
 public:
 	ModelComponent();
 

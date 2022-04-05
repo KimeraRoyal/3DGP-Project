@@ -56,13 +56,6 @@ void Scene::Start()
 	{
 		gameObject->Start();
 	}
-
-	std::vector<std::shared_ptr<ModelComponent>> modelComponents;
-	FindComponents<ModelComponent>(modelComponents);
-	for(std::shared_ptr<ModelComponent> modelComponent : modelComponents)
-	{
-		std::printf("Model found!\n");
-	}
 }
 
 void Scene::Update(const std::shared_ptr<Time>& _time)

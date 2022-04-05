@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 #include <GL/glew.h>
 
 #include <glm/vec2.hpp>
@@ -14,6 +15,10 @@ private:
 	GLuint m_programId;
 
 	int m_attributeCount;
+
+	std::unordered_map<size_t, GLuint> m_uniformLocations;
+
+	void SetUniformKeys();
 public:
 	ShaderProgram();
 	ShaderProgram(const std::string& _vertShader, const std::string& _fragShader);
@@ -35,10 +40,18 @@ public:
 	void SetUniformValue(GLuint _uniformLocation, const glm::vec4& _value) const;
 	void SetUniformValue(GLuint _uniformLocation, const glm::mat4& _value) const;
 
-	void SetUniformValue(const std::string& _uniformName, const float& _value) const;
-	void SetUniformValue(const std::string& _uniformName, const glm::vec2& _value) const;
-	void SetUniformValue(const std::string& _uniformName, const glm::vec3& _value) const;
-	void SetUniformValue(const std::string& _uniformName, const glm::vec4& _value) const;
-	void SetUniformValue(const std::string& _uniformName, const glm::mat4& _value) const;
+	void SetUniformValueByKey(size_t _uniformKey, const float& _value) const;
+	void SetUniformValueByKey(size_t _uniformKey, const glm::vec2& _value) const;
+	void SetUniformValueByKey(size_t _uniformKey, const glm::vec3& _value) const;
+	void SetUniformValueByKey(size_t _uniformKey, const glm::vec4& _value) const;
+	void SetUniformValueByKey(size_t _uniformKey, const glm::mat4& _value) const;
+
+	void SetUniformValueByName(const std::string& _uniformName, const float& _value) const;
+	void SetUniformValueByName(const std::string& _uniformName, const glm::vec2& _value) const;
+	void SetUniformValueByName(const std::string& _uniformName, const glm::vec3& _value) const;
+	void SetUniformValueByName(const std::string& _uniformName, const glm::vec4& _value) const;
+	void SetUniformValueByName(const std::string& _uniformName, const glm::mat4& _value) const;
+
+	static size_t GetUniformKey(const std::string& _uniformName);
 };
 

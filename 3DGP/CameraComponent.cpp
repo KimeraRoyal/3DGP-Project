@@ -5,6 +5,10 @@
 #include "Scene.h"
 #include "Window.h"
 
+size_t CameraComponent::s_viewKey = ShaderProgram::GetUniformKey("in_View");
+size_t CameraComponent::s_projectionKey = ShaderProgram::GetUniformKey("in_Projection");
+size_t CameraComponent::s_viewPosKey = ShaderProgram::GetUniformKey("in_ViewPos");
+
 CameraComponent::CameraComponent()
 {
 	m_clearColor = glm::vec3(0.0f);
@@ -40,12 +44,10 @@ void CameraComponent::PreDraw()
 		glUseProgram(renderable->GetProgram()->GetId());
 
 		// Set uniform values
-		renderable->GetProgram()->SetUniformValue("in_View", GetViewMatrix());
-		renderable->GetProgram()->SetUniformValue("in_Projection", projection);
+		renderable->GetProgram()->SetUniformValueByKey(s_viewKey, GetViewMatrix());
+		renderable->GetProgram()->SetUniformValueByKey(s_projectionKey, projection);
 
-		renderable->GetProgram()->SetUniformValue("in_ViewPos", GetTransform()->GetPosition());
-
-		//TODO: Generate hashtable within ShaderProgram that returns and stores uniform ids. O(1) lookup babey!!
+		renderable->GetProgram()->SetUniformValueByKey(s_viewPosKey, GetTransform()->GetPosition());
 
 		// Draw
 		renderable->Draw();

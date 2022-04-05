@@ -6,6 +6,10 @@
 class CameraComponent final : public IComponent
 {
 private:
+	static size_t s_viewKey;
+	static size_t s_projectionKey;
+	static size_t s_viewPosKey;
+	
 	glm::vec3 m_clearColor;
 
 	float m_fov;
