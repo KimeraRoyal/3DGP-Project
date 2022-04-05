@@ -194,9 +194,11 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="IModel.h" />
     <ClInclude Include="IRenderable.h" />
+    <ClInclude Include="IResource.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="ModelComponent.h" />
     <ClInclude Include="Quad.h" />
+    <ClInclude Include="ResourceHandler.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="Screen.h" />

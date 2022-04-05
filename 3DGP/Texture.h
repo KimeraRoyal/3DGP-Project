@@ -5,14 +5,18 @@
 #include <GL/glew.h>
 #include <glm/vec2.hpp>
 
-class Texture
+#include "IResource.h"
+
+class Texture : public IResource
 {
 private:
 	GLuint m_textureId;
 	glm::ivec2 m_textureSize;
 public:
-	Texture(const std::string& _fileName);
-	~Texture();
+	Texture();
+	~Texture() override;
+
+	void Load(const std::string& _path) override;
 
 	Texture(const Texture& _copy) = delete;
 	Texture& operator=(const Texture& _other) = delete;

@@ -5,9 +5,9 @@
 
 #include "File.h"
 
-Shader::Shader(const int _shaderType, const std::string& _fileName)
+Shader::Shader(const int _shaderType, const std::string& _path)
 {
-	const std::string sourceText = File::LoadTextFile(_fileName);
+	const std::string sourceText = File::LoadTextFile(File::EvaluatePath(_path));
 	const GLchar* source = sourceText.c_str();
 	
 	// Create and compile shader from source code.

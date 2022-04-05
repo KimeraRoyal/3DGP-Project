@@ -1,8 +1,6 @@
 #include "Scene.h"
 
 #include <glm/gtc/type_ptr.hpp>
-#include <glm/mat4x4.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 #include "Window.h"
 #include "Shader.h"
@@ -40,15 +38,13 @@ void Scene::Start()
 	CreateGameObject()->AddComponent<CameraComponent>();
 	m_light = CreateGameObject()->AddComponent<LightComponent>();
 
-	const std::shared_ptr<IModel> curuthersModel = std::make_unique<WavefrontModel>("data/models/curuthers/curuthers.obj");
-
 	std::shared_ptr<ModelComponent> model = CreateGameObject()->AddComponent<ModelComponent>();
-	model->SetModel(curuthersModel);
+	model->SetModel(m_models.GetResource("data/models/curuthers/curuthers.obj"));
 	model->SetProgram(m_program);
 	model->GetTransform()->SetPosition(glm::vec3(0.0f, -1.0f, -10.0f));
 
 	std::shared_ptr<ModelComponent> model2 = CreateGameObject()->AddComponent<ModelComponent>();
-	model2->SetModel(curuthersModel);
+	model2->SetModel(m_models.GetResource("data/models/curuthers/curuthers.obj"));
 	model2->SetProgram(m_program);
 	model2->GetTransform()->SetPosition(glm::vec3(3.0f, -1.0f, -8.0f));
 

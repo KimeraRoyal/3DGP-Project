@@ -9,7 +9,7 @@ private:
 	GLuint m_shaderId;
 	GLuint m_attachedProgramId;
 public:
-	Shader(int _shaderType, const std::string& _fileName);
+	Shader(int _shaderType, const std::string& _path);
 	virtual ~Shader();
 
 	Shader(const Shader& _copy) = delete;

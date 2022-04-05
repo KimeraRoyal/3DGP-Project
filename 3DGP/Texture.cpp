@@ -6,15 +6,24 @@
 
 #include "File.h"
 
-Texture::Texture(const std::string& _fileName)
+Texture::Texture()
+{
+	m_textureSize = glm::ivec2(0, 0);
+	m_textureId = 0;
+}
+
+Texture::~Texture()
+{
+	glDeleteTextures(1, &m_textureId);
+}
+
+void Texture::Load(const std::string& _path)
 {
 	// Load texture from file.
-	m_textureSize = glm::ivec2(0, 0);
-	unsigned char* data = stbi_load((File::GetBasePath() + _fileName).c_str(), &m_textureSize.x, &m_textureSize.y, nullptr, 4);
-	if (!data) { throw std::runtime_error("Failed to load texture \"" + _fileName + "\""); }
-	
+	unsigned char* data = stbi_load(_path.c_str(), &m_textureSize.x, &m_textureSize.y, nullptr, 4);
+	if (!data) { throw std::runtime_error("Failed to load texture \"" + _path + "\""); }
+
 	// Generate and bind texture.
-	m_textureId = 0;
 	glGenTextures(1, &m_textureId);
 	if (!m_textureId) { throw std::runtime_error("Failed to create texture."); }
 	glBindTexture(GL_TEXTURE_2D, m_textureId);
@@ -25,9 +34,4 @@ Texture::Texture(const std::string& _fileName)
 
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
-}
-
-Texture::~Texture()
-{
-	glDeleteTextures(1, &m_textureId);
 }

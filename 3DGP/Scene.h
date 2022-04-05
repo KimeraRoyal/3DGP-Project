@@ -8,6 +8,8 @@
 
 #include "Screen.h"
 #include "GameObject.h"
+#include "ResourceHandler.h"
+#include "WavefrontModel.h"
 
 class IComponent;
 
@@ -22,6 +24,8 @@ private:
 
 	GLint m_viewPosLoc;
 	GLint m_lightPosLoc;
+
+	ResourceHandler<WavefrontModel> m_models;
 
 	std::vector<std::shared_ptr<GameObject>> m_gameObjects;
 
