@@ -5,9 +5,8 @@
 #include <wavefront/wavefront.h> 
 
 #include "IModel.h"
-#include "IResource.h"
 
-class WavefrontModel final : public IModel, public IResource
+class WavefrontModel final : public IModel
 {
 private:
 	WfModel m_model{};

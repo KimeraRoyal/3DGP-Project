@@ -1,8 +1,9 @@
 #pragma once
 
-#include <gl/glew.h>
+#include <GL/glew.h>
+#include "IResource.h"
 
-class IModel
+class IModel : public IResource
 {
 public:
 	virtual ~IModel() = default;
