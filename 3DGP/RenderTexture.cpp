@@ -55,13 +55,13 @@ RenderTexture::~RenderTexture()
 	glDeleteFramebuffers(1, &m_fboId);
 }
 
-void RenderTexture::Bind() const
+void RenderTexture::BindFramebuffer() const
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, m_fboId);
 	glDrawBuffers(m_bufferCount, m_attachments);
 }
 
-void RenderTexture::Unbind() const
+void RenderTexture::UnbindFramebuffer() const
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDrawBuffer(GL_COLOR_ATTACHMENT0);

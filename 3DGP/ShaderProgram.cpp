@@ -11,14 +11,24 @@ ShaderProgram::ShaderProgram()
 	m_programId = glCreateProgram();
 
 	m_attributeCount = 0;
-}
 
-ShaderProgram::ShaderProgram(const std::string& _vertShader, const std::string& _fragShader) : ShaderProgram()
-{
 	BindAttribute("in_Position");
 	BindAttribute("in_Texcoord");
 	BindAttribute("in_Normal");
+}
 
+ShaderProgram::~ShaderProgram()
+{
+	glDeleteProgram(m_programId);
+}
+
+void ShaderProgram::Load(const std::string& _path)
+{
+	Load(_path + ".vert", _path + ".frag");
+}
+
+void ShaderProgram::Load(const std::string& _vertShader, const std::string& _fragShader)
+{
 	// Create and compile shaders
 	Shader vertexShader = Shader(GL_VERTEX_SHADER, _vertShader);
 	Shader fragmentShader = Shader(GL_FRAGMENT_SHADER, _fragShader);
@@ -33,16 +43,6 @@ ShaderProgram::ShaderProgram(const std::string& _vertShader, const std::string& 
 	SetUniformKeys();
 }
 
-ShaderProgram::~ShaderProgram()
-{
-	glDeleteProgram(m_programId);
-}
-
-void ShaderProgram::BindAttribute(const std::string& _attribute)
-{
-	glBindAttribLocation(m_programId, m_attributeCount++, _attribute.c_str());
-}
-
 void ShaderProgram::Link() const
 {
 	glLinkProgram(m_programId);
@@ -50,6 +50,11 @@ void ShaderProgram::Link() const
 	GLint success;
 	glGetProgramiv(m_programId, GL_LINK_STATUS, &success);
 	if (!success) { throw std::runtime_error("Failed to link GL program!"); }
+}
+
+void ShaderProgram::BindAttribute(const std::string& _attribute)
+{
+	glBindAttribLocation(m_programId, m_attributeCount++, _attribute.c_str());
 }
 
 void ShaderProgram::SetUniformValue(const GLuint _uniformLocation, const float& _value) const

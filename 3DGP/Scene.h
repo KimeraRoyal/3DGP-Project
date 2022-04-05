@@ -16,16 +16,10 @@ class IComponent;
 class Scene : public std::enable_shared_from_this<Scene>
 {
 private:
-	std::shared_ptr<ShaderProgram> m_program;
-
-	GLint m_modelLoc;
-	GLint m_projectionLoc;
-	GLint m_viewLoc;
-
-	GLint m_viewPosLoc;
-	GLint m_lightPosLoc;
-
+	static size_t s_lightPosKey;
+	
 	ResourceHandler<WavefrontModel> m_models;
+	ResourceHandler<ShaderProgram> m_programs;
 
 	std::vector<std::shared_ptr<GameObject>> m_gameObjects;
 
@@ -34,7 +28,6 @@ private:
 	std::shared_ptr<Screen> m_screen;
 public:
 	Scene();
-	~Scene();
 
 	void Start();
 	void Update(const std::shared_ptr<Time>& _time);

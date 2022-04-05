@@ -9,7 +9,9 @@
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
 
-class ShaderProgram
+#include "IResource.h"
+
+class ShaderProgram : public IResource
 {
 private:
 	GLuint m_programId;
@@ -21,11 +23,13 @@ private:
 	void SetUniformKeys();
 public:
 	ShaderProgram();
-	ShaderProgram(const std::string& _vertShader, const std::string& _fragShader);
-	~ShaderProgram();
+	~ShaderProgram() override;
 
 	ShaderProgram(const ShaderProgram& _copy) = delete;
 	ShaderProgram& operator=(const ShaderProgram& _other) = delete;
+
+	void Load(const std::string& _path) override;
+	void Load(const std::string& _vertShader, const std::string& _fragShader);
 
 	void Link() const;
 

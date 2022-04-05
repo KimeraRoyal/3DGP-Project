@@ -1,36 +1,18 @@
 #include "Scene.h"
 
-#include <glm/gtc/type_ptr.hpp>
-
 #include "Window.h"
 #include "Shader.h"
-
-#include "WavefrontModel.h"
 
 #include "GameObject.h"
 #include "LightComponent.h"
 #include "CameraComponent.h"
 #include "ModelComponent.h"
 
+size_t Scene::s_lightPosKey = ShaderProgram::GetUniformKey("in_LightPos");
+
 Scene::Scene()
 {
-	// Create program
-	m_program = std::make_unique<ShaderProgram>("data/shaders/phong.vert", "data/shaders/phong.frag");
-
-	// Set uniforms
-	m_viewLoc = m_program->GetUniformLocation("in_View");
-	m_modelLoc = m_program->GetUniformLocation("in_Model");
-	m_projectionLoc = m_program->GetUniformLocation("in_Projection");
-
-	m_viewPosLoc = m_program->GetUniformLocation("in_ViewPos");
-	m_lightPosLoc = m_program->GetUniformLocation("in_LightPos");
-
-	m_screen = std::make_unique<Screen>("data/shaders/screen.vert", "data/shaders/screen.frag");
-}
-
-Scene::~Scene()
-{
-	
+	m_screen = std::make_unique<Screen>(m_programs.GetResource("data/shaders/screen"));
 }
 
 void Scene::Start()
@@ -40,12 +22,12 @@ void Scene::Start()
 
 	std::shared_ptr<ModelComponent> model = CreateGameObject()->AddComponent<ModelComponent>();
 	model->SetModel(m_models.GetResource("data/models/curuthers/curuthers.obj"));
-	model->SetProgram(m_program);
+	model->SetProgram(m_programs.GetResource("data/shaders/phong"));
 	model->GetTransform()->SetPosition(glm::vec3(0.0f, -1.0f, -10.0f));
 
 	std::shared_ptr<ModelComponent> model2 = CreateGameObject()->AddComponent<ModelComponent>();
 	model2->SetModel(m_models.GetResource("data/models/curuthers/curuthers.obj"));
-	model2->SetProgram(m_program);
+	model2->SetProgram(m_programs.GetResource("data/shaders/phong"));
 	model2->GetTransform()->SetPosition(glm::vec3(3.0f, -1.0f, -8.0f));
 
 	for (const std::shared_ptr<GameObject>& gameObject : m_gameObjects)
@@ -66,7 +48,7 @@ void Scene::Draw()
 {
 	m_screen->Bind();
 	// Light position
-	glUniform3fv(m_lightPosLoc, 1, glm::value_ptr(m_light->GetGameObject()->GetTransform()->GetPosition()));
+	m_programs.GetResource("data/shaders/phong")->SetUniformValueByKey(s_lightPosKey, m_light->GetGameObject()->GetTransform()->GetPosition());
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

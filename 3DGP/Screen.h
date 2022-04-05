@@ -10,19 +10,19 @@
 class Screen
 {
 private:
+	static size_t s_projectionKey;
+	static size_t s_modelKey;
+	
 	std::shared_ptr<IModel> m_screenQuad;
 
 	std::shared_ptr<ShaderProgram> m_program;
 
 	std::shared_ptr<RenderTexture> m_renderTexture;
-
-	GLint m_projectionLoc;
-	GLint m_modelLoc;
 public:
-	Screen(const std::string& _vertShader, const std::string& _fragShader, unsigned int _colorBufferCount = 1);
+	Screen(const std::shared_ptr<ShaderProgram>& _shaderProgram, unsigned int _colorBufferCount = 1);
 
-	void Bind() const { m_renderTexture->Bind(); }
-	void Unbind() const { m_renderTexture->Unbind(); }
+	void Bind() const { m_renderTexture->BindFramebuffer(); }
+	void Unbind() const { m_renderTexture->UnbindFramebuffer(); }
 
 	void Draw() const;
 };

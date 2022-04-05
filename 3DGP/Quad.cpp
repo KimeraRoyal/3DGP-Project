@@ -1,9 +1,7 @@
 #include "Quad.h"
 
-Quad::Quad(const std::shared_ptr<Texture>& _texture)
+Quad::Quad(const std::shared_ptr<ITexture>& _texture) : IModel(_texture)
 {
-	m_texture = _texture;
-
 	// Create vertex array object
 	m_vao = std::make_unique<VertexArray>();
 

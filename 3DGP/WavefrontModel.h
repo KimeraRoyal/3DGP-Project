@@ -17,7 +17,7 @@ public:
 	void Load(const std::string& _path) override;
 	
 	[[nodiscard]] GLuint GetVaoId() override { return m_model.vaoId; }
-	[[nodiscard]] GLuint GetTextureId() override { return m_model.textureId; }
+	[[nodiscard]] GLuint GetTextureId() override;
 	[[nodiscard]] unsigned int GetVertexCount() override { return m_model.vertexCount; }
 };
 
