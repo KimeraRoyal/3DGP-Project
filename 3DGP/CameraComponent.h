@@ -2,6 +2,7 @@
 
 #include "IComponent.h"
 #include "IRenderable.h"
+#include "LightComponent.h"
 
 class CameraComponent final : public IComponent
 {
@@ -18,6 +19,7 @@ private:
 	float m_farPlane;
 
 	std::vector<std::shared_ptr<IRenderable>> m_renderables;
+	std::vector<std::shared_ptr<LightComponent>> m_lights;
 public:
 	CameraComponent();
 

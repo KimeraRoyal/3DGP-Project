@@ -1,5 +1,8 @@
 #include "Scene.h"
 
+#include <iostream>
+
+
 #include "Window.h"
 #include "Shader.h"
 
@@ -47,8 +50,6 @@ void Scene::Update(const std::shared_ptr<Time>& _time)
 void Scene::Draw()
 {
 	m_screen->Bind();
-	// Light position
-	m_programs.GetResource("data/shaders/phong")->SetUniformValueByKey(s_lightPosKey, m_light->GetGameObject()->GetTransform()->GetPosition());
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

@@ -1,5 +1,7 @@
 #include "LightComponent.h"
 
+size_t LightComponent::s_lightPosKey = ShaderProgram::GetUniformKey("in_LightPos");
+
 LightComponent::LightComponent()
 {
 	m_lightColor = glm::vec3(1.0f);
@@ -14,4 +16,9 @@ void LightComponent::Start()
 void LightComponent::Update(const std::shared_ptr<Time>& _time)
 {
 	GetGameObject()->GetTransform()->SetPosition(glm::vec3(10.0f * cos(_time->GetTime()), 10.0f * sin(_time->GetTime()), 0.0f));
+}
+
+void LightComponent::AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const
+{
+	_program->SetUniformValueByKey(s_lightPosKey, GetTransform()->GetPosition());
 }
