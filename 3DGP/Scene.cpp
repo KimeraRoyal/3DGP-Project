@@ -1,7 +1,5 @@
 #include "Scene.h"
 
-#include <iostream>
-
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -23,7 +21,7 @@ Scene::Scene()
 
 	// Set uniforms
 	m_viewLoc = m_program->GetUniformLocation("in_View");
-	m_modelMatrixLoc = m_program->GetUniformLocation("in_Model");
+	m_modelLoc = m_program->GetUniformLocation("in_Model");
 	m_projectionLoc = m_program->GetUniformLocation("in_Projection");
 
 	m_viewPosLoc = m_program->GetUniformLocation("in_ViewPos");
@@ -39,55 +37,47 @@ Scene::~Scene()
 
 void Scene::Start()
 {
-	m_camera = CreateGameObject()->AddComponent<CameraComponent>();
+	CreateGameObject()->AddComponent<CameraComponent>();
 	m_light = CreateGameObject()->AddComponent<LightComponent>();
 
-	std::shared_ptr<ModelComponent> curuthersModel = std::make_unique<ModelComponent>();
-	curuthersModel->SetModel(std::make_unique<WavefrontModel>("data/models/curuthers/curuthers.obj"));
-	curuthersModel->SetProgram(m_program);
-	m_model = CreateGameObject()->AddComponent(curuthersModel);
+	const std::shared_ptr<IModel> curuthersModel = std::make_unique<WavefrontModel>("data/models/curuthers/curuthers.obj");
 
-	for (auto& m_gameObject : m_gameObjects)
+	std::shared_ptr<ModelComponent> model = CreateGameObject()->AddComponent<ModelComponent>();
+	model->SetModel(curuthersModel);
+	model->SetProgram(m_program);
+	model->GetTransform()->SetPosition(glm::vec3(0.0f, -1.0f, -10.0f));
+
+	std::shared_ptr<ModelComponent> model2 = CreateGameObject()->AddComponent<ModelComponent>();
+	model2->SetModel(curuthersModel);
+	model2->SetProgram(m_program);
+	model2->GetTransform()->SetPosition(glm::vec3(3.0f, -1.0f, -8.0f));
+
+	for (const std::shared_ptr<GameObject>& gameObject : m_gameObjects)
 	{
-		m_gameObject.Start();
+		gameObject->Start();
 	}
 
-	const std::shared_ptr<ModelComponent> model = FindComponent<ModelComponent>();
-	if(model)
+	std::vector<std::shared_ptr<ModelComponent>> modelComponents;
+	FindComponents<ModelComponent>(modelComponents);
+	for(std::shared_ptr<ModelComponent> modelComponent : modelComponents)
 	{
-		glm::vec3 val = model->GetTransform()->GetPosition();
-		std::printf("pX: %f pY: %f pZ: %f ", val.x, val.y, val.z);
-		val = model->GetTransform()->GetScale();
-		std::printf("sX: %f sY: %f sZ: %f ", val.x, val.y, val.z);
-		val = model->GetTransform()->GetRotation();
-		std::printf("rX: %f rY: %f rZ: %f\n", val.x, val.y, val.z);
+		std::printf("Model found!\n");
 	}
 }
 
 void Scene::Update(const std::shared_ptr<Time>& _time)
 {
-	for(auto & m_gameObject : m_gameObjects)
+	for (const std::shared_ptr<GameObject>& gameObject : m_gameObjects)
 	{
-		m_gameObject.Update(_time);
+		gameObject->Update(_time);
 	}
 }
 
 void Scene::Draw()
 {
 	m_screen->Bind();
-	std::static_pointer_cast<CameraComponent>(m_camera)->Clear();
-
-	const glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), 0.1f, 100.0f);
-	
-	m_program->Bind();
-	
-	// Render Curuthers
-	m_program->SetUniformValue(m_viewLoc, std::static_pointer_cast<CameraComponent>(m_camera)->GetViewMatrix());
-	m_program->SetUniformValue(m_modelMatrixLoc, m_model->GetGameObject()->GetTransform()->GetModelMatrix());
-	m_program->SetUniformValue(m_projectionLoc, projection);
-	
-	m_program->SetUniformValue(m_viewPosLoc, m_camera->GetGameObject()->GetTransform()->GetPosition());
-	m_program->SetUniformValue(m_lightPosLoc, m_light->GetGameObject()->GetTransform()->GetPosition());
+	// Light position
+	glUniform3fv(m_lightPosLoc, 1, glm::value_ptr(m_light->GetGameObject()->GetTransform()->GetPosition()));
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -95,9 +85,9 @@ void Scene::Draw()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
-	for (auto& m_gameObject : m_gameObjects)
+	for (const std::shared_ptr<GameObject>& gameObject : m_gameObjects)
 	{
-		m_gameObject.Draw();
+		gameObject->PreDraw();
 	}
 	m_screen->Unbind();
 
@@ -114,27 +104,12 @@ void Scene::Draw()
 	glUseProgram(0);
 }
 
-GameObject* Scene::CreateGameObject()
+std::shared_ptr<GameObject> Scene::CreateGameObject()
 {
-	GameObject gameObject;
-	if(!m_inactiveGameObjects.empty())
-	{
-		gameObject = std::move(m_inactiveGameObjects.top());
-		m_inactiveGameObjects.pop();
-	}
-	
-	gameObject.SetScene(shared_from_this());
-	m_gameObjects.push_back(std::move(gameObject));
-	
-	return &m_gameObjects.back();
-}
+	std::shared_ptr<GameObject> gameObject = std::shared_ptr<GameObject>(new GameObject);
 
-void Scene::DestroyGameObject(GameObject* _gameObject)
-{
-	_gameObject->Disable();
-	_gameObject->SetScene(nullptr);
+	gameObject->SetScene(shared_from_this());
+	m_gameObjects.push_back(gameObject);
 	
-	const std::vector<GameObject>::iterator iterator = std::find(m_gameObjects.begin(), m_gameObjects.end(), *_gameObject);
-	m_inactiveGameObjects.push(std::move(*_gameObject));
-	m_gameObjects.erase(iterator);
+	return gameObject;
 }

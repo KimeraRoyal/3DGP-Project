@@ -41,11 +41,6 @@ void ShaderProgram::BindAttribute(const std::string& _attribute)
 	glBindAttribLocation(m_programId, m_attributeCount++, _attribute.c_str());
 }
 
-void ShaderProgram::Bind() const
-{
-	glUseProgram(m_programId);
-}
-
 void ShaderProgram::Link() const
 {
 	glLinkProgram(m_programId);

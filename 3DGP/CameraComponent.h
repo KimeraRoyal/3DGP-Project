@@ -1,16 +1,25 @@
 #pragma once
 
 #include "IComponent.h"
+#include "IRenderable.h"
 
 class CameraComponent final : public IComponent
 {
 private:
 	glm::vec3 m_clearColor;
+
+	float m_fov;
+	
+	float m_nearPlane;
+	float m_farPlane;
+
+	std::vector<std::shared_ptr<IRenderable>> m_renderables;
 public:
 	CameraComponent();
 
 	void Start() override;
 	void Update(const std::shared_ptr<Time>& _time) override;
+	void PreDraw() override;
 
 	void Clear() const;
 

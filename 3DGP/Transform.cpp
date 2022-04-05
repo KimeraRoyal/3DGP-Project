@@ -1,7 +1,5 @@
 #include "Transform.h"
 
-
-#include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
 

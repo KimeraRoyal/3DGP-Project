@@ -1,7 +1,5 @@
 #include "Screen.h"
 
-#include <glm/gtc/type_ptr.hpp>
-
 #include "Quad.h"
 #include "Shader.h"
 #include "Window.h"

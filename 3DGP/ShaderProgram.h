@@ -22,8 +22,6 @@ public:
 	ShaderProgram(const ShaderProgram& _copy) = delete;
 	ShaderProgram& operator=(const ShaderProgram& _other) = delete;
 
-	void Bind() const;
-
 	void Link() const;
 
 	void BindAttribute(const std::string& _attribute);
