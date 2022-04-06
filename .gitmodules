@@ -4,3 +4,6 @@
 [submodule "stb/stb"]
 	path = stb/stb
 	url = https://github.com/nothings/stb
+[submodule "rapidjson"]
+	path = rapidjson
+	url = https://github.com/Tencent/rapidjson
