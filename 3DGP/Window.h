@@ -18,6 +18,8 @@ private:
 
 	SDL_Window* m_window;
 
+	Resources m_resources;
+
 	std::shared_ptr<Time> m_time;
 	std::shared_ptr<Audio> m_audio;
 

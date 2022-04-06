@@ -1,6 +1,9 @@
 #pragma once
 
+#include <rapidjson/document.h>
+
 #include "IComponent.h"
+#include "IComponentParser.h"
 #include "ShaderProgram.h"
 
 class LightComponent : public IComponent
@@ -11,6 +14,13 @@ private:
 	glm::vec3 m_lightColor;
 	float m_lightStrength;
 public:
+	class Parser final : public IComponentParser
+	{
+	public:
+		explicit Parser(Resources* _resources) : IComponentParser(_resources) {}
+		std::shared_ptr<IComponent> Parse(rapidjson::Value& _value) override;
+	};
+	
 	LightComponent();
 
 	void Start() override;

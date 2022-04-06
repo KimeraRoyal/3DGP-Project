@@ -5,6 +5,8 @@
 #include <GL/glew.h>
 #include <iostream>
 
+#include "SceneParser.h"
+
 Window::Window()
 {
 	m_window = SDL_CreateWindow("3D Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, c_defaultWindowSize.x * c_defaultWindowScale, c_defaultWindowSize.y * c_defaultWindowScale, SDL_WINDOW_OPENGL);
@@ -24,8 +26,11 @@ Window::Window()
 	m_audio = std::make_unique<Audio>();
 	m_audio->LoadBank("data/banks/Desktop/Master.bank");
 	m_audio->LoadBank("data/banks/Desktop/Master.strings.bank");
-	
-	m_scene = std::make_unique<Scene>();
+
+	{
+		SceneParser sceneParser(&m_resources);
+		m_scene = sceneParser.ParseScene("data/scenes/test_scene.json");
+	}
 	m_scene->Start();
 }
 

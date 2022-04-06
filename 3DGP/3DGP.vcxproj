@@ -70,16 +70,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>../Libraries/Include/;../glm/;../stb/;$(IncludePath)</IncludePath>
+    <IncludePath>../Libraries/Include/;../glm/;../stb/;../rapidjson/include/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>../Libraries/Include/;../glm/;../stb/;$(IncludePath)</IncludePath>
+    <IncludePath>../Libraries/Include/;../glm/;../stb/;../rapidjson/include/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>../Libraries/Include/;../glm/;../stb/;$(IncludePath)</IncludePath>
+    <IncludePath>../Libraries/Include/;../glm/;../stb/;../rapidjson/include/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>../Libraries/Include/;../glm/;../stb/;$(IncludePath)</IncludePath>
+    <IncludePath>../Libraries/Include/;../glm/;../stb/;../rapidjson/include/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -167,12 +167,15 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="IComponentParser.cpp" />
+    <ClCompile Include="IJsonParser.cpp" />
     <ClCompile Include="IModel.cpp" />
     <ClCompile Include="LightComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelComponent.cpp" />
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="SceneParser.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="Screen.cpp" />
@@ -193,6 +196,8 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="File.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="IComponent.h" />
+    <ClInclude Include="IComponentParser.h" />
+    <ClInclude Include="IJsonParser.h" />
     <ClInclude Include="IModel.h" />
     <ClInclude Include="IRenderable.h" />
     <ClInclude Include="IResource.h" />
@@ -202,6 +207,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="Quad.h" />
     <ClInclude Include="ResourceHandler.h" />
     <ClInclude Include="Resources.h" />
+    <ClInclude Include="SceneParser.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="Screen.h" />

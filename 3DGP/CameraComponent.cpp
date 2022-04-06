@@ -66,3 +66,17 @@ void CameraComponent::Clear() const
 	glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+
+std::shared_ptr<IComponent> CameraComponent::Parser::Parse(rapidjson::Value& _value)
+{
+	std::shared_ptr<CameraComponent> component = std::make_unique<CameraComponent>();
+	
+	component->SetClearColor(ParseVector(_value["clearColor"]));
+	
+	component->SetFOV(_value["fov"].GetFloat());
+
+	component->SetNearPlane(_value["near"].GetFloat());
+	component->SetFarPlane(_value["far"].GetFloat());
+	
+	return component;
+}

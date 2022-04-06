@@ -43,6 +43,12 @@
     <Filter Include="Header Files\Scene">
       <UniqueIdentifier>{3519b1ec-bdc6-4ed1-82e1-9e56385d4ebe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scene\JSON">
+      <UniqueIdentifier>{00fb018d-c1a1-4dc4-bdb6-2d874ad4ad4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\JSON">
+      <UniqueIdentifier>{0200a6d2-6079-40c8-b0e6-c0e215aad0a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -113,6 +119,15 @@
     </ClCompile>
     <ClCompile Include="Resources.cpp">
       <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneParser.cpp">
+      <Filter>Source Files\Scene\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="IJsonParser.cpp">
+      <Filter>Source Files\Scene\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="IComponentParser.cpp">
+      <Filter>Source Files\Scene\JSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +211,15 @@
     </ClInclude>
     <ClInclude Include="Resources.h">
       <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneParser.h">
+      <Filter>Header Files\Scene\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="IComponentParser.h">
+      <Filter>Header Files\Scene\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="IJsonParser.h">
+      <Filter>Header Files\Scene\JSON</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

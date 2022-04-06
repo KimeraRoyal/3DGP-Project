@@ -22,3 +22,13 @@ void LightComponent::AssignUniforms(const std::shared_ptr<ShaderProgram>& _progr
 {
 	_program->SetUniformValueByKey(s_lightPosKey, GetTransform()->GetPosition());
 }
+
+std::shared_ptr<IComponent> LightComponent::Parser::Parse(rapidjson::Value& _value)
+{
+	std::shared_ptr<LightComponent> component = std::make_unique<LightComponent>();
+
+	component->SetLightColor(ParseVector(_value["color"]));
+	component->SetLightStrength(_value["strength"].GetFloat());
+	
+	return component;
+}

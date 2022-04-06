@@ -7,32 +7,18 @@
 #include "Shader.h"
 
 #include "GameObject.h"
-#include "LightComponent.h"
-#include "CameraComponent.h"
-#include "ModelComponent.h"
 
 size_t Scene::s_lightPosKey = ShaderProgram::GetUniformKey("in_LightPos");
 
-Scene::Scene()
+Scene::Scene(Resources* _resources)
 {
-	m_screen = std::make_unique<Screen>(m_resources.GetProgram("data/shaders/screen/screen.vert", "data/shaders/screen/dampen.frag"));
+	m_resources = _resources;
+	
+	m_screen = std::make_unique<Screen>(m_resources->GetProgram("data/shaders/screen/screen.vert", "data/shaders/screen/screen.frag"));
 }
 
 void Scene::Start()
 {
-	CreateGameObject()->AddComponent<CameraComponent>();
-	m_light = CreateGameObject()->AddComponent<LightComponent>();
-
-	std::shared_ptr<ModelComponent> model = CreateGameObject()->AddComponent<ModelComponent>();
-	model->SetModel(m_resources.GetModel("data/models/curuthers/curuthers.obj"));
-	model->SetProgram(m_resources.GetProgram("data/shaders/phong"));
-	model->GetTransform()->SetPosition(glm::vec3(0.0f, -1.0f, -10.0f));
-
-	std::shared_ptr<ModelComponent> model2 = CreateGameObject()->AddComponent<ModelComponent>();
-	model2->SetModel(m_resources.GetModel("data/models/curuthers/curuthers.obj"));
-	model2->SetProgram(m_resources.GetProgram("data/shaders/phong"));
-	model2->GetTransform()->SetPosition(glm::vec3(3.0f, -1.0f, -8.0f));
-
 	for (const std::shared_ptr<GameObject>& gameObject : m_gameObjects)
 	{
 		gameObject->Start();

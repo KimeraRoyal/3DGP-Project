@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IComponent.h"
+#include "IComponentParser.h"
 #include "IRenderable.h"
 #include "LightComponent.h"
 
@@ -21,6 +22,13 @@ private:
 	std::vector<std::shared_ptr<IRenderable>> m_renderables;
 	std::vector<std::shared_ptr<LightComponent>> m_lights;
 public:
+	class Parser final : public IComponentParser
+	{
+	public:
+		explicit Parser(Resources* _resources) : IComponentParser(_resources) {}
+		std::shared_ptr<IComponent> Parse(rapidjson::Value& _value) override;
+	};
+	
 	CameraComponent();
 
 	void Start() override;
@@ -30,7 +38,18 @@ public:
 	void Clear() const;
 
 	[[nodiscard]] glm::mat4 GetViewMatrix() const { return glm::inverse(GetGameObject()->GetTransform()->GetModelMatrix()); }
+	
 	[[nodiscard]] glm::vec3 GetClearColor() const { return m_clearColor; }
 
+	[[nodiscard]] float GetFOV() const { return m_fov; }
+	
+	[[nodiscard]] float GetNearPlane() const { return m_nearPlane; }
+	[[nodiscard]] float GetFarPlane() const { return m_farPlane; }
+
 	void SetClearColor(const glm::vec3 _clearColor) { m_clearColor = _clearColor; }
+	
+	void SetFOV(const float _fov) { m_fov = _fov; }
+	
+	void SetNearPlane(const float _nearPlane) { m_nearPlane = _nearPlane; }
+	void SetFarPlane(const float _farPlane) { m_farPlane = _farPlane; }
 };

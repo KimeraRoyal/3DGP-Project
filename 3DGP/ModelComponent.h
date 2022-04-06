@@ -1,8 +1,10 @@
 #pragma once
 
 #include <memory>
+#include <rapidjson/document.h>
 
 #include "IComponent.h"
+#include "IComponentParser.h"
 #include "IModel.h"
 #include "IRenderable.h"
 #include "ShaderProgram.h"
@@ -16,6 +18,13 @@ private:
 
 	std::shared_ptr<ShaderProgram> m_program;
 public:
+	class Parser final : public IComponentParser
+	{
+	public:
+		explicit Parser(Resources* _resources) : IComponentParser(_resources) {}
+		std::shared_ptr<IComponent> Parse(rapidjson::Value& _value) override;
+	};
+	
 	ModelComponent();
 
 	void Start() override;

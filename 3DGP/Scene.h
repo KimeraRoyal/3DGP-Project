@@ -13,9 +13,9 @@ class IComponent;
 class Scene : public std::enable_shared_from_this<Scene>
 {
 private:
-	static size_t s_lightPosKey;
+	Resources* m_resources;
 	
-	Resources m_resources;
+	static size_t s_lightPosKey;
 
 	std::vector<std::shared_ptr<GameObject>> m_gameObjects;
 
@@ -23,7 +23,7 @@ private:
 
 	std::shared_ptr<Screen> m_screen;
 public:
-	Scene();
+	Scene(Resources* _resources);
 
 	void Start();
 	void Update(const std::shared_ptr<Time>& _time);
