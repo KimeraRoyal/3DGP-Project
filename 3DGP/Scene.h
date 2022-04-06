@@ -2,14 +2,11 @@
 
 #include <memory>
 
-#include "ShaderProgram.h"
-
 #include "Time.h"
 
 #include "Screen.h"
 #include "GameObject.h"
-#include "ResourceHandler.h"
-#include "WavefrontModel.h"
+#include "Resources.h"
 
 class IComponent;
 
@@ -18,8 +15,7 @@ class Scene : public std::enable_shared_from_this<Scene>
 private:
 	static size_t s_lightPosKey;
 	
-	ResourceHandler<WavefrontModel> m_models;
-	ResourceHandler<ShaderProgram> m_programs;
+	Resources m_resources;
 
 	std::vector<std::shared_ptr<GameObject>> m_gameObjects;
 

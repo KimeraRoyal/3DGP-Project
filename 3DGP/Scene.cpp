@@ -15,7 +15,7 @@ size_t Scene::s_lightPosKey = ShaderProgram::GetUniformKey("in_LightPos");
 
 Scene::Scene()
 {
-	m_screen = std::make_unique<Screen>(m_programs.GetResource("data/shaders/screen"));
+	m_screen = std::make_unique<Screen>(m_resources.GetProgram("data/shaders/screen/screen.vert", "data/shaders/screen/dampen.frag"));
 }
 
 void Scene::Start()
@@ -24,13 +24,13 @@ void Scene::Start()
 	m_light = CreateGameObject()->AddComponent<LightComponent>();
 
 	std::shared_ptr<ModelComponent> model = CreateGameObject()->AddComponent<ModelComponent>();
-	model->SetModel(m_models.GetResource("data/models/curuthers/curuthers.obj"));
-	model->SetProgram(m_programs.GetResource("data/shaders/phong"));
+	model->SetModel(m_resources.GetModel("data/models/curuthers/curuthers.obj"));
+	model->SetProgram(m_resources.GetProgram("data/shaders/phong"));
 	model->GetTransform()->SetPosition(glm::vec3(0.0f, -1.0f, -10.0f));
 
 	std::shared_ptr<ModelComponent> model2 = CreateGameObject()->AddComponent<ModelComponent>();
-	model2->SetModel(m_models.GetResource("data/models/curuthers/curuthers.obj"));
-	model2->SetProgram(m_programs.GetResource("data/shaders/phong"));
+	model2->SetModel(m_resources.GetModel("data/models/curuthers/curuthers.obj"));
+	model2->SetProgram(m_resources.GetProgram("data/shaders/phong"));
 	model2->GetTransform()->SetPosition(glm::vec3(3.0f, -1.0f, -8.0f));
 
 	for (const std::shared_ptr<GameObject>& gameObject : m_gameObjects)
