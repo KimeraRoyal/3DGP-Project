@@ -1,7 +1,8 @@
 #include "SceneParser.h"
 
-#include <rapidjson/document.h>
+#include <sstream>
 
+#include <rapidjson/document.h>
 
 #include "CameraComponent.h"
 #include "File.h"
@@ -22,9 +23,24 @@ std::shared_ptr<Scene> SceneParser::ParseScene(const std::string& _path)
 	
 	rapidjson::Document sceneDocument;
 	sceneDocument.Parse(sceneText.c_str());
+	if (sceneDocument.HasParseError())
+	{
 #ifdef _DEBUG
-	if (sceneDocument.HasParseError()) { std::printf("JSON Parse Error: %d (%u): [%s]\n", sceneDocument.GetParseError(), sceneDocument.GetErrorOffset(), sceneText.substr(sceneDocument.GetErrorOffset()).c_str()); }
+		std::stringstream lineStream(sceneText);
+		std::string lineSegment, prevLineSegment;
+		int lines = 0;
+		unsigned int characters = 0;
+		while(std::getline(lineStream, lineSegment, '\n'))
+		{
+			characters += lineSegment.size();
+			if (characters >= sceneDocument.GetErrorOffset()) { break; }
+			prevLineSegment = lineSegment;
+			lines++;
+		}
+		std::printf("JSON Parse Error: Code %d (%u): \"%s\"\n", sceneDocument.GetParseError(), lines, prevLineSegment.c_str());
 #endif
+		throw std::runtime_error("Failed to parse JSON scene file! JSON Parse Error, Code: " + sceneDocument.GetParseError());
+	}
 	
 	std::shared_ptr<Scene> scene = std::make_unique<Scene>(m_resources);
 
