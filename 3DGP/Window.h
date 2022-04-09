@@ -7,6 +7,7 @@
 #include <glm/vec2.hpp>
 
 #include "Audio.h"
+#include "Input.h"
 #include "Time.h"
 #include "Scene.h"
 
@@ -20,8 +21,9 @@ private:
 
 	Resources m_resources;
 
-	std::shared_ptr<Time> m_time;
-	std::shared_ptr<Audio> m_audio;
+	Input m_input;
+	Time m_time;
+	Audio m_audio;
 
 	std::shared_ptr<Scene> m_scene;
 
@@ -32,6 +34,7 @@ public:
 	Window();
 	~Window();
 
+	void Start();
 	void GameLoop();
 
 	static glm::ivec2 GetWindowSize();

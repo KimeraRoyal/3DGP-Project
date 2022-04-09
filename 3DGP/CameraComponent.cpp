@@ -27,10 +27,10 @@ void CameraComponent::Start()
 	GetGameObject()->GetScene()->FindComponents<LightComponent>(m_lights);
 }
 
-void CameraComponent::Update(const std::shared_ptr<Time>& _time)
+void CameraComponent::Update(Time& _time)
 {
-	GetGameObject()->GetTransform()->SetPosition(glm::vec3(6.0f, 0.0f, 0.0f) * cos(_time->GetTime() / 2.0f));
-	GetGameObject()->GetTransform()->SetRotation(glm::vec3(0.0, 30.0f, 0.0f) * cos(_time->GetTime() / 2.0f));
+	GetGameObject()->GetTransform()->SetPosition(glm::vec3(6.0f, 0.0f, 0.0f) * cos(_time.GetTime() / 2.0f));
+	GetGameObject()->GetTransform()->SetRotation(glm::vec3(0.0, 30.0f, 0.0f) * cos(_time.GetTime() / 2.0f));
 }
 
 void CameraComponent::PreDraw()

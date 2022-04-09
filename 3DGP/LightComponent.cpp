@@ -13,9 +13,9 @@ void LightComponent::Start()
 	GetGameObject()->GetTransform()->SetPosition(glm::vec3(-10.0f, 5.0f, -8.0f));
 }
 
-void LightComponent::Update(const std::shared_ptr<Time>& _time)
+void LightComponent::Update(Time& _time)
 {
-	GetGameObject()->GetTransform()->SetPosition(glm::vec3(10.0f * cos(_time->GetTime()), 10.0f * sin(_time->GetTime()), 0.0f));
+	GetGameObject()->GetTransform()->SetPosition(glm::vec3(10.0f * cos(_time.GetTime()), 10.0f * sin(_time.GetTime()), 0.0f));
 }
 
 void LightComponent::AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const

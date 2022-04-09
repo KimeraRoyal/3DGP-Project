@@ -25,7 +25,7 @@ void Scene::Start()
 	}
 }
 
-void Scene::Update(const std::shared_ptr<Time>& _time)
+void Scene::Update(Time& _time)
 {
 	for (const std::shared_ptr<GameObject>& gameObject : m_gameObjects)
 	{

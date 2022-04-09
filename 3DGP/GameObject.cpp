@@ -14,7 +14,7 @@ void GameObject::Start()
 	}
 }
 
-void GameObject::Update(const std::shared_ptr<Time>& _time)
+void GameObject::Update(Time& _time)
 {
 	for (std::shared_ptr<IComponent>& component : m_components)
 	{

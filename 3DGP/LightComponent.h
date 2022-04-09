@@ -24,7 +24,7 @@ public:
 	LightComponent();
 
 	void Start() override;
-	void Update(const std::shared_ptr<Time>& _time) override;
+	void Update(Time& _time) override;
 
 	void AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const;
 

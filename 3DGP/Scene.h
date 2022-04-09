@@ -19,14 +19,12 @@ private:
 
 	std::vector<std::shared_ptr<GameObject>> m_gameObjects;
 
-	std::shared_ptr<IComponent> m_light;
-
 	std::shared_ptr<Screen> m_screen;
 public:
 	Scene(Resources* _resources);
 
 	void Start();
-	void Update(const std::shared_ptr<Time>& _time);
+	void Update(Time& _time);
 	void Draw();
 
 	std::shared_ptr<GameObject> CreateGameObject();

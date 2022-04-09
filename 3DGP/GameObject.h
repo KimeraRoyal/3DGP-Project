@@ -33,7 +33,7 @@ public:
 	bool operator==(const GameObject& _gameObject) const { return m_id == _gameObject.m_id; }
 	
 	void Start();
-	void Update(const std::shared_ptr<Time>& _time);
+	void Update(Time& _time);
 	void PreDraw();
 	
 	template<typename T, typename std::enable_if<std::is_base_of<IComponent, T>::value>::type* = nullptr>
