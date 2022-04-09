@@ -171,6 +171,8 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="IComponentParser.cpp" />
     <ClCompile Include="IJsonParser.cpp" />
     <ClCompile Include="IModel.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="KeybindParser.cpp" />
     <ClCompile Include="LightComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelComponent.cpp" />
@@ -201,9 +203,11 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="IComponentParser.h" />
     <ClInclude Include="IJsonParser.h" />
     <ClInclude Include="IModel.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="IRenderable.h" />
     <ClInclude Include="IResource.h" />
     <ClInclude Include="ITexture.h" />
+    <ClInclude Include="KeybindParser.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="ModelComponent.h" />
     <ClInclude Include="Quad.h" />
