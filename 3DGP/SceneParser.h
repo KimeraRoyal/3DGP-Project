@@ -18,6 +18,6 @@ private:
 public:
 	SceneParser(Resources* _resources);
 	
-	std::shared_ptr<Scene> ParseScene(const std::string& _path);
+	std::shared_ptr<Scene> Parse(const std::string& _path);
 };
 
