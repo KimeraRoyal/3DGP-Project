@@ -41,6 +41,17 @@ void BitSet::ClearAll()
 	std::fill(m_bits.begin(), m_bits.end(), 0x0);
 }
 
+void BitSet::CopyBits(BitSet& _other)
+{
+	if (_other.m_bits.size() > m_bits.size()) { m_bits.resize(_other.m_bits.size()); }
+	ClearAll();
+	
+	for(unsigned int i = 0; i < _other.m_bits.size(); i++)
+	{
+		m_bits.at(i) = _other.m_bits.at(i);
+	}
+}
+
 void BitSet::Display()
 {
 	unsigned int totalCount = 0;

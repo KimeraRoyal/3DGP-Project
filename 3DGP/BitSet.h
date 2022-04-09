@@ -20,5 +20,7 @@ public:
 	void SetAll();
 	void ClearAll();
 
+	void CopyBits(BitSet& _other);
+
 	void Display();
 };
