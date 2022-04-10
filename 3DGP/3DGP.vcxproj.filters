@@ -49,6 +49,12 @@
     <Filter Include="Source Files\JSON">
       <UniqueIdentifier>{0200a6d2-6079-40c8-b0e6-c0e215aad0a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{ed672554-f87f-425e-8843-8e680b4aa0f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{300e9f69-c78b-4cac-a911-ed4bc27cc8be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -132,14 +138,14 @@
     <ClCompile Include="BitSet.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
     <ClCompile Include="KeybindParser.cpp">
       <Filter>Source Files\JSON</Filter>
     </ClCompile>
     <ClCompile Include="PlayerInputComponent.cpp">
       <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -236,14 +242,14 @@
     <ClInclude Include="BitSet.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
     <ClInclude Include="KeybindParser.h">
       <Filter>Header Files\JSON</Filter>
     </ClInclude>
     <ClInclude Include="PlayerInputComponent.h">
       <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
