@@ -31,5 +31,5 @@ std::shared_ptr<IComponent> ModelComponent::Parser::Parse(rapidjson::Value& _val
 	component->SetModel(m_resources->GetModel(_value["model"].GetString()));
 	component->SetProgram(m_resources->GetProgram(_value["shader"].GetString()));
 	
-	return component;
+	return std::static_pointer_cast<IComponent>(component);
 }

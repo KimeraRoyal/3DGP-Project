@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "Time.h"
+#include "Input.h"
 
 #include "Screen.h"
 #include "GameObject.h"
@@ -24,7 +25,7 @@ public:
 	Scene(Resources* _resources);
 
 	void Start();
-	void Update(Time& _time);
+	void Update(Time& _time, Input& _input);
 	void Draw();
 
 	std::shared_ptr<GameObject> CreateGameObject();

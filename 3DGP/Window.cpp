@@ -77,7 +77,7 @@ bool Window::PollEvents()
 bool Window::Update()
 {
 	m_time.Update();
-	m_scene->Update(m_time);
+	m_scene->Update(m_time, m_input);
 	m_audio.Update();
 	
 	m_input.PostUpdate();

@@ -176,6 +176,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="LightComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelComponent.cpp" />
+    <ClCompile Include="PlayerInputComponent.cpp" />
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="SceneParser.cpp" />
@@ -210,6 +211,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="KeybindParser.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="ModelComponent.h" />
+    <ClInclude Include="PlayerInputComponent.h" />
     <ClInclude Include="Quad.h" />
     <ClInclude Include="ResourceHandler.h" />
     <ClInclude Include="Resources.h" />

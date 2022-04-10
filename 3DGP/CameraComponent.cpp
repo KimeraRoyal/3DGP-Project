@@ -27,12 +27,6 @@ void CameraComponent::Start()
 	GetGameObject()->GetScene()->FindComponents<LightComponent>(m_lights);
 }
 
-void CameraComponent::Update(Time& _time)
-{
-	GetGameObject()->GetTransform()->SetPosition(glm::vec3(6.0f, 0.0f, 0.0f) * cos(_time.GetTime() / 2.0f));
-	GetGameObject()->GetTransform()->SetRotation(glm::vec3(0.0, 30.0f, 0.0f) * cos(_time.GetTime() / 2.0f));
-}
-
 void CameraComponent::PreDraw()
 {
 	const glm::mat4 projection = glm::perspective(glm::radians(m_fov), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), m_nearPlane, m_farPlane);
@@ -78,5 +72,5 @@ std::shared_ptr<IComponent> CameraComponent::Parser::Parse(rapidjson::Value& _va
 	component->SetNearPlane(_value["near"].GetFloat());
 	component->SetFarPlane(_value["far"].GetFloat());
 	
-	return component;
+	return std::static_pointer_cast<IComponent>(component);
 }

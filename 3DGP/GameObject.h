@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "Time.h"
+#include "Input.h"
 #include "Transform.h"
 
 class Scene;
@@ -33,7 +34,7 @@ public:
 	bool operator==(const GameObject& _gameObject) const { return m_id == _gameObject.m_id; }
 	
 	void Start();
-	void Update(Time& _time);
+	void Update(Time& _time, Input& _input);
 	void PreDraw();
 	
 	template<typename T, typename std::enable_if<std::is_base_of<IComponent, T>::value>::type* = nullptr>

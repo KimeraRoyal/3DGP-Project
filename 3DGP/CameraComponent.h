@@ -32,7 +32,6 @@ public:
 	CameraComponent();
 
 	void Start() override;
-	void Update(Time& _time) override;
 	void PreDraw() override;
 
 	void Clear() const;

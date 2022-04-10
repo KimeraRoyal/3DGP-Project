@@ -4,6 +4,7 @@
 
 #include "CameraComponent.h"
 #include "ModelComponent.h"
+#include "PlayerInputComponent.h"
 
 SceneParser::SceneParser(Resources* _resources)
 {
@@ -12,6 +13,7 @@ SceneParser::SceneParser(Resources* _resources)
 	m_parsers.insert(std::make_pair("camera", std::make_unique<CameraComponent::Parser>(m_resources)));
 	m_parsers.insert(std::make_pair("light", std::make_unique<LightComponent::Parser>(m_resources)));
 	m_parsers.insert(std::make_pair("model", std::make_unique<ModelComponent::Parser>(m_resources)));
+	m_parsers.insert(std::make_pair("playerInput", std::make_unique<PlayerInputComponent::Parser>(m_resources)));
 }
 
 std::shared_ptr<Scene> SceneParser::Parse(const std::string& _path)

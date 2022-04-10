@@ -21,8 +21,8 @@ public:
 	Transform(const Transform& _copy) = delete;
 	Transform& operator=(const Transform& _other) = delete;
 
-	void Move(const glm::vec3 _amount) { m_position += _amount; }
-	void Rotate(const glm::vec3 _amount) { m_rotation += _amount; }
+	void Move(const glm::vec3 _amount){ SetPosition(m_position + _amount); }
+	void Rotate(const glm::vec3 _amount) { SetRotation(m_rotation += _amount); }
 
 	[[nodiscard]] glm::vec3 GetPosition() const { return m_position; }
 	[[nodiscard]] glm::vec3 GetRotation() const { return m_rotation; }

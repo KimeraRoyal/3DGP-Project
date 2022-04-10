@@ -26,7 +26,7 @@ public:
 	virtual ~IComponent() = default;
 
 	virtual void Start() {}
-	virtual void Update(Time& _time) {}
+	virtual void Update(Time& _time, Input& _input) {}
 	virtual void PreDraw() {}
 
 	[[nodiscard]] std::shared_ptr<GameObject> GetGameObject() const { return AccessGameObject(); }

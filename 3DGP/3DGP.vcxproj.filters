@@ -138,6 +138,9 @@
     <ClCompile Include="KeybindParser.cpp">
       <Filter>Source Files\JSON</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerInputComponent.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -238,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="KeybindParser.h">
       <Filter>Header Files\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerInputComponent.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

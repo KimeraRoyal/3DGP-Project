@@ -14,11 +14,11 @@ void GameObject::Start()
 	}
 }
 
-void GameObject::Update(Time& _time)
+void GameObject::Update(Time& _time, Input& _input)
 {
 	for (std::shared_ptr<IComponent>& component : m_components)
 	{
-		component->Update(_time);
+		component->Update(_time, _input);
 	}
 }
 

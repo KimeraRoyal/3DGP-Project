@@ -13,11 +13,6 @@ void LightComponent::Start()
 	GetGameObject()->GetTransform()->SetPosition(glm::vec3(-10.0f, 5.0f, -8.0f));
 }
 
-void LightComponent::Update(Time& _time)
-{
-	GetGameObject()->GetTransform()->SetPosition(glm::vec3(10.0f * cos(_time.GetTime()), 10.0f * sin(_time.GetTime()), 0.0f));
-}
-
 void LightComponent::AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const
 {
 	_program->SetUniformValueByKey(s_lightPosKey, GetTransform()->GetPosition());
@@ -30,5 +25,5 @@ std::shared_ptr<IComponent> LightComponent::Parser::Parse(rapidjson::Value& _val
 	component->SetLightColor(ParseVector(_value["color"]));
 	component->SetLightStrength(_value["strength"].GetFloat());
 	
-	return component;
+	return std::static_pointer_cast<IComponent>(component);
 }
