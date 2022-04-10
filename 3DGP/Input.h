@@ -4,11 +4,12 @@
 #include <SDL2/SDL_events.h>
 
 #include "BitSet.h"
+#include "KeyBinding.h"
 
 class Input
 {
 private:
-	std::unordered_map<size_t, SDL_Scancode> m_keyBinds;
+	std::unordered_map<size_t, KeyBinding> m_keyBinds;
 	
 	BitSet m_keyMap;
 	BitSet m_lastKeyMap;
@@ -33,7 +34,7 @@ public:
 	[[nodiscard]] int GetTrinaryBindingPressed(size_t _negativeKey, size_t _positiveKey);
 	[[nodiscard]] int GetTrinaryBindingUnpressed(size_t _negativeKey, size_t _positiveKey);
 
-	void SetBinding(const std::string& _bindingName, SDL_Scancode _keyCode);
+	void SetBinding(const std::string& _bindingName, SDL_Scancode _keyCode, SDL_Scancode _altKeyCode);
 
 	static size_t GetBindingKey(const std::string& _bindingName);
 };

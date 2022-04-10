@@ -251,5 +251,8 @@
     <ClInclude Include="Input.h">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
+    <ClInclude Include="KeyBinding.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

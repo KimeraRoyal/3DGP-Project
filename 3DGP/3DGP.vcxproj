@@ -208,6 +208,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="IRenderable.h" />
     <ClInclude Include="IResource.h" />
     <ClInclude Include="ITexture.h" />
+    <ClInclude Include="KeyBinding.h" />
     <ClInclude Include="KeybindParser.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="ModelComponent.h" />

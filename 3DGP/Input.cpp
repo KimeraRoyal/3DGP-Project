@@ -34,17 +34,42 @@ bool Input::GetKeyUnpressed(const SDL_Scancode _keyCode)
 
 bool Input::GetBindingDown(const size_t _bindingKey)
 {
-	return GetKeyDown(m_keyBinds.at(_bindingKey));
+	const bool alt = m_keyBinds.at(_bindingKey).HasAlt() && GetKeyDown(m_keyBinds.at(_bindingKey).GetAlt());
+	return GetKeyDown(m_keyBinds.at(_bindingKey).GetValue()) || alt;
 }
 
 bool Input::GetBindingPressed(const size_t _bindingKey)
 {
-	return GetKeyPressed(m_keyBinds.at(_bindingKey));
+	KeyBinding& binding = m_keyBinds.at(_bindingKey);
+
+	// First - was the main key pressed?
+	bool pressed = GetKeyPressed(binding.GetValue());
+	if(m_keyBinds.at(_bindingKey).HasAlt())
+	{
+		// If the main key was pressed, was the alt key down last frame?
+		if (pressed) { pressed = pressed && !m_lastKeyMap.IsBitSet(binding.GetAlt()); }
+
+		// If the main key was not pressed, was the alt key pressed this frame while the main key was unpressed last frame?
+		else { pressed = GetKeyPressed(binding.GetAlt()) && !m_lastKeyMap.IsBitSet(binding.GetValue()); }
+	}
+	return pressed;
 }
 
 bool Input::GetBindingUnpressed(const size_t _bindingKey)
 {
-	return GetKeyUnpressed(m_keyBinds.at(_bindingKey));
+	KeyBinding& binding = m_keyBinds.at(_bindingKey);
+
+	// First - was the main key unpressed?
+	bool unpressed = GetKeyUnpressed(binding.GetValue());
+	if (m_keyBinds.at(_bindingKey).HasAlt())
+	{
+		// If the main key was unpressed, is the alt key currently pressed?
+		if (unpressed) { unpressed = unpressed && !GetKeyDown(binding.GetAlt()); }
+
+		// If the main key was not unpressed, was the alt key unpressed this frame without the main key still being down?
+		else { unpressed = GetKeyUnpressed(binding.GetAlt()) && !GetKeyDown(binding.GetValue()); }
+	}
+	return unpressed;
 }
 
 int Input::GetTrinaryKeyDown(const SDL_Scancode _negative, const SDL_Scancode _positive)
@@ -64,23 +89,23 @@ int Input::GetTrinaryKeyUnpressed(const SDL_Scancode _negative, const SDL_Scanco
 
 int Input::GetTrinaryBindingDown(const size_t _negativeKey, const size_t _positiveKey)
 {
-	return GetTrinaryKeyDown(m_keyBinds.at(_negativeKey), m_keyBinds.at(_positiveKey));
+	return -GetBindingDown(_negativeKey) + GetBindingDown(_positiveKey);
 }
 
 int Input::GetTrinaryBindingPressed(const size_t _negativeKey, const size_t _positiveKey)
 {
-	return GetTrinaryKeyPressed(m_keyBinds.at(_negativeKey), m_keyBinds.at(_positiveKey));
+	return -GetBindingPressed(_negativeKey) + GetBindingPressed(_positiveKey);
 }
 
 int Input::GetTrinaryBindingUnpressed(const size_t _negativeKey, const size_t _positiveKey)
 {
-	return GetTrinaryKeyUnpressed(m_keyBinds.at(_negativeKey), m_keyBinds.at(_positiveKey));
+	return -GetBindingUnpressed(_negativeKey) + GetBindingUnpressed(_positiveKey);
 }
 
-void Input::SetBinding(const std::string& _bindingName, const SDL_Scancode _keyCode)
+void Input::SetBinding(const std::string& _bindingName, const SDL_Scancode _keyCode, const SDL_Scancode _altKeyCode)
 {
 	const size_t key = std::hash<std::string>()(_bindingName);
-	m_keyBinds[key] = _keyCode;
+	m_keyBinds.insert_or_assign(key, KeyBinding(_keyCode, _altKeyCode));
 }
 
 size_t Input::GetBindingKey(const std::string& _bindingName)

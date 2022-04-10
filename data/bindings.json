@@ -1,10 +1,10 @@
 {
   "bindings" :
   [
-    {"name" : "left", "value" : 4},
-    {"name" : "right", "value" : 7},
-    {"name" : "up", "value" : 26},
-    {"name" : "down", "value" : 22},
+    {"name" : "left", "value" : 4, "alt" : 80},
+    {"name" : "right", "value" : 7, "alt" : 79},
+    {"name" : "up", "value" : 26, "alt" : 82},
+    {"name" : "down", "value" : 22, "alt" : 81},
     {"name" : "jump", "value" : 44}
   ]
 }
