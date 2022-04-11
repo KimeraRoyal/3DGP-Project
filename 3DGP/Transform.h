@@ -37,6 +37,10 @@ public:
 
 	[[nodiscard]] glm::mat4 GetModelMatrix() const;
 
+	[[nodiscard]] glm::vec3 GetLeft() const { return normalize(glm::vec3(GetModelMatrix()[0])); }
+	[[nodiscard]] glm::vec3 GetUp() const { return normalize(glm::vec3(GetModelMatrix()[1])); }
+	[[nodiscard]] glm::vec3 GetForward() const { return normalize(glm::vec3(GetModelMatrix()[2])); }
+
 	void SetParent(Transform* _parent);
 	
 	void SetPosition(const glm::vec3 _position)

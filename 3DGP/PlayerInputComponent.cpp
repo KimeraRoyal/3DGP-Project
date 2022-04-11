@@ -12,7 +12,13 @@ void PlayerInputComponent::Update(Time& _time, Input& _input)
 {
 	const float horizontal = static_cast<float>(_input.GetAxisDown(s_horizontalBinding));
 	const float vertical = static_cast<float>(_input.GetAxisDown(s_verticalBinding));
-	GetTransform()->Move(glm::vec3(horizontal, 0, -vertical) * (m_movementSpeed * _time.GetDeltaTime()));
+
+	//TODO: Rotate by Quaternion rotation
+	const glm::vec3 movementVector = -GetTransform()->GetLeft() * horizontal + GetTransform()->GetForward() * vertical;
+	GetTransform()->Move(movementVector * (m_movementSpeed * _time.GetDeltaTime()));
+	
+	const float rotation = static_cast<float>(_input.GetTrinaryKeyDown(SDL_SCANCODE_Q, SDL_SCANCODE_E));
+	GetTransform()->Rotate(glm::vec3(0, rotation,  0) * (-m_turnSpeed * _time.GetDeltaTime()));
 }
 
 std::shared_ptr<IComponent> PlayerInputComponent::Parser::Parse(rapidjson::Value& _value)
@@ -20,6 +26,7 @@ std::shared_ptr<IComponent> PlayerInputComponent::Parser::Parse(rapidjson::Value
 	std::shared_ptr<PlayerInputComponent> component = std::make_unique<PlayerInputComponent>();
 
 	component->SetMovementSpeed(_value["speed"].GetFloat());
+	component->SetTurnSpeed(_value["turnSpeed"].GetFloat());
 
 	return std::static_pointer_cast<IComponent>(component);
 }

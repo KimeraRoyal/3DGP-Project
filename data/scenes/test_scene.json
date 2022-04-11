@@ -22,7 +22,7 @@
       "components" :
       [
         { "componentType" : "model", "model" : "data/models/curuthers/curuthers.obj", "shader" : "data/shaders/phong", "material" : "data/materials/curuthers.json" },
-        { "componentType" : "playerInput", "speed" : 3.0 }
+        { "componentType" : "playerInput", "speed" : 3.0, "turnSpeed" : 70.0 }
       ],
       "children" :
       [

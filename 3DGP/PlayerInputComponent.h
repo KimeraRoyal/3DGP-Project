@@ -10,6 +10,7 @@ private:
 	static size_t s_verticalBinding;
 	
 	float m_movementSpeed;
+	float m_turnSpeed;
 public:
 	PlayerInputComponent();
 	void Update(Time& _time, Input& _input) override;
@@ -22,5 +23,6 @@ public:
 	};
 
 	void SetMovementSpeed(const float _movementSpeed) { m_movementSpeed = _movementSpeed; }
+	void SetTurnSpeed(const float _turnSpeed) { m_turnSpeed = _turnSpeed; }
 };
 
