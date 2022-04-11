@@ -10,6 +10,9 @@ class LightComponent : public IComponent
 {
 private:
 	static size_t s_lightPosKey;
+	static size_t s_ambientKey;
+	static size_t s_diffuseKey;
+	static size_t s_specularKey;
 	
 	glm::vec3 m_lightColor;
 	float m_lightStrength;

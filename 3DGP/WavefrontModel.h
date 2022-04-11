@@ -14,7 +14,7 @@ private:
 public:
 	~WavefrontModel() override;
 
-	void Load(const std::string& _path) override;
+	void Load(const std::string& _path, Resources* _resources) override;
 	
 	[[nodiscard]] GLuint GetVaoId() override { return m_model.vaoId; }
 	[[nodiscard]] GLuint GetTextureId() override;

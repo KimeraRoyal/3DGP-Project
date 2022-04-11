@@ -12,7 +12,6 @@
 class ModelComponent : public IComponent, public IRenderable
 {
 private:
-	std::shared_ptr<ITexture> m_texture;
 	std::shared_ptr<Material> m_material;
 	
 	static size_t s_modelMatrixKey;
@@ -39,7 +38,6 @@ public:
 	void SetModel(const std::shared_ptr<IModel>& _model) { m_model = _model; }
 	void SetProgram(const std::shared_ptr<ShaderProgram>& _program);
 	
-	void SetTexture(const std::shared_ptr<Texture>& _texture) { m_texture = _texture; }
 	void SetMaterial(const std::shared_ptr<Material>& _material) { m_material = _material; }
 };
 

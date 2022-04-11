@@ -3,33 +3,38 @@
 #include <memory>
 #include <glm/vec3.hpp>
 
+#include "ITexture.h"
 #include "ShaderProgram.h"
 
 class Material : public IResource
 {
 private:
-	static size_t s_ambientKey;
-	static size_t s_diffuseKey;
 	static size_t s_specularKey;
 	static size_t s_shininessKey;
-	
-	glm::vec3 m_ambient;
-	glm::vec3 m_diffuse;
+
+	std::shared_ptr<ITexture> m_diffuse;
 	glm::vec3 m_specular;
 	
 	float m_shininess;
 public:
 	Material()
-		: m_ambient(glm::vec3(0.0f)), m_diffuse(glm::vec3(0.0f)), m_specular(glm::vec3(0.0f)), m_shininess(0.0f) {}
+		: m_diffuse(nullptr), m_specular(glm::vec3(0.0f)), m_shininess(0.0f) {}
 	~Material() override = default;
 	
-	void Load(const std::string& _path) override;
+	void Load(const std::string& _path, Resources* _resources) override;
 
 	void AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const;
 
-	void SetAmbient(const glm::vec3 _ambient) { m_ambient = _ambient; }
-	void SetDiffuse(const glm::vec3 _diffuse) { m_diffuse = _diffuse; }
+	void Bind() const;
+	void Unbind() const;
+
+	[[nodiscard]] std::shared_ptr<ITexture> GetDiffuse() const { return m_diffuse; }
+	[[nodiscard]] glm::vec3 GetSpecular() const { return m_specular; }
+	[[nodiscard]] float GetShininess() const { return m_shininess; }
+
+	void SetDiffuse(const std::shared_ptr<ITexture>& _diffuse) { m_diffuse = _diffuse; }
 	void SetSpecular(const glm::vec3 _specular) { m_specular = _specular; }
-	
 	void SetShininess(const float _shininess) { m_shininess = _shininess; }
+
+	bool HasTexture() const { return m_diffuse != nullptr; }
 };

@@ -1,6 +1,9 @@
 #include "LightComponent.h"
 
-size_t LightComponent::s_lightPosKey = std::hash<std::string>()("in_LightPos");
+size_t LightComponent::s_lightPosKey = std::hash<std::string>()("in_Light.position");
+size_t LightComponent::s_ambientKey = std::hash<std::string>()("in_Light.ambient");
+size_t LightComponent::s_diffuseKey = std::hash<std::string>()("in_Light.diffuse");
+size_t LightComponent::s_specularKey = std::hash<std::string>()("in_Light.specular");
 
 LightComponent::LightComponent()
 {
@@ -16,6 +19,10 @@ void LightComponent::Start()
 void LightComponent::AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const
 {
 	_program->SetUniformValueByKey(s_lightPosKey, GetTransform()->GetPosition());
+
+	_program->SetUniformValueByKey(s_ambientKey, m_lightColor * m_lightStrength * 0.2f);
+	_program->SetUniformValueByKey(s_diffuseKey, m_lightColor * m_lightStrength);
+	_program->SetUniformValueByKey(s_specularKey, glm::vec3(1) * m_lightStrength);
 }
 
 std::shared_ptr<IComponent> LightComponent::Parser::Parse(rapidjson::Value& _value)

@@ -22,7 +22,7 @@ ShaderProgram::~ShaderProgram()
 	glDeleteProgram(m_programId);
 }
 
-void ShaderProgram::Load(const std::string& _path)
+void ShaderProgram::Load(const std::string& _path, Resources* _resources)
 {
 	Load(_path + ".vert", _path + ".frag");
 }
@@ -148,8 +148,14 @@ void ShaderProgram::SetUniformKeys()
 
 	std::vector<std::string> uniformNames;
 
+#ifdef _DEBUG
+	std::printf("Hashing uniforms: ");
+#endif
 	for(GLint uniformLocation = 0; uniformLocation < activeUniforms; ++uniformLocation)
 	{
+#ifdef _DEBUG
+		if (uniformLocation > 0) { std::printf(","); }
+#endif
 		glGetProgramResourceiv(m_programId, GL_UNIFORM, uniformLocation, 1, &uniformProperties[0], 1, nullptr, &uniformValues[0]);
 
 		nameData.resize(uniformValues[0]);
@@ -162,7 +168,7 @@ void ShaderProgram::SetUniformKeys()
 		m_uniformLocations.insert(std::make_pair(key, uniformLocation));
 
 #ifdef _DEBUG
-		std::printf("Uniform %d: %s hashed as %u\n", uniformLocation, uniformName.c_str(), key);
+		std::printf(" %d: \"%s\" (%u)", uniformLocation, uniformName.c_str(), key);
 #endif
 	}
 #ifdef _DEBUG

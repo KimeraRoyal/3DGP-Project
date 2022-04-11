@@ -31,7 +31,7 @@ private:
 public:
 	explicit Quad(const std::shared_ptr<ITexture>& _texture);
 
-	void Load(const std::string& _path) override {}
+	void Load(const std::string& _path, Resources* _resources) override {}
 	
 	[[nodiscard]] GLuint GetVaoId() override { return m_vao->GetId(); }
 	[[nodiscard]] unsigned int GetVertexCount() override { return m_vao->GetVertexCount(); }

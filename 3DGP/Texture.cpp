@@ -17,7 +17,7 @@ Texture::~Texture()
 	glDeleteTextures(1, &m_textureId);
 }
 
-void Texture::Load(const std::string& _path)
+void Texture::Load(const std::string& _path, Resources* _resources)
 {
 	// Load texture from file.
 	unsigned char* data = stbi_load(_path.c_str(), &m_textureSize.x, &m_textureSize.y, nullptr, 4);

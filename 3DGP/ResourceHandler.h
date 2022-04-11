@@ -6,13 +6,15 @@
 #include "File.h"
 #include "IResource.h"
 
+class Resources;
+
 template<class T>
 class ResourceHandler
 {
 private:
 	std::unordered_map<size_t, std::shared_ptr<T>> m_resources;
 public:
-	std::shared_ptr<T> GetResource(const std::string& _path, const bool _load = true)
+	std::shared_ptr<T> GetResource(const std::string& _path, Resources* _resources, const bool _load = true)
 	{
 		// The return value
 		std::shared_ptr<T> resource;
@@ -27,7 +29,7 @@ public:
 			resource = std::make_unique<T>();
 			if(_load)
 			{
-				std::dynamic_pointer_cast<IResource>(resource)->Load(File::EvaluatePath(_path));
+				std::dynamic_pointer_cast<IResource>(resource)->Load(File::EvaluatePath(_path), _resources);
 			}
 
 			m_resources.insert(std::make_pair(key, resource));

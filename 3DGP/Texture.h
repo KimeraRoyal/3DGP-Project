@@ -17,7 +17,7 @@ public:
 	Texture();
 	~Texture() override;
 
-	void Load(const std::string& _path) override;
+	void Load(const std::string& _path, Resources* _resources) override;
 	
 	Texture(const Texture& _copy) = delete;
 	Texture& operator=(const Texture& _other) = delete;

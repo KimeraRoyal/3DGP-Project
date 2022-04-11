@@ -28,7 +28,7 @@ public:
 	ShaderProgram(const ShaderProgram& _copy) = delete;
 	ShaderProgram& operator=(const ShaderProgram& _other) = delete;
 
-	void Load(const std::string& _path) override;
+	void Load(const std::string& _path, Resources* _resources) override;
 	void Load(const std::string& _vertShader, const std::string& _fragShader);
 
 	void Link() const;
