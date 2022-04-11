@@ -3,21 +3,11 @@
   [
     { "texture" : "data/models/level/level_map.png", "mipmap" : true, "wrapX" : "repeat", "wrapY" : "repeat", "filtering" : false }
   ],
-  "screen" :
-  [
+  "screen" : [
     { "shader" : "data/shaders/screen/screen" }
   ],
   "objects" :
   [
-    {
-      "name" : "camera",
-      "transform" : { "position" : [ 0.0, 0.0, 0.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
-      "components" :
-      [
-        { "componentType" : "camera", "clearColor" : [ 0.65, 0.5, 0.9 ], "fov" : 45.0, "near" : 0.1, "far" : 100.0 },
-        { "componentType" : "playerInput", "speed" : 3.0 }
-      ]
-    },
     {
       "name" : "light",
       "transform" : { "position" : [ -10.0, 5.0, -8.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
@@ -28,10 +18,22 @@
     },
     {
       "name" : "curuthers",
-      "transform" : { "position" : [ 0.0, -1.0, -10.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
+      "transform" : { "position" : [ 0.0, 0.0, -10.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 0.5, 0.5, 0.5 ] },
       "components" :
       [
-        { "componentType" : "model", "model" : "data/models/curuthers/curuthers.obj", "shader" : "data/shaders/phong", "material" : "data/materials/curuthers.json" }
+        { "componentType" : "model", "model" : "data/models/curuthers/curuthers.obj", "shader" : "data/shaders/phong", "material" : "data/materials/curuthers.json" },
+        { "componentType" : "playerInput", "speed" : 3.0 }
+      ],
+      "children" :
+      [
+        {
+          "name" : "camera",
+          "transform" : { "position" : [ 0.0, 2.5, -12.5 ], "rotation" : [ -10.0, 180.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
+          "components" :
+          [
+            { "componentType" : "camera", "clearColor" : [ 0.65, 0.5, 0.9 ], "fov" : 45.0, "near" : 0.1, "far" : 100.0 }
+          ]
+        }
       ]
     },
     {

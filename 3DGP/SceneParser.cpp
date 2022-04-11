@@ -108,7 +108,7 @@ void SceneParser::ParseTexture(rapidjson::Value& _textureValue)
 #endif
 }
 
-void SceneParser::ParseObject(const std::shared_ptr<Scene>& _scene, rapidjson::Value& _objectValue)
+std::shared_ptr<GameObject> SceneParser::ParseObject(const std::shared_ptr<Scene>& _scene, rapidjson::Value& _objectValue)
 {
 	std::shared_ptr<GameObject> gameObject = _scene->CreateGameObject();
 
@@ -129,6 +129,19 @@ void SceneParser::ParseObject(const std::shared_ptr<Scene>& _scene, rapidjson::V
 			ParseComponent(gameObject, components[i]);
 		}
 	}
+
+	if(_objectValue.HasMember("children"))
+	{
+		rapidjson::Value& children = _objectValue["children"];
+		assert(children.IsArray());
+		for(rapidjson::SizeType i = 0; i < children.Size(); i++)
+		{
+			std::shared_ptr<GameObject> child = ParseObject(_scene, children[i]);
+			child->GetTransform()->SetParent(gameObject->GetTransform());
+		}
+	}
+
+	return gameObject;
 }
 
 void SceneParser::ParseComponent(const std::shared_ptr<GameObject>& _gameObject, rapidjson::Value& _componentValue)

@@ -55,6 +55,12 @@
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{300e9f69-c78b-4cac-a911-ed4bc27cc8be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Physics">
+      <UniqueIdentifier>{5b4ed727-6e94-47b2-9825-4a5ed4bc6b99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Physics">
+      <UniqueIdentifier>{6235f353-e83f-44e5-adf6-25058d0ec98a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,9 +86,6 @@
     </ClCompile>
     <ClCompile Include="Time.cpp">
       <Filter>Source Files\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Source Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\Scene</Filter>
@@ -150,6 +153,9 @@
     <ClCompile Include="JsonParser.cpp">
       <Filter>Source Files\JSON</Filter>
     </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -172,9 +178,6 @@
     </ClInclude>
     <ClInclude Include="Time.h">
       <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files\Scene</Filter>
@@ -265,6 +268,9 @@
     </ClInclude>
     <ClInclude Include="JsonParser.h">
       <Filter>Header Files\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
