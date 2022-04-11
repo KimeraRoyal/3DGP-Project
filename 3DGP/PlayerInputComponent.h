@@ -6,8 +6,8 @@ class PlayerInputComponent :
     public IComponent
 {
 private:
-	static size_t s_leftBinding;
-	static size_t s_rightBinding;
+	static size_t s_horizontalBinding;
+	static size_t s_verticalBinding;
 	
 	float m_movementSpeed;
 public:

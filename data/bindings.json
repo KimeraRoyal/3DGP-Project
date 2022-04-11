@@ -6,5 +6,10 @@
     {"name" : "up", "value" : 26, "alt" : 82},
     {"name" : "down", "value" : 22, "alt" : 81},
     {"name" : "jump", "value" : 44}
+  ],
+  "axis" :
+  [
+    {"name" : "horizontal", "negative" : "left", "positive" : "right"},
+    {"name" : "vertical", "negative" : "down", "positive" : "up"}
   ]
 }

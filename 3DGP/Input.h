@@ -5,11 +5,13 @@
 
 #include "BitSet.h"
 #include "KeyBinding.h"
+#include "InputAxis.h"
 
 class Input
 {
 private:
 	std::unordered_map<size_t, KeyBinding> m_keyBinds;
+	std::unordered_map<size_t, InputAxis> m_inputAxis;
 	
 	BitSet m_keyMap;
 	BitSet m_lastKeyMap;
@@ -34,8 +36,11 @@ public:
 	[[nodiscard]] int GetTrinaryBindingPressed(size_t _negativeKey, size_t _positiveKey);
 	[[nodiscard]] int GetTrinaryBindingUnpressed(size_t _negativeKey, size_t _positiveKey);
 
-	void SetBinding(const std::string& _bindingName, SDL_Scancode _keyCode, SDL_Scancode _altKeyCode);
+	[[nodiscard]] int GetAxisDown(size_t _axisKey);
+	[[nodiscard]] int GetAxisPressed(size_t _axisKey);
+	[[nodiscard]] int GetAxisUnpressed(size_t _axisKey);
 
-	static size_t GetBindingKey(const std::string& _bindingName);
+	void SetBinding(const std::string& _bindingName, SDL_Scancode _keyCode, SDL_Scancode _altKeyCode);
+	void SetInputAxis(const std::string& _axisName, const std::string& _negative, const std::string& _positive);
 };
 

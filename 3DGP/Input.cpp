@@ -102,13 +102,32 @@ int Input::GetTrinaryBindingUnpressed(const size_t _negativeKey, const size_t _p
 	return -GetBindingUnpressed(_negativeKey) + GetBindingUnpressed(_positiveKey);
 }
 
+int Input::GetAxisDown(const size_t _axisKey)
+{
+	InputAxis& axis = m_inputAxis.at(_axisKey);
+	return GetTrinaryBindingDown(axis.GetNegative(), axis.GetPositive());
+}
+
+int Input::GetAxisPressed(const size_t _axisKey)
+{
+	InputAxis& axis = m_inputAxis.at(_axisKey);
+	return GetTrinaryBindingPressed(axis.GetNegative(), axis.GetPositive());
+}
+
+int Input::GetAxisUnpressed(const size_t _axisKey)
+{
+	InputAxis& axis = m_inputAxis.at(_axisKey);
+	return GetTrinaryBindingUnpressed(axis.GetNegative(), axis.GetPositive());
+}
+
 void Input::SetBinding(const std::string& _bindingName, const SDL_Scancode _keyCode, const SDL_Scancode _altKeyCode)
 {
 	const size_t key = std::hash<std::string>()(_bindingName);
 	m_keyBinds.insert_or_assign(key, KeyBinding(_keyCode, _altKeyCode));
 }
 
-size_t Input::GetBindingKey(const std::string& _bindingName)
+void Input::SetInputAxis(const std::string& _axisName, const std::string& _negative, const std::string& _positive)
 {
-	return std::hash<std::string>()(_bindingName);
+	const size_t key = std::hash<std::string>()(_axisName);
+	m_inputAxis.insert_or_assign(key, InputAxis(_negative, _positive));
 }
