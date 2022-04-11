@@ -129,12 +129,6 @@
     <ClCompile Include="SceneParser.cpp">
       <Filter>Source Files\JSON</Filter>
     </ClCompile>
-    <ClCompile Include="IJsonParser.cpp">
-      <Filter>Source Files\JSON</Filter>
-    </ClCompile>
-    <ClCompile Include="IComponentParser.cpp">
-      <Filter>Source Files\JSON</Filter>
-    </ClCompile>
     <ClCompile Include="BitSet.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
@@ -146,6 +140,15 @@
     </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialParser.cpp">
+      <Filter>Source Files\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonParser.cpp">
+      <Filter>Source Files\JSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -233,9 +236,6 @@
     <ClInclude Include="SceneParser.h">
       <Filter>Header Files\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="IComponentParser.h">
-      <Filter>Header Files\JSON</Filter>
-    </ClInclude>
     <ClInclude Include="IJsonParser.h">
       <Filter>Header Files\JSON</Filter>
     </ClInclude>
@@ -253,6 +253,18 @@
     </ClInclude>
     <ClInclude Include="KeyBinding.h">
       <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputAxis.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialParser.h">
+      <Filter>Header Files\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonParser.h">
+      <Filter>Header Files\JSON</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

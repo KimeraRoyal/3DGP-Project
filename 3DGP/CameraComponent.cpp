@@ -5,9 +5,9 @@
 #include "Scene.h"
 #include "Window.h"
 
-size_t CameraComponent::s_viewKey = ShaderProgram::GetUniformKey("in_View");
-size_t CameraComponent::s_projectionKey = ShaderProgram::GetUniformKey("in_Projection");
-size_t CameraComponent::s_viewPosKey = ShaderProgram::GetUniformKey("in_ViewPos");
+size_t CameraComponent::s_viewKey = std::hash<std::string>()("in_View");
+size_t CameraComponent::s_projectionKey = std::hash<std::string>()("in_Projection");
+size_t CameraComponent::s_viewPosKey = std::hash<std::string>()("in_ViewPos");
 
 CameraComponent::CameraComponent()
 {

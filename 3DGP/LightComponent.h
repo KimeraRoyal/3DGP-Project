@@ -3,7 +3,7 @@
 #include <rapidjson/document.h>
 
 #include "IComponent.h"
-#include "IComponentParser.h"
+#include "IJsonParser.h"
 #include "ShaderProgram.h"
 
 class LightComponent : public IComponent
@@ -14,10 +14,10 @@ private:
 	glm::vec3 m_lightColor;
 	float m_lightStrength;
 public:
-	class Parser final : public IComponentParser
+	class Parser final : public IJsonParser<IComponent>
 	{
 	public:
-		explicit Parser(Resources* _resources) : IComponentParser(_resources) {}
+		explicit Parser(Resources* _resources) : IJsonParser(_resources) {}
 		std::shared_ptr<IComponent> Parse(rapidjson::Value& _value) override;
 	};
 	

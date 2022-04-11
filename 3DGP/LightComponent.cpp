@@ -1,6 +1,6 @@
 #include "LightComponent.h"
 
-size_t LightComponent::s_lightPosKey = ShaderProgram::GetUniformKey("in_LightPos");
+size_t LightComponent::s_lightPosKey = std::hash<std::string>()("in_LightPos");
 
 LightComponent::LightComponent()
 {

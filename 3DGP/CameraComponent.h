@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IComponent.h"
-#include "IComponentParser.h"
+#include "IJsonParser.h"
 #include "IRenderable.h"
 #include "LightComponent.h"
 
@@ -22,10 +22,10 @@ private:
 	std::vector<std::shared_ptr<IRenderable>> m_renderables;
 	std::vector<std::shared_ptr<LightComponent>> m_lights;
 public:
-	class Parser final : public IComponentParser
+	class Parser final : public IJsonParser<IComponent>
 	{
 	public:
-		explicit Parser(Resources* _resources) : IComponentParser(_resources) {}
+		explicit Parser(Resources* _resources) : IJsonParser(_resources) {}
 		std::shared_ptr<IComponent> Parse(rapidjson::Value& _value) override;
 	};
 	

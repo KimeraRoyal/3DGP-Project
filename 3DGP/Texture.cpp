@@ -31,7 +31,6 @@ void Texture::Load(const std::string& _path)
 	// Defines texture and frees loaded data.
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_textureSize.x, m_textureSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 	free(data);
-
-	glGenerateMipmap(GL_TEXTURE_2D);
+	
 	glBindTexture(GL_TEXTURE_2D, 0);
 }

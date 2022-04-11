@@ -1,23 +1,18 @@
 #pragma once
 
 #include <memory>
-#include <string>
 
-#include <glm/vec3.hpp>
-#include <rapidjson/document.h>
-
-class JsonParser
-{
-protected:
-	rapidjson::Document ReadDocument(const std::string& _path) const;
-	
-	static glm::vec3 ParseVector(rapidjson::Value& _value);
-};
+#include "JsonParser.h"
+#include "Resources.h"
 
 template<class T>
 class IJsonParser : public JsonParser
 {
+protected:
+	Resources* m_resources;
 public:
+	IJsonParser(Resources* _resources)
+		: m_resources(_resources) {}
 	virtual ~IJsonParser() = default;
 	
 	virtual std::shared_ptr<T> Parse(rapidjson::Value& _value) = 0;

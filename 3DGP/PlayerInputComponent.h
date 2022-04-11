@@ -1,6 +1,6 @@
 #pragma once
 #include "IComponent.h"
-#include "IComponentParser.h"
+#include "IJsonParser.h"
 
 class PlayerInputComponent :
     public IComponent
@@ -14,10 +14,10 @@ public:
 	PlayerInputComponent();
 	void Update(Time& _time, Input& _input) override;
 	
-	class Parser final : public IComponentParser
+	class Parser final : public IJsonParser<IComponent>
 	{
 	public:
-		explicit Parser(Resources* _resources) : IComponentParser(_resources) {}
+		explicit Parser(Resources* _resources) : IJsonParser(_resources) {}
 		std::shared_ptr<IComponent> Parse(rapidjson::Value& _value) override;
 	};
 

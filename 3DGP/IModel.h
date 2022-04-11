@@ -17,10 +17,10 @@ public:
 	explicit IModel(const std::shared_ptr<ITexture>& _texture);
 	virtual ~IModel() = default;
 
-	void Draw();
+	void Draw(bool _bindTexture = true);
 	
-	void Bind();
-	static void Unbind();
+	void Bind(bool _bindTexture = true);
+	static void Unbind(bool _unbindTexture = true);
 	
 	[[nodiscard]] virtual GLuint GetVaoId() = 0;
 	[[nodiscard]] virtual GLuint GetTextureId();

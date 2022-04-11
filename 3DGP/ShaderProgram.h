@@ -55,7 +55,5 @@ public:
 	void SetUniformValueByName(const std::string& _uniformName, const glm::vec3& _value) const;
 	void SetUniformValueByName(const std::string& _uniformName, const glm::vec4& _value) const;
 	void SetUniformValueByName(const std::string& _uniformName, const glm::mat4& _value) const;
-
-	static size_t GetUniformKey(const std::string& _uniformName);
 };
 

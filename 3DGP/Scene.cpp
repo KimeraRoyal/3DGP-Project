@@ -2,13 +2,12 @@
 
 #include <iostream>
 
-
 #include "Window.h"
 #include "Shader.h"
 
 #include "GameObject.h"
 
-size_t Scene::s_lightPosKey = ShaderProgram::GetUniformKey("in_LightPos");
+size_t Scene::s_lightPosKey = std::hash<std::string>()("in_LightPos");
 
 Scene::Scene(Resources* _resources)
 {

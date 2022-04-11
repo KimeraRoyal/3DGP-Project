@@ -169,8 +169,3 @@ void ShaderProgram::SetUniformKeys()
 	std::printf("\n");
 #endif
 }
-
-size_t ShaderProgram::GetUniformKey(const std::string& _uniformName)
-{
-	return std::hash<std::string>()(_uniformName);
-}

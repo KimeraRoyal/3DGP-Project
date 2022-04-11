@@ -10,22 +10,22 @@ IModel::IModel(const std::shared_ptr<ITexture>& _texture)
 	m_texture = _texture;
 }
 
-void IModel::Draw()
+void IModel::Draw(const bool _bindTexture)
 {
-	Bind();
+	Bind(_bindTexture);
 	glDrawArrays(GL_TRIANGLES, 0, GetVertexCount());
-	Unbind();
+	Unbind(_bindTexture);
 }
 
-void IModel::Bind()
+void IModel::Bind(const bool _bindTexture)
 {
-	glBindTexture(GL_TEXTURE_2D, GetTextureId());
+	if (_bindTexture) { glBindTexture(GL_TEXTURE_2D, GetTextureId()); }
 	glBindVertexArray(GetVaoId());
 }
 
-void IModel::Unbind()
+void IModel::Unbind(const bool _unbindTexture)
 {
-	glBindTexture(GL_TEXTURE_2D, 0);
+	if (_unbindTexture) { glBindTexture(GL_TEXTURE_2D, 0); }
 	glBindVertexArray(0);
 }
 

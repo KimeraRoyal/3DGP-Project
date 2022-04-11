@@ -4,8 +4,8 @@
 #include "Shader.h"
 #include "Window.h"
 
-size_t Screen::s_projectionKey = ShaderProgram::GetUniformKey("in_Projection");
-size_t Screen::s_modelKey = ShaderProgram::GetUniformKey("in_Model");
+size_t Screen::s_projectionKey = std::hash<std::string>()("in_Projection");
+size_t Screen::s_modelKey = std::hash<std::string>()("in_Model");
 
 Screen::Screen(const std::shared_ptr<ShaderProgram>& _shaderProgram, const unsigned int _colorBufferCount)
 {
