@@ -2,9 +2,10 @@
 
 #include <stdexcept>
 
-RenderTexture::RenderTexture(const int _width, const int _height, const unsigned int _colorBufferCount)
+RenderTexture::RenderTexture(const int _width, const int _height, const unsigned int _colorBufferCount, const GLenum _format, const GLenum _type, const GLenum _filter, const GLenum _wrap)
 {
 	// Generate and bind framebuffer object.
+	m_fboId = 0;
 	glGenFramebuffers(1, &m_fboId);
 	if (!m_fboId) { throw std::runtime_error("Failed to load frame buffer object in render texture."); }
 	glBindFramebuffer(GL_FRAMEBUFFER, m_fboId);
@@ -18,13 +19,13 @@ RenderTexture::RenderTexture(const int _width, const int _height, const unsigned
 	for(unsigned int i = 0; i < _colorBufferCount; i++)
 	{
 		glBindTexture(GL_TEXTURE_2D, m_textureIds[i]);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+		glTexImage2D(GL_TEXTURE_2D, 0, _format, _width, _height, 0, _format, _type, nullptr);
 
 		// The render texture should not generate minmaps.
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _filter);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _filter);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _wrap);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _wrap);
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, m_textureIds[i], 0);
@@ -33,6 +34,7 @@ RenderTexture::RenderTexture(const int _width, const int _height, const unsigned
 	}
 
 	// Generate and bind render buffer.
+	m_rboId = 0;
 	glGenRenderbuffers(1, &m_rboId);
 	glBindRenderbuffer(GL_RENDERBUFFER, m_rboId);
 	
