@@ -6,16 +6,12 @@
 #include "IJsonParser.h"
 #include "ShaderProgram.h"
 
+class ILight;
+
 class LightComponent : public IComponent
 {
 private:
-	static size_t s_lightPosKey;
-	static size_t s_ambientKey;
-	static size_t s_diffuseKey;
-	static size_t s_specularKey;
-	
-	glm::vec3 m_lightColor;
-	float m_lightStrength;
+	std::shared_ptr<ILight> m_light;
 public:
 	class Parser final : public IJsonParser<IComponent>
 	{
@@ -30,9 +26,7 @@ public:
 
 	void AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const;
 
-	[[nodiscard]] glm::vec3 GetLightColor() const { return m_lightColor; }
-	[[nodiscard]] float GetLightStrength() const { return m_lightStrength; }
-
-	void SetLightColor(const glm::vec3 _lightColor) { m_lightColor = _lightColor; }
-	void SetLightStrength(const float _lightStrength) { m_lightStrength = _lightStrength; }
+	[[nodiscard]] std::shared_ptr<ILight> GetLight() const { return m_light; }
+	
+	void SetLight(const std::shared_ptr<ILight>& _light) { m_light = _light; }
 };

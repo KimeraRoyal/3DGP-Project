@@ -162,10 +162,12 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AmbientLight.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="AudioEvent.cpp" />
     <ClCompile Include="BitSet.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="JsonParser.cpp" />
@@ -178,6 +180,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="MaterialParser.cpp" />
     <ClCompile Include="ModelComponent.cpp" />
     <ClCompile Include="PlayerInputComponent.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="SceneParser.cpp" />
@@ -185,6 +188,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -195,14 +199,17 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AmbientLight.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="AudioEvent.h" />
     <ClInclude Include="BitSet.h" />
     <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="IJsonParser.h" />
+    <ClInclude Include="ILight.h" />
     <ClInclude Include="IModel.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputAxis.h" />
@@ -217,6 +224,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="MaterialParser.h" />
     <ClInclude Include="ModelComponent.h" />
     <ClInclude Include="PlayerInputComponent.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="Quad.h" />
     <ClInclude Include="ResourceHandler.h" />
     <ClInclude Include="Resources.h" />
@@ -225,6 +233,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Scene.h" />

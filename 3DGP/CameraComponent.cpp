@@ -21,8 +21,6 @@ CameraComponent::CameraComponent()
 
 void CameraComponent::Start()
 {
-	SetClearColor(glm::vec3(0.65f, 0.5f, 0.9f));
-
 	GetGameObject()->GetScene()->FindComponents<IRenderable>(m_renderables);
 	GetGameObject()->GetScene()->FindComponents<LightComponent>(m_lights);
 }
@@ -44,7 +42,10 @@ void CameraComponent::PreDraw()
 
 		renderable->GetProgram()->SetUniformValueByKey(s_viewPosKey, GetTransform()->GetPosition());
 
-		m_lights[0]->AssignUniforms(renderable->GetProgram());
+		for(const std::shared_ptr<LightComponent> light : m_lights)
+		{
+			light->AssignUniforms(renderable->GetProgram());
+		}
 
 		// Draw
 		renderable->Draw();

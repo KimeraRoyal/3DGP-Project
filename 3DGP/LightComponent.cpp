@@ -1,36 +1,58 @@
 #include "LightComponent.h"
 
-size_t LightComponent::s_lightPosKey = std::hash<std::string>()("in_Light.position");
-size_t LightComponent::s_ambientKey = std::hash<std::string>()("in_Light.ambient");
-size_t LightComponent::s_diffuseKey = std::hash<std::string>()("in_Light.diffuse");
-size_t LightComponent::s_specularKey = std::hash<std::string>()("in_Light.specular");
+#include "AmbientLight.h"
+#include "DirectionalLight.h"
+#include "PointLight.h"
+#include "SpotLight.h"
 
 LightComponent::LightComponent()
 {
-	m_lightColor = glm::vec3(1.0f);
-	m_lightStrength = 1.0f;
+	m_light = nullptr;
 }
 
 void LightComponent::Start()
 {
-	GetGameObject()->GetTransform()->SetPosition(glm::vec3(-10.0f, 5.0f, -8.0f));
+	m_light->SetTransform(GetTransform());
 }
 
 void LightComponent::AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const
 {
 	_program->SetUniformValueByKey(s_lightPosKey, GetTransform()->GetPosition());
 
-	_program->SetUniformValueByKey(s_ambientKey, m_lightColor * m_lightStrength * 0.2f);
-	_program->SetUniformValueByKey(s_diffuseKey, m_lightColor * m_lightStrength);
-	_program->SetUniformValueByKey(s_specularKey, glm::vec3(1) * m_lightStrength);
+void LightComponent::AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const
+{
+	m_light->AssignUniforms(_program);
 }
 
 std::shared_ptr<IComponent> LightComponent::Parser::Parse(rapidjson::Value& _value)
 {
 	std::shared_ptr<LightComponent> component = std::make_unique<LightComponent>();
 
-	component->SetLightColor(ParseVector(_value["color"]));
-	component->SetLightStrength(_value["strength"].GetFloat());
+	const std::string lightType = _value["type"].GetString();
+	if (lightType == "ambient") // Ambient
+	{
+		component->SetLight(std::make_unique<AmbientLight>());
+	}
+	else if (lightType == "directional") // Directional
+	{
+		component->SetLight(std::make_unique<DirectionalLight>());
+	}
+	else if (lightType == "spotlight") // Spot
+	{
+		std::shared_ptr<SpotLight> spot = std::make_unique<SpotLight>();
+		spot->SetInnerCutoff(_value["inner"].GetFloat());
+		spot->SetOuterCutoff(_value["outer"].GetFloat());
+		component->SetLight(spot);
+	}
+	else // Point
+	{
+		std::shared_ptr<PointLight> point = std::make_unique<PointLight>();
+		point->SetRadius(_value["radius"].GetFloat());
+		component->SetLight(point);
+	}
+	
+	component->GetLight()->SetLightColor(ParseVector(_value["color"]));
+	component->GetLight()->SetLightStrength(_value["strength"].GetFloat());
 	
 	return std::static_pointer_cast<IComponent>(component);
 }
