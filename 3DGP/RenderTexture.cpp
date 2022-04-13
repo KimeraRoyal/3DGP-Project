@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-RenderTexture::RenderTexture(const int _width, const int _height, const unsigned int _colorBufferCount, const GLenum _format, const GLenum _type, const GLenum _filter, const GLenum _wrap)
+RenderTexture::RenderTexture(const int _width, const int _height, const unsigned int _colorBufferCount, const Params& _params)
 {
 	// Generate and bind framebuffer object.
 	m_fboId = 0;
@@ -18,27 +18,32 @@ RenderTexture::RenderTexture(const int _width, const int _height, const unsigned
 	glGenTextures(_colorBufferCount, m_textureIds);
 	for(unsigned int i = 0; i < _colorBufferCount; i++)
 	{
+		Params::FramebufferParams fbParams = _params.m_framebufferParams[i % _params.m_framebufferParams.size()];
+		
 		glBindTexture(GL_TEXTURE_2D, m_textureIds[i]);
-		glTexImage2D(GL_TEXTURE_2D, 0, _format, _width, _height, 0, _format, _type, nullptr);
+		glTexImage2D(GL_TEXTURE_2D, 0, fbParams.m_internalFormat, _width, _height, 0, fbParams.m_format, fbParams.m_type, nullptr);
 
 		// The render texture should not generate minmaps.
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _filter);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _filter);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _wrap);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _wrap);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, fbParams.m_filter);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, fbParams.m_filter);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, fbParams.m_wrap);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, fbParams.m_wrap);
 
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, m_textureIds[i], 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, fbParams.m_startingAttachment + i, GL_TEXTURE_2D, m_textureIds[i], 0);
 
-		m_attachments[i] = GL_COLOR_ATTACHMENT0 + i;
+		m_attachments[i] = fbParams.m_startingAttachment + i;
 	}
-
+	
+	m_bufferCount = _colorBufferCount;
+	glDrawBuffers(m_bufferCount, m_attachments);
+	
 	// Generate and bind render buffer.
 	m_rboId = 0;
 	glGenRenderbuffers(1, &m_rboId);
 	glBindRenderbuffer(GL_RENDERBUFFER, m_rboId);
 	
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
+	glRenderbufferStorage(GL_RENDERBUFFER, _params.m_renderBufferFormat, _width, _height);
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	
 	// Assign the render buffer to the frame buffer object.
@@ -46,8 +51,6 @@ RenderTexture::RenderTexture(const int _width, const int _height, const unsigned
 	
 	// Unbind framebuffer object.
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	m_bufferCount = _colorBufferCount;
 }
 
 RenderTexture::~RenderTexture()
@@ -60,11 +63,27 @@ RenderTexture::~RenderTexture()
 void RenderTexture::BindFramebuffer() const
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, m_fboId);
-	glDrawBuffers(m_bufferCount, m_attachments);
 }
 
 void RenderTexture::UnbindFramebuffer() const
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glDrawBuffer(GL_COLOR_ATTACHMENT0);
+}
+
+void RenderTexture::BindAll() const
+{
+	for (unsigned int i = 0; i < m_bufferCount; i++)
+	{
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, m_textureIds[i]);
+	}
+}
+
+void RenderTexture::UnbindAll() const
+{
+	for (unsigned int i = 0; i < m_bufferCount; i++)
+	{
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 }

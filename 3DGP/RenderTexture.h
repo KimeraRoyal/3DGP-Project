@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <GL/glew.h>
 
 #include "ITexture.h"
@@ -17,14 +18,34 @@ private:
 
 	unsigned int m_bufferCount;
 public:
-	RenderTexture(int _width, int _height, unsigned int _colorBufferCount = 1, GLenum _format = GL_RGB, GLenum _type = GL_UNSIGNED_BYTE, GLenum _filter = GL_LINEAR, GLenum _wrap = GL_CLAMP_TO_EDGE);
-	~RenderTexture() override;
+	struct Params
+	{
+		struct FramebufferParams
+		{
+			GLenum m_internalFormat;
+			GLenum m_format;
+			GLenum m_type;
 
-	RenderTexture(const RenderTexture& _copy) = delete;
-	RenderTexture& operator=(const RenderTexture& _other) = delete;
+			GLuint m_startingAttachment;
+
+			GLenum m_filter;
+			GLenum m_wrap;
+		};
+
+		std::vector<FramebufferParams> m_framebufferParams;
+		
+		GLuint m_renderBufferFormat;
+		GLuint m_renderBufferAttachment;
+	};
+	
+	RenderTexture(int _width, int _height, unsigned int _colorBufferCount = 1, const Params& _params = { {{GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, GL_COLOR_ATTACHMENT0, GL_LINEAR, GL_CLAMP_TO_EDGE} }, GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL_ATTACHMENT });
+	~RenderTexture() override;
 
 	void BindFramebuffer() const;
 	void UnbindFramebuffer() const;
+
+	void BindAll() const;
+	void UnbindAll() const;
 
 	[[nodiscard]] GLuint GetTexture(const unsigned int _index) const { return m_textureIds[_index]; }
 	[[nodiscard]] GLuint GetId() override { return GetTexture(0); }
