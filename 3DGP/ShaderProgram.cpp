@@ -84,26 +84,31 @@ void ShaderProgram::SetUniformValue(const GLuint _uniformLocation, const glm::ma
 
 void ShaderProgram::SetUniformValueByKey(const size_t _uniformKey, const float& _value) const
 {
+	if (m_uniformLocations.find(_uniformKey) == m_uniformLocations.end()) { return; }
 	SetUniformValue(m_uniformLocations.at(_uniformKey), _value);
 }
 
 void ShaderProgram::SetUniformValueByKey(const size_t _uniformKey, const glm::vec2& _value) const
 {
+	if (m_uniformLocations.find(_uniformKey) == m_uniformLocations.end()) { return; }
 	SetUniformValue(m_uniformLocations.at(_uniformKey), _value);
 }
 
 void ShaderProgram::SetUniformValueByKey(const size_t _uniformKey, const glm::vec3& _value) const
 {
+	if (m_uniformLocations.find(_uniformKey) == m_uniformLocations.end()) { return; }
 	SetUniformValue(m_uniformLocations.at(_uniformKey), _value);
 }
 
 void ShaderProgram::SetUniformValueByKey(const size_t _uniformKey, const glm::vec4& _value) const
 {
+	if (m_uniformLocations.find(_uniformKey) == m_uniformLocations.end()) { return; }
 	SetUniformValue(m_uniformLocations.at(_uniformKey), _value);
 }
 
 void ShaderProgram::SetUniformValueByKey(const size_t _uniformKey, const glm::mat4& _value) const
 {
+	if (m_uniformLocations.find(_uniformKey) == m_uniformLocations.end()) { return; }
 	SetUniformValue(m_uniformLocations.at(_uniformKey), _value);
 }
 
