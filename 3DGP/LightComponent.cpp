@@ -17,10 +17,6 @@ void LightComponent::Start()
 
 void LightComponent::AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const
 {
-	_program->SetUniformValueByKey(s_lightPosKey, GetTransform()->GetPosition());
-
-void LightComponent::AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const
-{
 	m_light->AssignUniforms(_program);
 }
 
