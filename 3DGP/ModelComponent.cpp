@@ -40,7 +40,14 @@ std::shared_ptr<IComponent> ModelComponent::Parser::Parse(rapidjson::Value& _val
 	std::shared_ptr<ModelComponent> component = std::make_unique<ModelComponent>();
 
 	component->SetModel(m_resources->GetModel(_value["model"].GetString()));
-	component->SetProgram(m_resources->GetProgram(_value["shader"].GetString()));
+	if(_value.HasMember("shader"))
+	{
+		component->SetProgram(m_resources->GetProgram(_value["shader"].GetString()));
+	}
+	else
+	{
+		component->SetProgram(m_resources->GetProgram(_value["vert"].GetString(), _value["frag"].GetString()));
+	}
 	if(_value.HasMember("material")) { component->SetMaterial(m_resources->GetMaterial(_value["material"].GetString())); }
 	
 	return std::static_pointer_cast<IComponent>(component);
