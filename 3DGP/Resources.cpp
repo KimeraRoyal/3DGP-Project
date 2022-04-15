@@ -4,7 +4,7 @@ std::shared_ptr<ShaderProgram> Resources::GetProgram(const std::string& _vertSha
 {
 	bool alreadyLoaded = false;
 	const std::string path = _vertShader + _fragShader;
-	std::shared_ptr<ShaderProgram> program = m_programs.GetResource(path, this, alreadyLoaded, false);
+	std::shared_ptr<ShaderProgram> program = m_programs.GetResource(path, this, false, &alreadyLoaded);
 
 	if (!alreadyLoaded) { program->Load(_vertShader, _fragShader); }
 
