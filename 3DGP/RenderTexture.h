@@ -2,52 +2,59 @@
 
 #include <vector>
 #include <GL/glew.h>
+#include <glm/vec2.hpp>
 
 #include "ITexture.h"
+
+#include "ColorBuffer.h"
 
 class RenderTexture : public ITexture
 {
 private:
-	static constexpr unsigned int c_maxBuffers = 4;
+	glm::ivec2 m_size;
 	
 	GLuint m_fboId;
-	GLuint m_textureIds[c_maxBuffers];
 	GLuint m_rboId;
 
-	unsigned int m_attachments[c_maxBuffers];
-
-	unsigned int m_bufferCount;
-public:
-	struct Params
-	{
-		struct FramebufferParams
-		{
-			GLenum m_internalFormat;
-			GLenum m_format;
-			GLenum m_type;
-
-			GLuint m_startingAttachment;
-
-			GLenum m_filter;
-			GLenum m_wrap;
-		};
-
-		std::vector<FramebufferParams> m_framebufferParams;
-		
-		GLuint m_renderBufferFormat;
-		GLuint m_renderBufferAttachment;
-	};
+	std::vector<ColorBuffer> m_colorBuffers;
 	
-	RenderTexture(int _width, int _height, unsigned int _colorBufferCount = 1, const Params& _params = { {{GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, GL_COLOR_ATTACHMENT0, GL_LINEAR, GL_CLAMP_TO_EDGE} }, GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL_ATTACHMENT });
+	GLuint m_startingAttachment;
+	
+	GLuint m_renderBufferFormat;
+	GLuint m_renderBufferAttachment;
+
+	bool m_dirty;
+
+	void GenerateBuffers();
+public:
+	RenderTexture(int _width, int _height);
 	~RenderTexture() override;
 
-	void BindFramebuffer() const;
+	void BindFramebuffer();
 	void UnbindFramebuffer() const;
 
-	void BindAll() const;
+	void BindAll();
 	void UnbindAll() const;
 
-	[[nodiscard]] GLuint GetTexture(const unsigned int _index) const { return m_textureIds[_index]; }
+	void AddColorBuffer(GLenum _internalFormat = GL_RGB, GLenum _format = GL_RGB, GLenum _type = GL_UNSIGNED_BYTE, GLenum _filter = GL_LINEAR, GLenum _wrap = GL_CLAMP_TO_EDGE);
+	void AddColorBuffers(unsigned int _count, GLenum _internalFormat = GL_RGB, GLenum _format = GL_RGB, GLenum _type = GL_UNSIGNED_BYTE, GLenum _filter = GL_LINEAR, GLenum _wrap = GL_CLAMP_TO_EDGE);
+
+	[[nodiscard]] GLuint GetTexture(const unsigned int _index) const { return m_colorBuffers[_index].GetTextureId(); }
 	[[nodiscard]] GLuint GetId() override { return GetTexture(0); }
+
+	void SetStartingAttachment(const GLuint _startingAttachment)
+	{
+		m_startingAttachment = _startingAttachment;
+
+		m_dirty = true;
+	}
+
+	void SetRenderbuffer(const GLuint _format, const GLuint _attachment)
+	{
+		m_renderBufferFormat = _format;
+		m_renderBufferAttachment = _attachment;
+
+		m_dirty = true;
+	}
 };
 

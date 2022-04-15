@@ -9,7 +9,9 @@ size_t Screen::s_modelKey = std::hash<std::string>()("in_Model");
 
 Screen::Screen(const std::shared_ptr<ShaderProgram>& _shaderProgram, const unsigned int _colorBufferCount)
 {
-	m_renderTexture = std::make_unique<RenderTexture>(Window::GetScaledWindowSize().x, Window::GetScaledWindowSize().y, _colorBufferCount);
+	m_renderTexture = std::make_unique<RenderTexture>(Window::GetScaledWindowSize().x, Window::GetScaledWindowSize().y);
+	m_renderTexture->AddColorBuffers(_colorBufferCount);
+	
 	m_screenQuad = std::make_unique<Quad>(m_renderTexture);
 
 	// Create program

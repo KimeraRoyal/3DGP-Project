@@ -207,6 +207,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="ColorBuffer.h" />
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="IJsonParser.h" />
     <ClInclude Include="ILight.h" />
