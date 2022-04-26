@@ -4,9 +4,8 @@
 
 #include <glm/vec3.hpp>
 
-#include "ShaderProgram.h"
-
 class Transform;
+class ShaderProgram;
 
 class ILight
 {

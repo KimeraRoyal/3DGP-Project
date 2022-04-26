@@ -1,6 +1,7 @@
 #include "DirectionalLight.h"
 
 #include "Transform.h"
+#include "ShaderProgram.h"
 
 size_t DirectionalLight::s_directionKey = std::hash<std::string>()("in_DirLight.direction");
 

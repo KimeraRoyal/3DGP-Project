@@ -2,6 +2,7 @@
 
 #include <FMOD/fmod_errors.h>
 
+#include "AudioEvent.h"
 #include "File.h"
 
 Audio::Audio()

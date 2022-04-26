@@ -1,6 +1,7 @@
 #include "PointLight.h"
 
 #include "Transform.h"
+#include "ShaderProgram.h"
 
 size_t PointLight::s_positionKey = std::hash<std::string>()("in_PointLight.position");
 

@@ -1,5 +1,6 @@
 #include "MaterialParser.h"
 
+#include "Resources.h"
 #include "Material.h"
 
 void MaterialParser::Parse(Material* _material, const std::string& _path) const

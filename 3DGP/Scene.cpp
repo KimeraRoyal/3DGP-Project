@@ -10,14 +10,17 @@
 size_t Scene::s_lightPosKey = std::hash<std::string>()("in_LightPos");
 
 Scene::Scene(Resources* _resources)
+	: m_renderingSystem(_resources)
 {
 	m_resources = _resources;
-	
+
 	m_screen = std::make_unique<Screen>(m_resources->GetProgram("data/shaders/screen/screen.vert", "data/shaders/screen/screen.frag"));
 }
 
 void Scene::Start()
 {
+	m_renderingSystem.Start(shared_from_this());
+	
 	for (const std::shared_ptr<GameObject>& gameObject : m_gameObjects)
 	{
 		gameObject->Start();
@@ -34,8 +37,10 @@ void Scene::Update(Time& _time, Input& _input)
 
 void Scene::Draw()
 {
-	m_screen->Bind();
-
+	// PASS 1: GEOMETRY PASS
+	m_renderingSystem.Bind();
+	//m_screen->Bind();
+	
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -46,19 +51,21 @@ void Scene::Draw()
 	{
 		gameObject->PreDraw();
 	}
-	m_screen->Unbind();
-
+	m_renderingSystem.Unbind();
+	//m_screen->Unbind();
+	
 	glDisable(GL_DEPTH_TEST);
+	
+	// PASS 2: LIGHTING PASS
+	m_renderingSystem.Draw();
 
-	glClearColor(1, 1, 1, 1);
+	/*glClearColor(1, 1, 1, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glEnable(GL_FRAMEBUFFER_SRGB);
 	m_screen->Draw();
 	glDisable(GL_FRAMEBUFFER_SRGB);
-	glDisable(GL_CULL_FACE);
-
-	glUseProgram(0);
+	glDisable(GL_CULL_FACE);*/
 }
 
 std::shared_ptr<GameObject> Scene::CreateGameObject()

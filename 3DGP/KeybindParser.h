@@ -3,7 +3,8 @@
 #include <string>
 
 #include "IJsonParser.h"
-#include "Input.h"
+
+class Input;
 
 class KeybindParser : public JsonParser
 {

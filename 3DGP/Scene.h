@@ -7,6 +7,8 @@
 
 #include "Screen.h"
 #include "GameObject.h"
+
+#include "RenderingSystem.h"
 #include "Resources.h"
 
 class IComponent;
@@ -20,6 +22,7 @@ private:
 
 	std::vector<std::shared_ptr<GameObject>> m_gameObjects;
 
+	RenderingSystem m_renderingSystem;
 	std::shared_ptr<Screen> m_screen;
 public:
 	Scene(Resources* _resources);

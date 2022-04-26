@@ -2,6 +2,9 @@
 
 #include <rapidjson/document.h>
 
+#include "Resources.h"
+
+#include "Scene.h"
 #include "CameraComponent.h"
 #include "ModelComponent.h"
 #include "PlayerInputComponent.h"

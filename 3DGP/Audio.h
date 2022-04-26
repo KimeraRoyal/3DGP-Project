@@ -6,7 +6,7 @@
 
 #include <FMOD/fmod_studio.hpp>
 
-#include "AudioEvent.h"
+class AudioEvent;
 
 class Audio
 {

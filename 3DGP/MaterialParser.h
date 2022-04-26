@@ -1,4 +1,5 @@
 #pragma once
+
 #include "IJsonParser.h"
 
 class Material;

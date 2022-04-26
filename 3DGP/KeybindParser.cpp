@@ -1,5 +1,10 @@
 #include "KeybindParser.h"
 
+#include <SDL2/SDL_scancode.h>
+
+#include "Resources.h"
+#include "Input.h"
+
 void KeybindParser::Parse(const std::string& _path, Input& _input) const
 {
 	rapidjson::Document document = ReadDocument(_path);

@@ -2,9 +2,15 @@
 
 #include <memory>
 #include <string>
+#include <unordered_map>
+
+#include <GL/glew.h>
 
 #include "IJsonParser.h"
-#include "Scene.h"
+
+class IComponent;
+class Scene;
+class GameObject;
 
 class SceneParser : public JsonParser
 {

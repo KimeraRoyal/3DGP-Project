@@ -3,7 +3,8 @@
 #include <memory>
 
 #include "JsonParser.h"
-#include "Resources.h"
+
+class Resources;
 
 template<class T>
 class IJsonParser : public JsonParser

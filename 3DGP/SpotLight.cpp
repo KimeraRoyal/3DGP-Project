@@ -1,6 +1,7 @@
 #include "SpotLight.h"
 
 #include "Transform.h"
+#include "ShaderProgram.h"
 
 size_t SpotLight::s_positionKey = std::hash<std::string>()("in_SpotLight.position");
 size_t SpotLight::s_directionKey = std::hash<std::string>()("in_SpotLight.direction");
