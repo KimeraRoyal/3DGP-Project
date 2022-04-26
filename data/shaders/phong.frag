@@ -53,10 +53,10 @@ uniform DirectionalLight in_DirLight;
 uniform PointLight in_PointLight;
 uniform SpotLight in_SpotLight;
 
-varying vec2 out_TexCoord;
+in vec2 TexCoord;
 
-varying vec3 out_Normal;
-varying vec3 out_FragPos;
+in vec3 Normal;
+in vec3 FragPos;
 
 vec3 ambient(vec4 _tex, AmbientLight _light);
 vec3 directional(vec4 _tex, DirectionalLight _light, vec3 _normal, vec3 _viewDir);
@@ -65,10 +65,10 @@ vec3 spot(vec4 _tex, SpotLight _light, vec3 _normal, vec3 _fragPos, vec3 _viewDi
 
 void main()
 {
-	vec4 tex = texture2D(in_Material.diffuse, out_TexCoord);
+	vec4 tex = texture2D(in_Material.diffuse, TexCoord);
 	
-	vec3 normal = normalize(out_Normal);
-	vec3 viewDir = normalize(in_ViewPos - out_FragPos);
+	vec3 normal = normalize(Normal);
+	vec3 viewDir = normalize(in_ViewPos - FragPos);
 
 	vec3 result = vec3(0.0);
 	result += ambient(tex, in_AmbientLight);
@@ -77,10 +77,10 @@ void main()
 	result += directional(tex, in_DirLight, normal, viewDir);
 	
 	// Loop through all point lights
-	result += point(tex, in_PointLight, normal, out_FragPos, viewDir);
+	result += point(tex, in_PointLight, normal, FragPos, viewDir);
 	
 	// Loop through all spot lights
-	result += spot(tex, in_SpotLight, normal, out_FragPos, viewDir);
+	result += spot(tex, in_SpotLight, normal, FragPos, viewDir);
 	
 	gl_FragColor = vec4(result, 1.0);
 }

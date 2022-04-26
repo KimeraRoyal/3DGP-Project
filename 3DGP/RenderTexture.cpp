@@ -19,6 +19,7 @@ RenderTexture::RenderTexture(const int _width, const int _height)
 
 RenderTexture::~RenderTexture()
 {
+	if (m_dirty) { return; } // Dirty bit set means the framebuffer hasn't actually been created
 	glDeleteRenderbuffers(1, &m_rboId);
 	for (auto& colorBuffer : m_colorBuffers)
 	{
@@ -86,9 +87,16 @@ void RenderTexture::GenerateBuffers()
 	textureIds.resize(m_colorBuffers.size());
 	glGenTextures(m_colorBuffers.size(), textureIds.data());
 
+#ifdef _DEBUG
+	std::printf("Generating %d render texture buffers:", textureIds.size());
+#endif
+
 	std::vector<unsigned int> attachments;
 	for (unsigned int i = 0; i < m_colorBuffers.size(); i++)
 	{
+#ifdef _DEBUG
+		if (i > 0) { std::printf(","); }
+#endif
 		glBindTexture(GL_TEXTURE_2D, textureIds[i]);
 		glTexImage2D(GL_TEXTURE_2D, 0, m_colorBuffers[i].GetInternalFormat(), m_size.x, m_size.y, 0, m_colorBuffers[i].GetFormat(), m_colorBuffers[i].GetType(), nullptr);
 
@@ -98,28 +106,37 @@ void RenderTexture::GenerateBuffers()
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_colorBuffers[i].GetWrap());
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_colorBuffers[i].GetWrap());
 
-		glBindTexture(GL_TEXTURE_2D, 0);
+		// Attach the texture to the framebuffer.
 		glFramebufferTexture2D(GL_FRAMEBUFFER, m_startingAttachment + i, GL_TEXTURE_2D, textureIds[i], 0);
+
+		// Unbind the texture.
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		// Assign persistent values.
 		m_colorBuffers[i].SetTextureId(textureIds[i]);
 		attachments.push_back(m_startingAttachment + i);
+
+#ifdef _DEBUG
+		std::printf(" %d: %d", attachments[i], m_colorBuffers[i].GetTextureId());
+#endif
 	}
+#ifdef _DEBUG
+	std::printf("\n");
+#endif
 
 	glDrawBuffers(m_colorBuffers.size(), attachments.data());
-
+	
 	// Generate and bind render buffer.
 	m_rboId = 0;
 	glGenRenderbuffers(1, &m_rboId);
 	glBindRenderbuffer(GL_RENDERBUFFER, m_rboId);
-
 	glRenderbufferStorage(GL_RENDERBUFFER, m_renderBufferFormat, m_size.x, m_size.y);
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
 	// Assign the render buffer to the frame buffer object.
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, m_renderBufferAttachment, GL_RENDERBUFFER, m_rboId);
-
+	
 	// Unbind framebuffer object.
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	m_dirty = false;

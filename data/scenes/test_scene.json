@@ -9,19 +9,35 @@
   "objects" :
   [
     {
-      "name" : "light",
-      "transform" : { "position" : [ -10.0, 5.0, -8.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
+      "name" : "ambient",
+      "transform" : { "position" : [ 0.0, 0.0, 0.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
       "components" :
       [
-        { "componentType" : "light", "color" : [ 1.0, 0.9, 0.8 ], "strength" : 0.6 }
+        { "componentType" : "light", "type" : "ambient", "color" : [ 0.15, 0.1, 0.5 ], "strength" : 0.3 }
+      ]
+    },
+    {
+      "name" : "directional",
+      "transform" : { "position" : [ 0.0, 0.0, 0.0 ], "rotation" : [ 80.0, 5.0, 10.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
+      "components" :
+      [
+        { "componentType" : "light", "type" : "directional", "color" : [ 0.3, 0.35, 0.45 ], "strength" : 0.4 }
+      ]
+    },
+    {
+      "name" : "spotlight",
+      "transform" : { "position" : [ 0.0, 5.0, 0.0 ], "rotation" : [ 90.0, 0.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
+      "components" :
+      [
+        { "componentType" : "light", "type" : "spotlight", "color" : [ 1.0, 1.0, 1.0 ], "strength" : 1.0, "inner" : 12.5, "outer" : 30.0 }
       ]
     },
     {
       "name" : "curuthers",
-      "transform" : { "position" : [ 0.0, 0.0, -10.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
+      "transform" : { "position" : [ 0.0, 0.0, 0.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
       "components" :
       [
-        { "componentType" : "playerInput", "speed" : 3.0, "turnSpeed" : 70.0 }
+        { "componentType" : "playerInput", "speed" : 9.0, "turnSpeed" : 70.0 }
       ],
       "children" :
       [
@@ -30,7 +46,7 @@
           "transform": { "position" : [ 0.0, 1.12, 0.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 0.5, 0.5, 0.5 ] },
           "components" :
           [
-            { "componentType" : "model", "model" : "data/models/curuthers/curuthers.obj", "shader" : "data/shaders/phong", "material" : "data/materials/curuthers.json" }
+            { "componentType" : "model", "model" : "data/models/curuthers/curuthers.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/curuthers.json" }
           ]
         },
         {
@@ -38,9 +54,41 @@
           "transform" : { "position" : [ 0.0, 2.5, -8.0 ], "rotation" : [ -10.0, 180.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
           "components" :
           [
-            { "componentType" : "camera", "clearColor" : [ 0.65, 0.5, 0.9 ], "fov" : 45.0, "near" : 0.1, "far" : 100.0 }
+            { "componentType" : "camera", "clearColor" : [ 0.7, 0.65, 0.9 ], "fov" : 45.0, "near" : 0.1, "far" : 100.0 }
           ]
         }
+      ]
+    },
+    {
+      "name" : "crate",
+      "transform" : { "position" : [ -1.0, 0.6, -5.0 ], "rotation" : [ 0.0, 12.5, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
+      "components" :
+      [
+        { "componentType" : "model", "model" : "data/models/level/crate.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/crate.json" }
+      ]
+    },
+    {
+      "name" : "crate",
+      "transform" : { "position" : [ 2.0, 1.0, -10.0 ], "rotation" : [ 60.0, 0.0, 5.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
+      "components" :
+      [
+        { "componentType" : "model", "model" : "data/models/level/crate.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/crate.json" }
+      ]
+    },
+    {
+      "name" : "crate",
+      "transform" : { "position" : [ 0.5, 0.5, -20.0 ], "rotation" : [ 25.0, 2.5, 80.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
+      "components" :
+      [
+        { "componentType" : "model", "model" : "data/models/level/crate.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/crate.json" }
+      ]
+    },
+    {
+      "name" : "crate",
+      "transform" : { "position" : [ 0.5, 2.0, -40.0 ], "rotation" : [ 20.0, 5.5, 10.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
+      "components" :
+      [
+        { "componentType" : "model", "model" : "data/models/level/crate.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/crate.json" }
       ]
     },
     {
@@ -48,15 +96,7 @@
       "transform" : { "position" : [ 0.0, 0.0, 0.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
       "components" :
       [
-        { "componentType" : "model", "model" : "data/models/level/test_level.obj", "shader" : "data/shaders/phong", "material" : "data/materials/level.json" }
-      ]
-    },
-    {
-      "name" : "crate",
-      "transform" : { "position" : [ 0.0, 0.5, 0.0 ], "rotation" : [ 0.0, 12.5, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
-      "components" :
-      [
-        { "componentType" : "model", "model" : "data/models/level/crate.obj", "shader" : "data/shaders/phong", "material" : "data/materials/crate.json" }
+        { "componentType" : "model", "model" : "data/models/level/test_level.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/level.json" }
       ]
     }
   ]

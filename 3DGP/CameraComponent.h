@@ -20,7 +20,6 @@ private:
 	float m_farPlane;
 
 	std::vector<std::shared_ptr<IRenderable>> m_renderables;
-	std::vector<std::shared_ptr<LightComponent>> m_lights;
 public:
 	class Parser final : public IJsonParser<IComponent>
 	{

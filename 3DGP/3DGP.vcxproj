@@ -182,6 +182,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="PlayerInputComponent.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Quad.cpp" />
+    <ClCompile Include="RenderingSystem.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="SceneParser.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
@@ -227,6 +228,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="PlayerInputComponent.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Quad.h" />
+    <ClInclude Include="RenderingSystem.h" />
     <ClInclude Include="ResourceHandler.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="SceneParser.h" />
