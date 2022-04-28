@@ -38,7 +38,7 @@ void RenderingSystem::Draw() const
 
 	// Bind color buffers and program.
 	glUseProgram(m_program->GetId());
-	m_gBuffer->BindAll();
+	m_gBuffer->BindAll(m_program->GetId());
 
 	// Set the uniforms to draw.
 	m_program->SetUniformValueByKey(s_projectionKey, projection);

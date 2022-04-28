@@ -9,6 +9,8 @@
 #include "IRenderable.h"
 #include "ShaderProgram.h"
 
+class Material;
+
 class ModelComponent : public IComponent, public IRenderable
 {
 private:

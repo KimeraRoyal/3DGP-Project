@@ -33,7 +33,7 @@ public:
 	void BindFramebuffer();
 	void UnbindFramebuffer() const;
 
-	void BindAll();
+	void BindAll(GLuint _programId);
 	void UnbindAll() const;
 
 	void AddColorBuffer(GLenum _internalFormat = GL_RGB, GLenum _format = GL_RGB, GLenum _type = GL_UNSIGNED_BYTE, GLenum _filter = GL_LINEAR, GLenum _wrap = GL_CLAMP_TO_EDGE);
