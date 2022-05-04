@@ -95,7 +95,7 @@
       <AdditionalLibraryDirectories>../Libraries/libs/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)Libraries\dlls\x86\ $(OutDir) /e /i /d /y
+      <Command>xcopy $(SolutionDir)Libraries\dlls\x86 $(OutDir) /e /i /d /y
 xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
