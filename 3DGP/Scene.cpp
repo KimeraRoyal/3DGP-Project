@@ -39,7 +39,6 @@ void Scene::Draw()
 {
 	// PASS 1: GEOMETRY PASS
 	m_renderingSystem.Bind();
-	//m_screen->Bind();
 	
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -52,20 +51,21 @@ void Scene::Draw()
 		gameObject->PreDraw();
 	}
 	m_renderingSystem.Unbind();
-	//m_screen->Unbind();
 	
 	glDisable(GL_DEPTH_TEST);
 	
 	// PASS 2: LIGHTING PASS
+	m_screen->Bind();
 	m_renderingSystem.Draw();
+	m_screen->Unbind();
 
-	/*glClearColor(1, 1, 1, 1);
+	glClearColor(1, 1, 1, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glEnable(GL_FRAMEBUFFER_SRGB);
 	m_screen->Draw();
 	glDisable(GL_FRAMEBUFFER_SRGB);
-	glDisable(GL_CULL_FACE);*/
+	glDisable(GL_CULL_FACE);
 }
 
 std::shared_ptr<GameObject> Scene::CreateGameObject()

@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "Quad.h"
 #include "CameraComponent.h"
+#include "LightComponent.h"
 
 size_t RenderingSystem::s_projectionKey = std::hash<std::string>()("in_Projection");
 size_t RenderingSystem::s_modelKey = std::hash<std::string>()("in_Model");
@@ -16,6 +17,7 @@ RenderingSystem::RenderingSystem(Resources* _resources)
 	m_gBuffer->SetRenderbuffer(GL_DEPTH_COMPONENT, GL_DEPTH_ATTACHMENT);
 	
 	m_quad = std::make_unique<Quad>(m_gBuffer);
+	m_quad->SetActiveTexture(4);
 	
 	m_program = _resources->GetProgram("data/shaders/screen/screen.vert", "data/shaders/deferred/lightingPass.frag");
 }
@@ -24,6 +26,7 @@ RenderingSystem::RenderingSystem(Resources* _resources)
 void RenderingSystem::Start(const std::shared_ptr<Scene>& _scene)
 {
 	m_camera = _scene->FindComponent<CameraComponent>();
+	_scene->FindComponents<LightComponent>(m_lights);
 }
 
 void RenderingSystem::Draw() const
@@ -45,6 +48,11 @@ void RenderingSystem::Draw() const
 	m_program->SetUniformValueByKey(s_modelKey, model);
 	
 	m_program->SetUniformValue(s_viewPosKey, m_camera->GetViewMatrix());
+
+	for (const std::shared_ptr<LightComponent> light : m_lights)
+	{
+		light->AssignUniforms(m_program);
+	}
 
 	// Draw to the quad.
 	m_quad->Draw();

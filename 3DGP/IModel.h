@@ -11,6 +11,8 @@ class IModel : public IResource
 {
 private:
 	std::shared_ptr<ITexture> m_texture;
+
+	GLuint m_activeTexture;
 	
 public:
 	IModel();
@@ -20,10 +22,12 @@ public:
 	void Draw(bool _bindTexture = true);
 	
 	void Bind(bool _bindTexture = true);
-	static void Unbind(bool _unbindTexture = true);
+	void Unbind(bool _unbindTexture = true);
 	
 	[[nodiscard]] virtual GLuint GetVaoId() = 0;
 	[[nodiscard]] virtual GLuint GetTextureId();
 	[[nodiscard]] virtual unsigned int GetVertexCount() = 0;
+
+	void SetActiveTexture(const GLuint _activeTexture) { m_activeTexture = _activeTexture; }
 };
 

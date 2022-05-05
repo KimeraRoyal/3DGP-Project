@@ -5,6 +5,7 @@
 #include "RenderTexture.h"
 
 class CameraComponent;
+class LightComponent;
 class IModel;
 class ShaderProgram;
 class Resources;
@@ -18,6 +19,7 @@ private:
 	static size_t s_viewPosKey;
 	
 	std::shared_ptr<CameraComponent> m_camera;
+	std::vector<std::shared_ptr<LightComponent>> m_lights;
 	
 	std::shared_ptr<RenderTexture> m_gBuffer;
 

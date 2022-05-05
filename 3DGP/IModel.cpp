@@ -3,6 +3,8 @@
 IModel::IModel()
 {
 	m_texture = nullptr;
+
+	m_activeTexture = 0;
 }
 
 IModel::IModel(const std::shared_ptr<ITexture>& _texture)
@@ -19,13 +21,23 @@ void IModel::Draw(const bool _bindTexture)
 
 void IModel::Bind(const bool _bindTexture)
 {
-	if (_bindTexture) { glBindTexture(GL_TEXTURE_2D, GetTextureId()); }
+	if (_bindTexture)
+	{
+		glActiveTexture(GL_TEXTURE0 + m_activeTexture);
+		glBindTexture(GL_TEXTURE_2D, GetTextureId());
+		glActiveTexture(GL_TEXTURE0);
+	}
 	glBindVertexArray(GetVaoId());
 }
 
 void IModel::Unbind(const bool _unbindTexture)
 {
-	if (_unbindTexture) { glBindTexture(GL_TEXTURE_2D, 0); }
+	if (_unbindTexture)
+	{
+		glActiveTexture(GL_TEXTURE0 + m_activeTexture);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glActiveTexture(GL_TEXTURE0);
+	}
 	glBindVertexArray(0);
 }
 
