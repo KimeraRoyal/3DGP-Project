@@ -177,6 +177,9 @@
     <ClCompile Include="RenderingSystem.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="ColliderComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -313,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="ColorBuffer.h">
       <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
