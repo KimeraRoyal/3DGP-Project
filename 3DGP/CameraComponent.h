@@ -2,7 +2,7 @@
 
 #include "IComponent.h"
 #include "IJsonParser.h"
-#include "IRenderable.h"
+#include "RenderableComponent.h"
 #include "LightComponent.h"
 
 class CameraComponent final : public IComponent
@@ -18,8 +18,6 @@ private:
 	
 	float m_nearPlane;
 	float m_farPlane;
-
-	std::vector<std::shared_ptr<IRenderable>> m_renderables;
 public:
 	class Parser final : public IJsonParser<IComponent>
 	{
@@ -31,11 +29,11 @@ public:
 	CameraComponent();
 
 	void Start() override;
-	void PreDraw() override;
+	void DrawRenderables(const std::vector<std::shared_ptr<RenderableComponent>>& _renderables) const;
 
 	void Clear() const;
 
-	[[nodiscard]] glm::mat4 GetViewMatrix() const { return glm::inverse(GetGameObject()->GetTransform()->GetModelMatrix()); }
+	[[nodiscard]] glm::mat4 GetViewMatrix() const;
 	
 	[[nodiscard]] glm::vec3 GetClearColor() const { return m_clearColor; }
 

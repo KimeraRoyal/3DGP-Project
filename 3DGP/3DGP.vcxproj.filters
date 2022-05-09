@@ -67,6 +67,24 @@
     <Filter Include="Source Files\Rendering\Lighting">
       <UniqueIdentifier>{1292f062-ec15-4fe5-b217-e0472ad1b164}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scene\Physics">
+      <UniqueIdentifier>{8a9f38d3-7f66-4619-a379-850ff0d2bf1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Physics">
+      <UniqueIdentifier>{703d026f-ad44-4eb8-ae9a-5ca37ea72880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene\Rendering">
+      <UniqueIdentifier>{3821dd53-b6c8-408a-9421-9894f46b0961}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Rendering">
+      <UniqueIdentifier>{a2d9d8d1-5f45-4117-897d-7e5bcbf74cfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Game">
+      <UniqueIdentifier>{52314abc-edf9-437b-bd1a-dc9f6a193480}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene\Game">
+      <UniqueIdentifier>{3a2f7a59-98ee-419a-8c85-a1300357f505}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -117,20 +135,11 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CameraComponent.cpp">
-      <Filter>Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="LightComponent.cpp">
-      <Filter>Source Files\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Quad.cpp">
       <Filter>Source Files\Rendering\Model</Filter>
     </ClCompile>
     <ClCompile Include="ShaderProgram.cpp">
       <Filter>Source Files\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelComponent.cpp">
-      <Filter>Source Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Resources.cpp">
       <Filter>Source Files\Util</Filter>
@@ -143,9 +152,6 @@
     </ClCompile>
     <ClCompile Include="KeybindParser.cpp">
       <Filter>Source Files\JSON</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerInputComponent.cpp">
-      <Filter>Source Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Source Files\Input</Filter>
@@ -178,13 +184,31 @@
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="ColliderComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Scene\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Source Files\Scene\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="LightComponent.cpp">
+      <Filter>Source Files\Scene\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelComponent.cpp">
+      <Filter>Source Files\Scene\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerInputComponent.cpp">
+      <Filter>Source Files\Scene\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidbodyComponent.cpp">
+      <Filter>Source Files\Scene\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderableComponent.cpp">
+      <Filter>Source Files\Scene\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="IComponent.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VertexBuffer.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
@@ -230,22 +254,10 @@
     <ClInclude Include="IComponent.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CameraComponent.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="LightComponent.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Quad.h">
       <Filter>Header Files\Rendering\Model</Filter>
     </ClInclude>
     <ClInclude Include="ShaderProgram.h">
-      <Filter>Header Files\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelComponent.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="IRenderable.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="IResource.h">
@@ -271,9 +283,6 @@
     </ClInclude>
     <ClInclude Include="KeybindParser.h">
       <Filter>Header Files\JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerInputComponent.h">
-      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>Header Files\Input</Filter>
@@ -318,7 +327,28 @@
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="ColliderComponent.h">
+      <Filter>Header Files\Scene\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="LightComponent.h">
+      <Filter>Header Files\Scene\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelComponent.h">
+      <Filter>Header Files\Scene\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Header Files\Scene\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerInputComponent.h">
+      <Filter>Header Files\Scene\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidbodyComponent.h">
+      <Filter>Header Files\Scene\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderableComponent.h">
+      <Filter>Header Files\Scene\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

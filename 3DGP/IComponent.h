@@ -3,14 +3,22 @@
 #include <memory>
 #include <stdexcept>
 
-#include "GameObject.h"
+class Time;
+class Input;
 
-class IComponent
+class Scene;
+class GameObject;
+class Transform;
+
+class IComponent : public std::enable_shared_from_this<IComponent>
 {
 private:
 	friend GameObject;
 
 	std::weak_ptr<GameObject> m_gameObject;
+
+	bool m_gameObjectActive = true;
+	bool m_active = true;
 
 	[[nodiscard]] std::shared_ptr<GameObject> AccessGameObject() const
 	{
@@ -19,7 +27,9 @@ private:
 		return gameObject;
 	}
 
-	void SetGameObject(const std::shared_ptr<GameObject>& _gameObject) { m_gameObject = _gameObject; }
+	void SetGameObject(const std::shared_ptr<GameObject>& _gameObject);
+
+	void SetGameObjectActive(const bool _gameObjectActive) { m_gameObjectActive = _gameObjectActive; }
 protected:
 	IComponent() = default;
 public:
@@ -27,8 +37,12 @@ public:
 
 	virtual void Start() {}
 	virtual void Update(Time& _time, Input& _input) {}
-	virtual void PreDraw() {}
 
+	[[nodiscard]] bool GetActive() const { return m_active && m_gameObjectActive; }
+
+	[[nodiscard]] std::shared_ptr<Scene> GetScene() const;
 	[[nodiscard]] std::shared_ptr<GameObject> GetGameObject() const { return AccessGameObject(); }
-	[[nodiscard]] Transform* GetTransform() const { return AccessGameObject()->GetTransform(); }
+	[[nodiscard]] Transform* GetTransform() const;
+
+	void SetActive(const bool _active) { m_active = _active; }
 };

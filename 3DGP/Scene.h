@@ -52,5 +52,7 @@ public:
 			gameObject->GetComponents<T>(o_components);
 		}
 	}
+
+	RenderingSystem* GetRenderingSystem() { return &m_renderingSystem; }
 };
 

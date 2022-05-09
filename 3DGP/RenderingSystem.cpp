@@ -22,11 +22,19 @@ RenderingSystem::RenderingSystem(Resources* _resources)
 	m_program = _resources->GetProgram("data/shaders/screen/screen.vert", "data/shaders/deferred/lightingPass.frag");
 }
 
-
-void RenderingSystem::Start(const std::shared_ptr<Scene>& _scene)
+void RenderingSystem::PreDraw()
 {
-	m_camera = _scene->FindComponent<CameraComponent>();
-	_scene->FindComponents<LightComponent>(m_lights);
+	Bind();
+	bool activeCameras = false;
+	for(const std::shared_ptr<CameraComponent>& camera : m_cameras)
+	{
+		if (!camera->GetActive()) { continue; }
+		camera->DrawRenderables(m_renderables);
+
+		activeCameras = true;
+	}
+	if (!activeCameras) { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
+	Unbind();
 }
 
 void RenderingSystem::Draw() const
@@ -46,11 +54,10 @@ void RenderingSystem::Draw() const
 	// Set the uniforms to draw.
 	m_program->SetUniformValueByKey(s_projectionKey, projection);
 	m_program->SetUniformValueByKey(s_modelKey, model);
-	
-	m_program->SetUniformValue(s_viewPosKey, m_camera->GetViewMatrix());
 
-	for (const std::shared_ptr<LightComponent> light : m_lights)
+	for (const std::shared_ptr<LightComponent>& light : m_lights)
 	{
+		if (!light->GetActive()) { continue; }
 		light->AssignUniforms(m_program);
 	}
 

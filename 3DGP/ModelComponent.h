@@ -3,15 +3,14 @@
 #include <memory>
 #include <rapidjson/document.h>
 
-#include "IComponent.h"
 #include "IJsonParser.h"
 #include "IModel.h"
-#include "IRenderable.h"
+#include "RenderableComponent.h"
 #include "ShaderProgram.h"
 
 class Material;
 
-class ModelComponent : public IComponent, public IRenderable
+class ModelComponent : public RenderableComponent
 {
 private:
 	std::shared_ptr<Material> m_material;
@@ -31,7 +30,6 @@ public:
 	
 	ModelComponent();
 
-	void Start() override;
 	void Draw() override;
 
 	[[nodiscard]] std::shared_ptr<IModel> GetModel() const { return m_model; }

@@ -5,7 +5,7 @@
 
 class Resources;
 
-class ColliderComponent : public IComponent
+class RigidbodyComponent : public IComponent
 {
 public:
 	class Parser final : public IJsonParser<IComponent>

@@ -21,17 +21,19 @@ CameraComponent::CameraComponent()
 
 void CameraComponent::Start()
 {
-	GetGameObject()->GetScene()->FindComponents<IRenderable>(m_renderables);
+	GetScene()->GetRenderingSystem()->AddCamera(std::dynamic_pointer_cast<CameraComponent>(shared_from_this()));
 }
 
-void CameraComponent::PreDraw()
+void CameraComponent::DrawRenderables(const std::vector<std::shared_ptr<RenderableComponent>>& _renderables) const
 {
 	const glm::mat4 projection = glm::perspective(glm::radians(m_fov), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), m_nearPlane, m_farPlane);
 
 	Clear();
 	
-	for(const std::shared_ptr<IRenderable>& renderable : m_renderables)
+	for(const std::shared_ptr<RenderableComponent>& renderable : _renderables)
 	{
+		if (!renderable->GetActive()) { continue; }
+		
 		// Bind shader program
 		glUseProgram(renderable->GetProgram()->GetId());
 
@@ -54,6 +56,11 @@ void CameraComponent::Clear() const
 {
 	glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+glm::mat4 CameraComponent::GetViewMatrix() const
+{
+	return glm::inverse(GetGameObject()->GetTransform()->GetModelMatrix());
 }
 
 std::shared_ptr<IComponent> CameraComponent::Parser::Parse(rapidjson::Value& _value)

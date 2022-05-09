@@ -1,5 +1,7 @@
 #include "LightComponent.h"
 
+#include "Scene.h"
+
 #include "AmbientLight.h"
 #include "DirectionalLight.h"
 #include "PointLight.h"
@@ -13,6 +15,8 @@ LightComponent::LightComponent()
 void LightComponent::Start()
 {
 	m_light->SetTransform(GetTransform());
+
+	GetScene()->GetRenderingSystem()->AddLight(std::dynamic_pointer_cast<LightComponent>(shared_from_this()));
 }
 
 void LightComponent::AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const

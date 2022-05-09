@@ -171,6 +171,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="IComponent.cpp" />
     <ClCompile Include="JsonParser.cpp" />
     <ClCompile Include="IModel.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -183,8 +184,10 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="PlayerInputComponent.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Quad.cpp" />
+    <ClCompile Include="RenderableComponent.cpp" />
     <ClCompile Include="RenderingSystem.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="RigidbodyComponent.cpp" />
     <ClCompile Include="SceneParser.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
@@ -217,7 +220,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="IModel.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputAxis.h" />
-    <ClInclude Include="IRenderable.h" />
+    <ClInclude Include="RenderableComponent.h" />
     <ClInclude Include="IResource.h" />
     <ClInclude Include="ITexture.h" />
     <ClInclude Include="JsonParser.h" />
@@ -233,6 +236,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="RenderingSystem.h" />
     <ClInclude Include="ResourceHandler.h" />
     <ClInclude Include="Resources.h" />
+    <ClInclude Include="RigidbodyComponent.h" />
     <ClInclude Include="SceneParser.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="RenderTexture.h" />

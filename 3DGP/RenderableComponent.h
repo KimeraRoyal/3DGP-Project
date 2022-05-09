@@ -1,12 +1,15 @@
 #pragma once
 
+#include "IComponent.h"
+
 #include "ShaderProgram.h"
 
-class IRenderable
+class RenderableComponent : public IComponent
 {
 public:
-	virtual ~IRenderable() = default;
-	
+	virtual ~RenderableComponent() = default;
+
+	void Start() override;
 	virtual void Draw() = 0;
 
 	virtual std::shared_ptr<ShaderProgram> GetProgram() = 0;

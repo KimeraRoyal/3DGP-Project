@@ -25,17 +25,28 @@ private:
 
 	uint32_t m_id;
 
+	bool m_parentActive = true;
+	bool m_active = true;
+
 	GameObject() : m_id(s_globalId++) {}
 
 	std::shared_ptr<Scene> AccessScene() const;
-	
+
+	void SetParentActive(const bool _parentActive)
+	{
+		m_parentActive = _parentActive;
+		UpdateChildrenActive();
+	}
+
 	void SetScene(const std::shared_ptr<Scene>& _scene) { m_scene = _scene; }
+	
+	void UpdateChildrenActive();
 public:
 	bool operator==(const GameObject& _gameObject) const { return m_id == _gameObject.m_id; }
-	
+
+	void OnCreate();
 	void Start();
 	void Update(Time& _time, Input& _input);
-	void PreDraw();
 	
 	template<typename T, typename std::enable_if<std::is_base_of<IComponent, T>::value>::type* = nullptr>
 	std::shared_ptr<T> AddComponent()
@@ -46,6 +57,10 @@ public:
 	}
 	
 	std::shared_ptr<IComponent> AddComponent(const std::shared_ptr<IComponent>& _component);
+
+	uint32_t GetId() const { return m_id; }
+
+	bool GetActive() const { return m_active; }
 
 	std::shared_ptr<Scene> GetScene() const { return AccessScene(); }
 	Transform* GetTransform() { return &m_transform; }
@@ -69,5 +84,11 @@ public:
 			std::shared_ptr<T> castComponent = std::dynamic_pointer_cast<T>(component);
 			if (castComponent) { o_components.push_back(castComponent); }
 		}
+	}
+
+	void SetActive(const bool _active)
+	{
+		m_active = _active;
+		UpdateChildrenActive();
 	}
 };

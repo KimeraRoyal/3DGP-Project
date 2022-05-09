@@ -1,5 +1,7 @@
 #include "ModelComponent.h"
 
+#include "GameObject.h"
+
 #include "Material.h"
 #include "Resources.h"
 
@@ -8,11 +10,6 @@ size_t ModelComponent::s_modelMatrixKey = std::hash<std::string>()("in_Model");
 ModelComponent::ModelComponent()
 {
 	m_material = nullptr;
-}
-
-void ModelComponent::Start()
-{
-	
 }
 
 void ModelComponent::Draw()
