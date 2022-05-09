@@ -85,6 +85,9 @@
     <Filter Include="Header Files\Scene\Game">
       <UniqueIdentifier>{3a2f7a59-98ee-419a-8c85-a1300357f505}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Physics\Colliders">
+      <UniqueIdentifier>{cd76e908-c488-4306-aa0f-1bfa703e957f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -349,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="RenderableComponent.h">
       <Filter>Header Files\Scene\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="ICollider.h">
+      <Filter>Header Files\Physics\Colliders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
