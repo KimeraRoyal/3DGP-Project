@@ -8,6 +8,7 @@ size_t PlayerInputComponent::s_verticalBinding = std::hash<std::string>()("verti
 PlayerInputComponent::PlayerInputComponent()
 {
 	m_movementSpeed = 0.0f;
+	m_turnSpeed = 0.0f;
 }
 
 void PlayerInputComponent::Update(Time& _time, Input& _input)
