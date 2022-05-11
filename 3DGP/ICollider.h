@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ColliderType.h"
+
 class Transform;
 
 class ICollider
@@ -13,4 +15,6 @@ protected:
 public:
 	ICollider() : m_transform(nullptr) {}
 	virtual ~ICollider() = default;
+
+	virtual ColliderType GetColliderType() = 0;
 };
