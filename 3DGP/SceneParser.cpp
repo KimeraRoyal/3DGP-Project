@@ -13,8 +13,9 @@
 
 #include "PlayerInputComponent.h"
 
-SceneParser::SceneParser(Resources* _resources)
+SceneParser::SceneParser(Settings* _settings, Resources* _resources)
 {
+	m_settings = _settings;
 	m_resources = _resources;
 
 	// Rendering
@@ -34,7 +35,7 @@ SceneParser::SceneParser(Resources* _resources)
 std::shared_ptr<Scene> SceneParser::Parse(const std::string& _path)
 {
 	rapidjson::Document document = ReadDocument(_path);
-	std::shared_ptr<Scene> scene = std::make_unique<Scene>(m_resources);
+	std::shared_ptr<Scene> scene = std::make_unique<Scene>(m_settings, m_resources);
 
 	if(document.HasMember("textures"))
 	{

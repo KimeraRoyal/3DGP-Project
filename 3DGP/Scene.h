@@ -11,7 +11,8 @@
 #include "PhysicsSystem.h"
 #include "RenderingSystem.h"
 
-#include "Resources.h"
+class Settings;
+class Resources;
 
 class IComponent;
 

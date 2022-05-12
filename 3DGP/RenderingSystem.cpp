@@ -11,7 +11,7 @@ size_t RenderingSystem::s_viewPosKey = std::hash<std::string>()("in_ViewPos");
 
 RenderingSystem::RenderingSystem(Resources* _resources)
 {
-	m_gBuffer = std::make_unique<RenderTexture>(Window::GetScaledWindowSize().x, Window::GetScaledWindowSize().y);
+	m_gBuffer = std::make_unique<RenderTexture>(Window::GetInstance()->GetScreenResolution().x, Window::GetInstance()->GetScreenResolution().y);
 	m_gBuffer->AddColorBuffers(2, GL_RGBA16F, GL_RGBA, GL_FLOAT, GL_NEAREST, GL_CLAMP_TO_EDGE);
 	m_gBuffer->AddColorBuffer(GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, GL_NEAREST, GL_CLAMP_TO_EDGE);
 	m_gBuffer->SetRenderbuffer(GL_DEPTH_COMPONENT, GL_DEPTH_ATTACHMENT);
@@ -39,11 +39,11 @@ void RenderingSystem::PreDraw()
 
 void RenderingSystem::Draw() const
 {
-	const glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(Window::GetWindowSize().x), 0.0f, static_cast<float>(Window::GetWindowSize().y), 0.0f, 1.0f);
+	const glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(Window::GetInstance()->GetResolution().x), 0.0f, static_cast<float>(Window::GetInstance()->GetResolution().y), 0.0f, 1.0f);
 
 	glm::mat4 model(1.0f);
-	model = glm::translate(model, glm::vec3(Window::GetWindowSize(), 0) / 2.0f);
-	model = glm::scale(model, glm::vec3(Window::GetWindowSize(), 1));
+	model = glm::translate(model, glm::vec3(Window::GetInstance()->GetResolution(), 0) / 2.0f);
+	model = glm::scale(model, glm::vec3(Window::GetInstance()->GetResolution(), 1));
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

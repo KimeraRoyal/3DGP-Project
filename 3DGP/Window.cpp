@@ -9,12 +9,19 @@
 #include "KeybindParser.h"
 #include "SceneParser.h"
 
-Window::Window()
+Window* Window::s_instance = nullptr;
+
+Window::Window() : m_resolution(glm::ivec2(1)), m_scale(1)
 {
+	s_instance = this;
+	
 	const SettingsParser settingsParser = SettingsParser();
 	settingsParser.Parse("data/settings.json", m_settings);
 
-	m_window = SDL_CreateWindow("3D Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_settings.GetScaledScreenResolution().x, m_settings.GetScaledScreenResolution().y, SDL_WINDOW_OPENGL);
+	m_resolution = m_settings.GetScreenResolution();
+	m_scale = m_settings.GetScreenScale();
+
+	m_window = SDL_CreateWindow("3D Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, GetScreenResolution().x, GetScreenResolution().y, SDL_WINDOW_OPENGL);
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
@@ -53,7 +60,7 @@ void Window::GameLoop()
 
 void Window::Start()
 {
-	SceneParser sceneParser(&m_resources);
+	SceneParser sceneParser(&m_settings, &m_resources);
 	m_scene = sceneParser.Parse("data/scenes/test_scene.json");
 
 	m_scene->Start();

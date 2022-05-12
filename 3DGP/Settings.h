@@ -10,11 +10,13 @@ private:
 
 	float m_physicsTimestep;
 public:
-	glm::ivec2 GetScreenResolution() const { return m_screenResolution; }
-	glm::ivec2 GetScaledScreenResolution() const { return m_screenResolution * m_screenScale; }
-	int GetScreenScale() const { return m_screenScale; }
+	Settings() : m_screenResolution(glm::ivec2(1)), m_screenScale(1), m_physicsTimestep(0.1f) {}
+	
+	[[nodiscard]] glm::ivec2 GetScreenResolution() const { return m_screenResolution; }
+	[[nodiscard]] glm::ivec2 GetScaledScreenResolution() const { return m_screenResolution * m_screenScale; }
+	[[nodiscard]] int GetScreenScale() const { return m_screenScale; }
 
-	float GetPhysicsTimestep() const { return m_physicsTimestep; }
+	[[nodiscard]] float GetPhysicsTimestep() const { return m_physicsTimestep; }
 
 	void SetScreenResolution(const glm::ivec2 _resolution) { m_screenResolution = _resolution; }
 	void SetScreenScale(const int _scale) { m_screenScale = _scale; }

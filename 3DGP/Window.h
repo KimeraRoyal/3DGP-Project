@@ -4,9 +4,8 @@
 
 #include <SDL2/SDL.h>
 
-#include <glm/vec2.hpp>
-
 #include "Settings.h"
+#include "Resources.h"
 
 #include "Input.h"
 #include "Time.h"
@@ -19,6 +18,9 @@ class Window
 private:
 	//TODO: Don't use a singleton
 	static Window* s_instance;
+
+	glm::ivec2 m_resolution;
+	int m_scale;
 
 	SDL_Window* m_window;
 
@@ -41,6 +43,10 @@ public:
 	void Start();
 	void GameLoop();
 
+	[[nodiscard]] glm::ivec2 GetResolution() const { return m_resolution; }
+	[[nodiscard]] glm::ivec2 GetScreenResolution() const { return m_resolution * m_scale; }
+	[[nodiscard]] int GetScale() const { return m_scale; }
+	
 	Settings* GetSettings() { return &m_settings; }
 	Resources* GetResources() { return &m_resources; }
 

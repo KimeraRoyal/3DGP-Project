@@ -26,7 +26,7 @@ void CameraComponent::Start()
 
 void CameraComponent::DrawRenderables(const std::vector<std::shared_ptr<RenderableComponent>>& _renderables) const
 {
-	const glm::mat4 projection = glm::perspective(glm::radians(m_fov), static_cast<float>(Window::GetWindowSize().x) / static_cast<float>(Window::GetWindowSize().y), m_nearPlane, m_farPlane);
+	const glm::mat4 projection = glm::perspective(glm::radians(m_fov), static_cast<float>(Window::GetInstance()->GetResolution().x) / static_cast<float>(Window::GetInstance()->GetResolution().y), m_nearPlane, m_farPlane);
 
 	Clear();
 	

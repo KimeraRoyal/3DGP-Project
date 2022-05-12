@@ -3,6 +3,8 @@
 #include <iostream>
 
 #include "Window.h"
+#include "Resources.h"
+
 #include "Shader.h"
 
 #include "GameObject.h"

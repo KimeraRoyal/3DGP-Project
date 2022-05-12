@@ -1,5 +1,5 @@
 {
-  "screenResolution" : [ 240, 160 ]
-  "screenScale" : 6,
+  "screenResolution" : [ 240, 160 ],
+  "screenScale" : 2,
   "physicsTimestep" : 0.05
 }

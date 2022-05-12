@@ -8,6 +8,8 @@
 
 #include "IJsonParser.h"
 
+class Settings;
+
 class IComponent;
 class Scene;
 class GameObject;
@@ -15,6 +17,7 @@ class GameObject;
 class SceneParser : public JsonParser
 {
 private:
+	Settings* m_settings;
 	Resources* m_resources;
 	
 	std::unordered_map<std::string, std::shared_ptr<IJsonParser<IComponent>>> m_parsers;
@@ -25,7 +28,7 @@ private:
 
 	static GLint GetWrapMode(const std::string& _in);
 public:
-	SceneParser(Resources* _resources);
+	SceneParser(Settings* _settings, Resources* _resources);
 	
 	std::shared_ptr<Scene> Parse(const std::string& _path);
 };
