@@ -11,7 +11,7 @@
 
 Window* Window::s_instance = nullptr;
 
-Window::Window() : m_resolution(glm::ivec2(1)), m_scale(1)
+Window::Window()
 {
 	s_instance = this;
 	
@@ -21,13 +21,15 @@ Window::Window() : m_resolution(glm::ivec2(1)), m_scale(1)
 	m_resolution = m_settings.GetScreenResolution();
 	m_scale = m_settings.GetScreenScale();
 
-	m_window = SDL_CreateWindow("3D Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, GetScreenResolution().x, GetScreenResolution().y, SDL_WINDOW_OPENGL);
+	m_window = SDL_CreateWindow("3D Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, GetScaledResolution().x, GetScaledResolution().y, SDL_WINDOW_OPENGL);
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	if (!SDL_GL_CreateContext(m_window))
+	glHint(GL_SAMPLES, m_settings.GetMultisampleCount());
+
+	m_context = SDL_GL_CreateContext(m_window);
 	{
 		throw std::runtime_error("Failed to create SDL GL context.");
 	}

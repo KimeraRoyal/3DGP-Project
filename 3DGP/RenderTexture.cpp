@@ -2,12 +2,16 @@
 
 #include <stdexcept>
 
-RenderTexture::RenderTexture(const int _width, const int _height)
+#include "Window.h"
+
+RenderTexture::RenderTexture(const int _width, const int _height, const bool _multisample)
 {
 	m_fboId = 0;
 	m_rboId = 0;
 
 	m_size = glm::ivec2(_width, _height);
+
+	m_multisample = _multisample;
 	
 	m_startingAttachment = GL_COLOR_ATTACHMENT0;
 	
@@ -99,7 +103,17 @@ void RenderTexture::GenerateBuffers()
 		if (i > 0) { std::printf(","); }
 #endif
 		glBindTexture(GL_TEXTURE_2D, textureIds[i]);
-		glTexImage2D(GL_TEXTURE_2D, 0, m_colorBuffers[i].GetInternalFormat(), m_size.x, m_size.y, 0, m_colorBuffers[i].GetFormat(), m_colorBuffers[i].GetType(), nullptr);
+
+		//TODO: Multisampling
+		/*
+		if(m_multisample)
+		{
+			//glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, Window::GetInstance()->GetSettings()->GetMultisampleCount(), m_colorBuffers[i].GetInternalFormat(), m_size.x, m_size.y, 0, m_colorBuffers[i].GetFormat(), m_colorBuffers[i].GetType(), nullptr)
+		}
+		else*/
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, m_colorBuffers[i].GetInternalFormat(), m_size.x, m_size.y, 0, m_colorBuffers[i].GetFormat(), m_colorBuffers[i].GetType(), nullptr);
+		}
 
 		// The render texture should not generate minmaps.
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_colorBuffers[i].GetFilter());

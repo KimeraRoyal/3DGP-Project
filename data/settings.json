@@ -1,5 +1,6 @@
 {
-  "screenResolution" : [ 240, 160 ],
+  "screenResolution" : [ 400, 240 ],
   "screenScale" : 2,
+  "multisample" : 4,
   "physicsTimestep" : 0.05
 }

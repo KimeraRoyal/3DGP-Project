@@ -46,14 +46,18 @@ void Scene::Draw()
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_MULTISAMPLE);
 
+	glViewport(0, 0, Window::GetInstance()->GetResolution().x, Window::GetInstance()->GetResolution().y);
 	m_renderingSystem.PreDraw();
-	
+
+	glDisable(GL_MULTISAMPLE);
 	glDisable(GL_DEPTH_TEST);
 	
 	/*												*
 	 * PASS 2: LIGHTING PASS	*
 	 *												*/
+	glViewport(0, 0, Window::GetInstance()->GetScaledResolution().x, Window::GetInstance()->GetScaledResolution().y);
 	m_screen->Bind();
 	m_renderingSystem.Draw();
 	m_screen->Unbind();

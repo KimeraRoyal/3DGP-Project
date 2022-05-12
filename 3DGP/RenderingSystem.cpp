@@ -11,7 +11,7 @@ size_t RenderingSystem::s_viewPosKey = std::hash<std::string>()("in_ViewPos");
 
 RenderingSystem::RenderingSystem(Resources* _resources)
 {
-	m_gBuffer = std::make_unique<RenderTexture>(Window::GetInstance()->GetScreenResolution().x, Window::GetInstance()->GetScreenResolution().y);
+	m_gBuffer = std::make_unique<RenderTexture>(Window::GetInstance()->GetResolution().x, Window::GetInstance()->GetResolution().y);
 	m_gBuffer->AddColorBuffers(2, GL_RGBA16F, GL_RGBA, GL_FLOAT, GL_NEAREST, GL_CLAMP_TO_EDGE);
 	m_gBuffer->AddColorBuffer(GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, GL_NEAREST, GL_CLAMP_TO_EDGE);
 	m_gBuffer->SetRenderbuffer(GL_DEPTH_COMPONENT, GL_DEPTH_ATTACHMENT);

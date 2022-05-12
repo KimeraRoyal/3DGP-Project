@@ -17,4 +17,7 @@ protected:
 
 	static glm::ivec2 ParseIVector2(rapidjson::Value& _value);
 	static glm::ivec3 ParseIVector3(rapidjson::Value& _value);
+
+	static glm::uvec2 ParseUVector2(rapidjson::Value& _value);
+	static glm::uvec3 ParseUVector3(rapidjson::Value& _value);
 };
