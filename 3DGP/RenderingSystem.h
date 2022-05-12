@@ -30,7 +30,7 @@ private:
 	std::shared_ptr<IModel> m_quad;
 	std::shared_ptr<ShaderProgram> m_program;
 public:
-	RenderingSystem(Resources* _resources);
+	explicit RenderingSystem(Resources* _resources);
 
 	void PreDraw();
 	void Draw() const;

@@ -8,7 +8,9 @@
 #include "Screen.h"
 #include "GameObject.h"
 
+#include "PhysicsSystem.h"
 #include "RenderingSystem.h"
+
 #include "Resources.h"
 
 class IComponent;
@@ -22,7 +24,9 @@ private:
 
 	std::vector<std::shared_ptr<GameObject>> m_gameObjects;
 
+	PhysicsSystem m_physicsSystem;
 	RenderingSystem m_renderingSystem;
+	
 	std::shared_ptr<Screen> m_screen;
 public:
 	Scene(Resources* _resources);
@@ -53,6 +57,7 @@ public:
 		}
 	}
 
+	PhysicsSystem* GetPhysicsSystem() { return &m_physicsSystem; }
 	RenderingSystem* GetRenderingSystem() { return &m_renderingSystem; }
 };
 

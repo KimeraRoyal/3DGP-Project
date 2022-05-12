@@ -181,6 +181,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MaterialParser.cpp" />
     <ClCompile Include="ModelComponent.cpp" />
+    <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="PlayerInputComponent.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Quad.cpp" />
@@ -223,6 +224,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="IModel.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputAxis.h" />
+    <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="RenderableComponent.h" />
     <ClInclude Include="IResource.h" />
     <ClInclude Include="ITexture.h" />

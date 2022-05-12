@@ -23,6 +23,8 @@ public:
 
 	RigidbodyComponent();
 
+	void Start() override;
+
 	void AddForce(const glm::vec3 _force) { m_force += _force; }
 	void AddTorque(const glm::vec3 _torque) { m_torque += _torque; }
 
