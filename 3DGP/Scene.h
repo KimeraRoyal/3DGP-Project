@@ -29,7 +29,7 @@ private:
 	
 	std::shared_ptr<Screen> m_screen;
 public:
-	Scene(Resources* _resources);
+	Scene(Settings* _settings, Resources* _resources);
 
 	void Start();
 	void Update(Time& _time, Input& _input);

@@ -33,11 +33,36 @@ rapidjson::Document JsonParser::ReadDocument(const std::string& _path) const
 	return document;
 }
 
-glm::vec3 JsonParser::ParseVector(rapidjson::Value& _value)
+glm::vec2 JsonParser::ParseVector2(rapidjson::Value& _value)
+{
+	glm::vec3 vector(0.0f);
+	vector.x = _value[0].GetFloat();
+	vector.y = _value[1].GetFloat();
+	return vector;
+}
+
+glm::vec3 JsonParser::ParseVector3(rapidjson::Value& _value)
 {
 	glm::vec3 vector(0.0f);
 	vector.x = _value[0].GetFloat();
 	vector.y = _value[1].GetFloat();
 	vector.z = _value[2].GetFloat();
+	return vector;
+}
+
+glm::ivec2 JsonParser::ParseIVector2(rapidjson::Value& _value)
+{
+	glm::ivec3 vector(0.0f);
+	vector.x = _value[0].GetInt();
+	vector.y = _value[1].GetInt();
+	return vector;
+}
+
+glm::ivec3 JsonParser::ParseIVector3(rapidjson::Value& _value)
+{
+	glm::ivec3 vector(0.0f);
+	vector.x = _value[0].GetInt();
+	vector.y = _value[1].GetInt();
+	vector.z = _value[2].GetInt();
 	return vector;
 }

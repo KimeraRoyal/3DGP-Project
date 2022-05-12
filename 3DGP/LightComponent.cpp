@@ -51,7 +51,7 @@ std::shared_ptr<IComponent> LightComponent::Parser::Parse(rapidjson::Value& _val
 		component->SetLight(point);
 	}
 	
-	component->GetLight()->SetLightColor(ParseVector(_value["color"]));
+	component->GetLight()->SetLightColor(ParseVector3(_value["color"]));
 	component->GetLight()->SetLightStrength(_value["strength"].GetFloat());
 	
 	return std::static_pointer_cast<IComponent>(component);

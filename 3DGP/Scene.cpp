@@ -9,8 +9,8 @@
 
 size_t Scene::s_lightPosKey = std::hash<std::string>()("in_LightPos");
 
-Scene::Scene(Resources* _resources)
-	: m_renderingSystem(_resources)
+Scene::Scene(Settings* _settings, Resources* _resources)
+	: m_physicsSystem(_settings->GetPhysicsTimestep()), m_renderingSystem(_resources)
 {
 	m_resources = _resources;
 

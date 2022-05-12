@@ -190,6 +190,8 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="RigidbodyComponent.cpp" />
     <ClCompile Include="SceneParser.cpp" />
+    <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="SettingsParser.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="Screen.cpp" />
@@ -243,6 +245,8 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="Resources.h" />
     <ClInclude Include="RigidbodyComponent.h" />
     <ClInclude Include="SceneParser.h" />
+    <ClInclude Include="Settings.h" />
+    <ClInclude Include="SettingsParser.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="Screen.h" />

@@ -6,19 +6,23 @@
 
 #include <glm/vec2.hpp>
 
-#include "Audio.h"
+#include "Settings.h"
+
 #include "Input.h"
 #include "Time.h"
+#include "Audio.h"
+
 #include "Scene.h"
 
 class Window
 {
 private:
-	static constexpr glm::ivec2 c_defaultWindowSize = glm::ivec2(240, 160);
-	static constexpr int c_defaultWindowScale = 6;
+	//TODO: Don't use a singleton
+	static Window* s_instance;
 
 	SDL_Window* m_window;
 
+	Settings m_settings;
 	Resources m_resources;
 
 	Input m_input;
@@ -37,8 +41,13 @@ public:
 	void Start();
 	void GameLoop();
 
-	static glm::ivec2 GetWindowSize();
-	static int GetWindowScale();
-	static glm::ivec2 GetScaledWindowSize();
+	Settings* GetSettings() { return &m_settings; }
+	Resources* GetResources() { return &m_resources; }
+
+	Input* GetInput() { return &m_input; }
+	Time* GetTime() { return &m_time; }
+	Audio* GetAudio() { return &m_audio; }
+
+	static Window* GetInstance() { return s_instance; }
 };
 

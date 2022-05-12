@@ -130,9 +130,9 @@ std::shared_ptr<GameObject> SceneParser::ParseObject(const std::shared_ptr<Scene
 	if(_objectValue.HasMember("transform"))
 	{
 		rapidjson::Value& transform = _objectValue["transform"];
-		gameObject->GetTransform()->SetPosition(ParseVector(transform["position"]));
-		gameObject->GetTransform()->SetRotation(ParseVector(transform["rotation"]));
-		gameObject->GetTransform()->SetScale(ParseVector(transform["scale"]));
+		gameObject->GetTransform()->SetPosition(ParseVector3(transform["position"]));
+		gameObject->GetTransform()->SetRotation(ParseVector3(transform["rotation"]));
+		gameObject->GetTransform()->SetScale(ParseVector3(transform["scale"]));
 	}
 
 	if(_objectValue.HasMember("components"))

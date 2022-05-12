@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "IJsonParser.h"
+#include "JsonParser.h"
 
 class Input;
 

@@ -5,12 +5,16 @@
 #include <GL/glew.h>
 #include <iostream>
 
+#include "SettingsParser.h"
 #include "KeybindParser.h"
 #include "SceneParser.h"
 
 Window::Window()
 {
-	m_window = SDL_CreateWindow("3D Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, c_defaultWindowSize.x * c_defaultWindowScale, c_defaultWindowSize.y * c_defaultWindowScale, SDL_WINDOW_OPENGL);
+	const SettingsParser settingsParser = SettingsParser();
+	settingsParser.Parse("data/settings.json", m_settings);
+
+	m_window = SDL_CreateWindow("3D Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_settings.GetScaledScreenResolution().x, m_settings.GetScaledScreenResolution().y, SDL_WINDOW_OPENGL);
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
@@ -94,19 +98,4 @@ void Window::Draw()
 	m_scene->Draw();
 
 	SDL_GL_SwapWindow(m_window);
-}
-
-glm::ivec2 Window::GetWindowSize()
-{
-	return c_defaultWindowSize;
-}
-
-int Window::GetWindowScale()
-{
-	return c_defaultWindowScale;
-}
-
-glm::ivec2 Window::GetScaledWindowSize()
-{
-	return c_defaultWindowSize * c_defaultWindowScale;
 }

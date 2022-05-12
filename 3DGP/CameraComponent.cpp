@@ -67,7 +67,7 @@ std::shared_ptr<IComponent> CameraComponent::Parser::Parse(rapidjson::Value& _va
 {
 	std::shared_ptr<CameraComponent> component = std::make_unique<CameraComponent>();
 	
-	component->SetClearColor(ParseVector(_value["clearColor"]));
+	component->SetClearColor(ParseVector3(_value["clearColor"]));
 	
 	component->SetFOV(_value["fov"].GetFloat());
 

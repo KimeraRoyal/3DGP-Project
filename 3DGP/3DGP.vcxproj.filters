@@ -88,6 +88,9 @@
     <Filter Include="Header Files\Physics\Colliders">
       <UniqueIdentifier>{cd76e908-c488-4306-aa0f-1bfa703e957f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Physics\Colliders">
+      <UniqueIdentifier>{42591788-f538-43db-a17e-8f37b3f83a8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -210,11 +213,17 @@
     <ClCompile Include="IComponent.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="SphereCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PhysicsSystem.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>Source Files\Physics\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsParser.cpp">
+      <Filter>Source Files\JSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -365,11 +374,17 @@
     <ClInclude Include="ColliderType.h">
       <Filter>Header Files\Physics\Colliders</Filter>
     </ClInclude>
-    <ClInclude Include="SphereCollider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PhysicsSystem.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>Header Files\Physics\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsParser.h">
+      <Filter>Header Files\JSON</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
