@@ -18,6 +18,10 @@ Window::Window()
 	const SettingsParser settingsParser = SettingsParser();
 	settingsParser.Parse("data/settings.json", m_settings);
 
+	m_moveWindow = true;
+	m_windowAnchor = glm::vec2(0.5f);
+	m_windowPosition = glm::vec2(0.0f, 0.0f);
+
 	m_resolution = m_settings.GetScreenResolution();
 	m_scale = m_settings.GetScreenScale();
 
@@ -30,6 +34,7 @@ Window::Window()
 	glHint(GL_SAMPLES, m_settings.GetMultisampleCount());
 
 	m_context = SDL_GL_CreateContext(m_window);
+	if (!m_context)
 	{
 		throw std::runtime_error("Failed to create SDL GL context.");
 	}
@@ -38,6 +43,10 @@ Window::Window()
 	{
 		throw std::runtime_error("Failed to initialize OpenGL.");
 	}
+
+	SDL_DisplayMode displayMode;
+	SDL_GetCurrentDisplayMode(0, &displayMode);
+	m_screenSize = glm::ivec2(displayMode.w, displayMode.h);
 	
 	const KeybindParser keybindParser = KeybindParser();
 	keybindParser.Parse("data/bindings.json", m_input);
@@ -104,6 +113,13 @@ bool Window::Update()
 
 void Window::Draw()
 {
+	if(m_moveWindow)
+	{
+		const glm::vec2 windowPos = glm::uvec2(glm::vec2(m_screenSize - GetScaledResolution()) * m_windowAnchor + m_windowPosition);
+		SDL_SetWindowPosition(m_window, static_cast<int>(windowPos.x), static_cast<int>(windowPos.y));
+	}
+	
+	SDL_GL_MakeCurrent(m_window, m_context);
 	m_scene->Draw();
 
 	SDL_GL_SwapWindow(m_window);
