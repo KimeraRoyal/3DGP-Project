@@ -42,7 +42,7 @@ private:
 
 	bool PollEvents();
 	bool Update();
-	void Draw() const;
+	void Draw();
 public:
 	Window();
 	~Window();

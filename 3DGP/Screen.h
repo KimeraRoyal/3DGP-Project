@@ -12,6 +12,7 @@ class Screen
 private:
 	static size_t s_projectionKey;
 	static size_t s_modelKey;
+	static size_t s_texelStepKey;
 	
 	std::shared_ptr<IModel> m_screenQuad;
 

@@ -2,6 +2,8 @@
 
 #include "GameObject.h"
 
+#include <stdexcept>
+
 size_t PlayerInputComponent::s_horizontalBinding = std::hash<std::string>()("horizontal");
 size_t PlayerInputComponent::s_verticalBinding = std::hash<std::string>()("vertical");
 

@@ -3,8 +3,8 @@
   "windowAnchor" : [ 0.5, 0.5 ],
   "windowPosition" : [ 0.0, 0.0 ],
 
-  "screenResolution" : [ 400, 240 ],
-  "screenScale" : 3,
+  "screenResolution" : [ 1600, 960 ],
+  "screenScale" : 1,
 
   "multisample" : 4,
 

@@ -44,6 +44,9 @@ Window::Window()
 		throw std::runtime_error("Failed to initialize OpenGL.");
 	}
 
+	// Enable adaptive Vsync. If it fails, enable regular Vsync.
+	if (SDL_GL_SetSwapInterval(-1) < 0) { SDL_GL_SetSwapInterval(1); }
+
 	SDL_DisplayMode displayMode;
 	SDL_GetCurrentDisplayMode(0, &displayMode);
 	m_screenSize = glm::ivec2(displayMode.w, displayMode.h);
@@ -111,7 +114,7 @@ bool Window::Update()
 	return true;
 }
 
-void Window::Draw() const
+void Window::Draw() 
 {
 	if(m_controlPosition)
 	{
