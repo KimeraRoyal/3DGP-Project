@@ -170,6 +170,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="File.cpp" />
+    <ClCompile Include="FXAA.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="IComponent.cpp" />
     <ClCompile Include="JsonParser.cpp" />
@@ -190,7 +191,6 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="RigidbodyComponent.cpp" />
     <ClCompile Include="SceneParser.cpp" />
-    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SettingsParser.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
@@ -217,6 +217,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="ColliderType.h" />
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="File.h" />
+    <ClInclude Include="FXAA.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ColorBuffer.h" />
     <ClInclude Include="ICollider.h" />

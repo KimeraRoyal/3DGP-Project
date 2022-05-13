@@ -12,8 +12,7 @@ void SettingsParser::Parse(const std::string& _path, Settings& _settings) const
 
 	_settings.SetWindowResolution(ParseUVector2(document["screenResolution"]));
 	_settings.SetWindowScale(document["screenScale"].GetUint());
-	
-	_settings.SetMultisampleCount(document["multisample"].GetUint());
+	_settings.SetEnableVsync(document["enableVsync"].GetBool());
 
 	_settings.SetPhysicsTimestep(document["physicsTimestep"].GetFloat());
 }

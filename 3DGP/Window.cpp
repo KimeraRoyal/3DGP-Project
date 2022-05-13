@@ -31,8 +31,6 @@ Window::Window()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	glHint(GL_SAMPLES, m_settings.GetMultisampleCount());
-
 	m_context = SDL_GL_CreateContext(m_window);
 	if (!m_context)
 	{
@@ -45,7 +43,8 @@ Window::Window()
 	}
 
 	// Enable adaptive Vsync. If it fails, enable regular Vsync.
-	if (SDL_GL_SetSwapInterval(-1) < 0) { SDL_GL_SetSwapInterval(1); }
+	if (m_settings.GetEnableVsync() && SDL_GL_SetSwapInterval(-1) < 0) { SDL_GL_SetSwapInterval(1); }
+	std::printf("Set swap interval to mode %d\n", SDL_GL_GetSwapInterval());
 
 	SDL_DisplayMode displayMode;
 	SDL_GetCurrentDisplayMode(0, &displayMode);

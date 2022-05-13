@@ -13,8 +13,7 @@ private:
 	
 	glm::uvec2 m_windowResolution;
 	unsigned int m_windowScale;
-
-	unsigned int m_multisample;
+	bool m_enableVsync;
 
 	float m_physicsTimestep;
 
@@ -24,14 +23,13 @@ private:
 
 	void SetWindowResolution(const glm::uvec2 _resolution) { m_windowResolution = _resolution; }
 	void SetWindowScale(const unsigned int _scale) { m_windowScale = _scale; }
-
-	void SetMultisampleCount(const unsigned int _multisample) { m_multisample = _multisample; }
+	void SetEnableVsync(const bool _enableVsync) { m_enableVsync = _enableVsync; }
 
 	void SetPhysicsTimestep(const float _timestep) { m_physicsTimestep = _timestep; }
 public:
 	Settings()
 	: m_controlWindowMovement(false), m_windowAnchor(0.5f), m_windowPosition(0.0f),
-		m_windowResolution(glm::uvec2(1)), m_windowScale(1), m_multisample(1),
+		m_windowResolution(glm::uvec2(1)), m_windowScale(1), m_enableVsync(true),
 		m_physicsTimestep(0.1f) {}
 
 	[[nodiscard]] bool GetControlWindowMovement() const { return m_controlWindowMovement; }
@@ -41,9 +39,7 @@ public:
 	[[nodiscard]] glm::uvec2 GetWindowResolution() const { return m_windowResolution; }
 	[[nodiscard]] glm::uvec2 GetScaledWindowResolution() const { return m_windowResolution * m_windowScale; }
 	[[nodiscard]] unsigned int GetWindowScale() const { return m_windowScale; }
-	
-	[[nodiscard]] unsigned int GetMultisampleCount() const { return m_multisample; }
-	[[nodiscard]] bool GetMultisamplingEnabled() const { return m_multisample > 0; }
+	[[nodiscard]] bool GetEnableVsync() const { return m_enableVsync; }
 
 	[[nodiscard]] float GetPhysicsTimestep() const { return m_physicsTimestep; }
 };

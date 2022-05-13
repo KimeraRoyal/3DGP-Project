@@ -91,6 +91,12 @@
     <Filter Include="Source Files\Physics\Colliders">
       <UniqueIdentifier>{42591788-f538-43db-a17e-8f37b3f83a8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Rendering\Screen">
+      <UniqueIdentifier>{90bceae8-359f-43f0-9f9a-8157736b21a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Rendering\Screen">
+      <UniqueIdentifier>{e4e3a13c-7414-4bd1-8d6a-98a49c6bd0d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -134,9 +140,6 @@
     </ClCompile>
     <ClCompile Include="AudioEvent.cpp">
       <Filter>Source Files\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Screen.cpp">
-      <Filter>Source Files\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\Scene</Filter>
@@ -219,11 +222,14 @@
     <ClCompile Include="SphereCollider.cpp">
       <Filter>Source Files\Physics\Colliders</Filter>
     </ClCompile>
-    <ClCompile Include="Settings.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
     <ClCompile Include="SettingsParser.cpp">
       <Filter>Source Files\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.cpp">
+      <Filter>Source Files\Rendering\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="FXAA.cpp">
+      <Filter>Source Files\Rendering\Screen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -262,9 +268,6 @@
     </ClInclude>
     <ClInclude Include="AudioEvent.h">
       <Filter>Header Files\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Screen.h">
-      <Filter>Header Files\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Header Files\Scene</Filter>
@@ -385,6 +388,12 @@
     </ClInclude>
     <ClInclude Include="SettingsParser.h">
       <Filter>Header Files\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>Header Files\Rendering\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="FXAA.h">
+      <Filter>Header Files\Rendering\Screen</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

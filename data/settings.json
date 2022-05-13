@@ -3,10 +3,9 @@
   "windowAnchor" : [ 0.5, 0.5 ],
   "windowPosition" : [ 0.0, 0.0 ],
 
-  "screenResolution" : [ 1600, 960 ],
-  "screenScale" : 1,
-
-  "multisample" : 4,
+  "screenResolution" : [ 800, 480 ],
+  "screenScale" : 2,
+  "enableVsync" : false,
 
   "physicsTimestep" : 0.05
 }

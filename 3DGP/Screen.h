@@ -1,11 +1,10 @@
 #pragma once
 
-#include <memory>
-#include <string>
-
 #include "IModel.h"
 #include "ShaderProgram.h"
 #include "RenderTexture.h"
+
+#include "FXAA.h"
 
 class Screen
 {
@@ -19,6 +18,8 @@ private:
 	std::shared_ptr<ShaderProgram> m_program;
 
 	std::shared_ptr<RenderTexture> m_renderTexture;
+
+	FXAA m_fxaa;
 public:
 	Screen(const std::shared_ptr<ShaderProgram>& _shaderProgram, unsigned int _colorBufferCount = 1);
 
@@ -26,4 +27,6 @@ public:
 	void Unbind() const { m_renderTexture->UnbindFramebuffer(); }
 
 	void Draw() const;
+
+	[[nodiscard]] FXAA& GetFxaa() { return m_fxaa; }
 };

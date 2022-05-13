@@ -9,6 +9,7 @@ size_t Screen::s_modelKey = std::hash<std::string>()("in_Model");
 size_t Screen::s_texelStepKey = std::hash<std::string>()("in_TexelStep");
 
 Screen::Screen(const std::shared_ptr<ShaderProgram>& _shaderProgram, const unsigned int _colorBufferCount)
+	: m_fxaa(true, 0.5f, 8.0f, 128.0f, 8.0f)
 {
 	m_renderTexture = std::make_unique<RenderTexture>(Window::GetInstance()->GetScaledResolution().x, Window::GetInstance()->GetScaledResolution().y);
 	m_renderTexture->AddColorBuffers(_colorBufferCount);
@@ -31,8 +32,8 @@ void Screen::Draw() const
 
 	m_program->SetUniformValueByKey(s_projectionKey, projection);
 	m_program->SetUniformValueByKey(s_modelKey, model);
-
-	m_program->SetUniformValueByKey(s_texelStepKey, 1.0f / static_cast<glm::vec2>(Window::GetInstance()->GetScaledResolution()));
+	
+	m_fxaa.AssignUniforms(m_program);
 
 	m_screenQuad->Draw();
 
