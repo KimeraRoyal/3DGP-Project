@@ -18,12 +18,12 @@ Window::Window()
 	const SettingsParser settingsParser = SettingsParser();
 	settingsParser.Parse("data/settings.json", m_settings);
 
-	m_moveWindow = true;
-	m_windowAnchor = glm::vec2(0.5f);
-	m_windowPosition = glm::vec2(0.0f, 0.0f);
+	m_controlPosition = m_settings.GetControlWindowMovement();
+	m_anchor = m_settings.GetWindowAnchor();
+	m_position = m_settings.GetWindowPosition();
 
-	m_resolution = m_settings.GetScreenResolution();
-	m_scale = m_settings.GetScreenScale();
+	m_resolution = m_settings.GetWindowResolution();
+	m_scale = m_settings.GetWindowScale();
 
 	m_window = SDL_CreateWindow("3D Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, GetScaledResolution().x, GetScaledResolution().y, SDL_WINDOW_OPENGL);
 
@@ -111,11 +111,11 @@ bool Window::Update()
 	return true;
 }
 
-void Window::Draw()
+void Window::Draw() const
 {
-	if(m_moveWindow)
+	if(m_controlPosition)
 	{
-		const glm::vec2 windowPos = glm::uvec2(glm::vec2(m_screenSize - GetScaledResolution()) * m_windowAnchor + m_windowPosition);
+		const glm::vec2 windowPos = static_cast<glm::vec2>(m_screenSize - GetScaledResolution()) * m_anchor + m_position;
 		SDL_SetWindowPosition(m_window, static_cast<int>(windowPos.x), static_cast<int>(windowPos.y));
 	}
 	

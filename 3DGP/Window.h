@@ -21,9 +21,9 @@ private:
 
 	glm::uvec2 m_screenSize;
 
-	bool m_moveWindow;
-	glm::vec2 m_windowAnchor;
-	glm::vec2 m_windowPosition;
+	bool m_controlPosition;
+	glm::vec2 m_anchor;
+	glm::vec2 m_position;
 	
 	glm::uvec2 m_resolution;
 	unsigned int m_scale;
@@ -42,7 +42,7 @@ private:
 
 	bool PollEvents();
 	bool Update();
-	void Draw();
+	void Draw() const;
 public:
 	Window();
 	~Window();
@@ -52,9 +52,9 @@ public:
 
 	[[nodiscard]] glm::uvec2 GetScreenSize() const { return m_screenSize; }
 
-	[[nodiscard]] bool GetCanMoveWindow() const { return m_moveWindow; }
-	[[nodiscard]] glm::vec2 GetWindowAnchor() const { return m_windowAnchor; }
-	[[nodiscard]] glm::vec2 GetWindowPosition() const { return m_windowPosition; }
+	[[nodiscard]] bool GetControlPosition() const { return m_controlPosition; }
+	[[nodiscard]] glm::vec2 GetAnchor() const { return m_anchor; }
+	[[nodiscard]] glm::vec2 GetPosition() const { return m_position; }
 
 	[[nodiscard]] glm::uvec2 GetResolution() const { return m_resolution; }
 	[[nodiscard]] glm::uvec2 GetScaledResolution() const { return m_resolution * m_scale; }
@@ -67,9 +67,9 @@ public:
 	Time* GetTime() { return &m_time; }
 	Audio* GetAudio() { return &m_audio; }
 
-	void SetCanMoveWindow(const bool _moveWindow) { m_moveWindow = _moveWindow; }
-	void SetWindowAnchor(const glm::vec2 _anchor) { m_windowAnchor = _anchor; }
-	void SetWindowPosition(const glm::vec2 _position) { m_windowPosition = _position; }
+	void SetControlPosition(const bool _controlPosition) { m_controlPosition = _controlPosition; }
+	void SetAnchor(const glm::vec2 _anchor) { m_anchor = _anchor; }
+	void SetPosition(const glm::vec2 _position) { m_position = _position; }
 
 	static Window* GetInstance() { return s_instance; }
 };
