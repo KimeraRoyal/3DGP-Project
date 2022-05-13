@@ -12,8 +12,6 @@ class RenderTexture : public ITexture
 {
 private:
 	glm::ivec2 m_size;
-
-	bool m_multisample;
 	
 	GLuint m_fboId;
 	GLuint m_rboId;
@@ -29,7 +27,7 @@ private:
 
 	void GenerateBuffers();
 public:
-	RenderTexture(int _width, int _height, bool _multisample = false);
+	RenderTexture(int _width, int _height);
 	~RenderTexture() override;
 
 	void BindFramebuffer();
