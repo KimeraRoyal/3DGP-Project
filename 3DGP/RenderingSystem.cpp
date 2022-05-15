@@ -25,6 +25,7 @@ RenderingSystem::RenderingSystem(Resources* _resources)
 void RenderingSystem::PreDraw()
 {
 	Bind();
+	
 	bool activeCameras = false;
 	for(const std::shared_ptr<CameraComponent>& camera : m_cameras)
 	{
@@ -34,6 +35,7 @@ void RenderingSystem::PreDraw()
 		activeCameras = true;
 	}
 	if (!activeCameras) { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
+	
 	Unbind();
 }
 

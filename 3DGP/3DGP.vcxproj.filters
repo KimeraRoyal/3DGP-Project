@@ -231,6 +231,12 @@
     <ClCompile Include="FXAA.cpp">
       <Filter>Source Files\Rendering\Screen</Filter>
     </ClCompile>
+    <ClCompile Include="PlaneCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VertexBuffer.h">
@@ -374,9 +380,6 @@
     <ClInclude Include="ICollider.h">
       <Filter>Header Files\Physics\Colliders</Filter>
     </ClInclude>
-    <ClInclude Include="ColliderType.h">
-      <Filter>Header Files\Physics\Colliders</Filter>
-    </ClInclude>
     <ClInclude Include="PhysicsSystem.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
@@ -394,6 +397,12 @@
     </ClInclude>
     <ClInclude Include="FXAA.h">
       <Filter>Header Files\Rendering\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaneCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeCollider.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

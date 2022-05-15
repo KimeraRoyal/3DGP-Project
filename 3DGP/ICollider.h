@@ -1,8 +1,10 @@
 #pragma once
 
-#include "ColliderType.h"
-
 class Transform;
+
+class SphereCollider;
+class PlaneCollider;
+class CubeCollider;
 
 class ICollider
 {
@@ -16,5 +18,8 @@ public:
 	ICollider() : m_transform(nullptr) {}
 	virtual ~ICollider() = default;
 
-	virtual ColliderType GetColliderType() = 0;
+	virtual void CheckCollision(ICollider* _other) = 0;
+	virtual void CheckCollision(SphereCollider* _other) = 0;
+	virtual void CheckCollision(PlaneCollider* _other) = 0;
+	virtual void CheckCollision(CubeCollider* _other) = 0;
 };

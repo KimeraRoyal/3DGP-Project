@@ -168,6 +168,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="BitSet.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
+    <ClCompile Include="CubeCollider.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="FXAA.cpp" />
@@ -183,6 +184,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="MaterialParser.cpp" />
     <ClCompile Include="ModelComponent.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
+    <ClCompile Include="PlaneCollider.cpp" />
     <ClCompile Include="PlayerInputComponent.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Quad.cpp" />
@@ -214,7 +216,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="BitSet.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
-    <ClInclude Include="ColliderType.h" />
+    <ClInclude Include="CubeCollider.h" />
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="FXAA.h" />
@@ -228,6 +230,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputAxis.h" />
     <ClInclude Include="PhysicsSystem.h" />
+    <ClInclude Include="PlaneCollider.h" />
     <ClInclude Include="RenderableComponent.h" />
     <ClInclude Include="IResource.h" />
     <ClInclude Include="ITexture.h" />

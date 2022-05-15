@@ -16,6 +16,9 @@ private:
 	float m_turnSpeed;
 public:
 	PlayerInputComponent();
+
+	void Start() override;
+	
 	void Update(Time& _time, Input& _input) override;
 	
 	class Parser final : public IJsonParser<IComponent>
