@@ -1,4 +1,4 @@
 {
-  "specular" : [ 0.2, 0.2, 0.2 ],
-  "shininess" : 64.0
+  "specular" : [ 0.2, 0.1, 0.1 ],
+  "shininess" : 256.0
 }

@@ -18,6 +18,7 @@ public:
 	ICollider() : m_transform(nullptr) {}
 	virtual ~ICollider() = default;
 
+	// Child classes use double dispatch to eliminate the need to know what kind of collider is being checked.
 	virtual void CheckCollision(ICollider* _other) = 0;
 	virtual void CheckCollision(SphereCollider* _other) = 0;
 	virtual void CheckCollision(PlaneCollider* _other) = 0;

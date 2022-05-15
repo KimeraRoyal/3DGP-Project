@@ -232,10 +232,10 @@
       <Filter>Source Files\Rendering\Screen</Filter>
     </ClCompile>
     <ClCompile Include="PlaneCollider.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Physics\Colliders</Filter>
     </ClCompile>
     <ClCompile Include="CubeCollider.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Physics\Colliders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -399,10 +399,10 @@
       <Filter>Header Files\Rendering\Screen</Filter>
     </ClInclude>
     <ClInclude Include="PlaneCollider.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Physics\Colliders</Filter>
     </ClInclude>
     <ClInclude Include="CubeCollider.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Physics\Colliders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

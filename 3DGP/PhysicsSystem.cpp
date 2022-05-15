@@ -9,10 +9,8 @@ void PhysicsSystem::Update(Time& _time, const std::vector<std::shared_ptr<GameOb
 {
 	m_fixedTimer += _time.GetDeltaTime();
 
-	std::printf("True Frame");
 	while(m_fixedTimer >= m_timestep)
 	{
-		std::printf(" Physics Frame");
 		for(const std::shared_ptr<GameObject>& gameObject : _gameObjects)
 		{
 			gameObject->FixedUpdate(m_timestep);
@@ -30,5 +28,4 @@ void PhysicsSystem::Update(Time& _time, const std::vector<std::shared_ptr<GameOb
 		
 		m_fixedTimer -= m_timestep;
 	}
-	std::printf("\n");
 }

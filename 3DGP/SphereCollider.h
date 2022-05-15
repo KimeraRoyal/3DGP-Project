@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ICollider.h"
-#include "ColliderType.h"
 
 class SphereCollider : public ICollider
 {

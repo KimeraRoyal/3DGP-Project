@@ -44,12 +44,13 @@ std::shared_ptr<IComponent> LightComponent::Parser::Parse(rapidjson::Value& _val
 		spot->SetOuterCutoff(_value["outer"].GetFloat());
 		component->SetLight(spot);
 	}
-	else // Point
+	else if (lightType == "point")// Point
 	{
 		std::shared_ptr<PointLight> point = std::make_unique<PointLight>();
 		point->SetRadius(_value["radius"].GetFloat());
 		component->SetLight(point);
 	}
+	else { throw std::runtime_error("Unsupported light component type."); } // Invalid type value
 	
 	component->GetLight()->SetLightColor(ParseVector3(_value["color"]));
 	component->GetLight()->SetLightStrength(_value["strength"].GetFloat());

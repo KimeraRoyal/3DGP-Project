@@ -44,12 +44,14 @@ void RenderTexture::UnbindFramebuffer() const
 
 void RenderTexture::BindAll(GLuint _programId)
 {
+	const std::string textureNames[] = {"g_Position", "g_Normal", "g_Specular", "g_Albedo"};
+	
 	GenerateBuffers();
 	for (unsigned int i = 0; i < m_colorBuffers.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i);
 		glBindTexture(GL_TEXTURE_2D, m_colorBuffers[i].GetTextureId());
-		glUniform1i(glGetUniformLocation(_programId, i == 0 ? "g_Position" : i == 1 ? "g_Normal" : "g_Albedo"), i);
+		glUniform1i(glGetUniformLocation(_programId, textureNames[i].c_str()), i);
 	}
 }
 

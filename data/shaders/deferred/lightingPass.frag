@@ -37,6 +37,12 @@ struct SpotLight
 	float outerCutoff;
 };
 
+struct Material
+{
+	vec3 specular;
+	float shininess;
+};
+
 uniform AmbientLight in_AmbientLight;
 uniform DirectionalLight in_DirLight;
 uniform PointLight in_PointLight;
@@ -44,6 +50,7 @@ uniform SpotLight in_SpotLight;
 
 uniform sampler2D g_Position;
 uniform sampler2D g_Normal;
+uniform sampler2D g_Specular;
 uniform sampler2D g_Albedo;
 
 uniform vec3 in_ViewPos;
@@ -53,29 +60,34 @@ in vec2 TexCoord;
 out vec4 FragColor;
 
 vec3 ambient(vec4 _tex, AmbientLight _light);
-vec3 directional(vec4 _tex, DirectionalLight _light, vec3 _normal, vec3 _viewDir);
-vec3 point(vec4 _tex, PointLight _light, vec3 _normal, vec3 _fragPos, vec3 _viewDir);
-vec3 spot(vec4 _tex, SpotLight _light, vec3 _normal, vec3 _fragPos, vec3 _viewDir);
+vec3 directional(vec4 _tex, DirectionalLight _light, vec3 _normal, vec3 _viewDir, Material _material);
+vec3 point(vec4 _tex, PointLight _light, vec3 _normal, vec3 _fragPos, vec3 _viewDir, Material _material);
+vec3 spot(vec4 _tex, SpotLight _light, vec3 _normal, vec3 _fragPos, vec3 _viewDir, Material _material);
 
 void main()
 {
 	vec3 FragPos = texture(g_Position, TexCoord).rgb;
 	vec3 Normal = texture(g_Normal, TexCoord).rgb;
+	vec4 Specular = texture(g_Specular, TexCoord);
 	vec4 Albedo = texture(g_Albedo, TexCoord);
 	
 	vec3 viewDir = normalize(in_ViewPos - FragPos);
+	
+	Material material;
+	material.specular = Specular.rgb;
+	material.shininess = Specular.a * 256.0;
 	
 	vec3 result = vec3(0.0);
 	result += ambient(Albedo, in_AmbientLight);
 	
 	// Loop through all directional lights
-	result += directional(Albedo, in_DirLight, Normal, viewDir);
+	result += directional(Albedo, in_DirLight, Normal, viewDir, material);
 	
 	// Loop through all point lights
-	result += point(Albedo, in_PointLight, Normal, FragPos, viewDir);
+	result += point(Albedo, in_PointLight, Normal, FragPos, viewDir, material);
 	
 	// Loop through all spot lights
-	result += spot(Albedo, in_SpotLight, Normal, FragPos, viewDir);
+	result += spot(Albedo, in_SpotLight, Normal, FragPos, viewDir, material);
 	
 	FragColor = vec4(result, 1.0);
 }
@@ -86,23 +98,23 @@ vec3 ambient(vec4 _tex, AmbientLight _light)
 	return ambient;
 }
 
-vec3 directional(vec4 _tex, DirectionalLight _light, vec3 _normal, vec3 _viewDir)
+vec3 directional(vec4 _tex, DirectionalLight _light, vec3 _normal, vec3 _viewDir, Material _material)
 {
 	vec3 lightDir = normalize(-_light.direction);
 	
 	float diff = max(dot(_normal, lightDir), 0.0);
 
 	vec3 halfwayDir = normalize(lightDir + _viewDir);
-	float spec = pow(max(dot(_normal, halfwayDir), 0.0), 128.0);
+	float spec = pow(max(dot(_normal, halfwayDir), 0.0), _material.shininess);
 	
 	vec3 ambient = _light.ambient * vec3(_tex);
 	vec3 diffuse = _light.diffuse * diff * vec3(_tex);
-	vec3 specular = _light.specular * spec * vec3(0.5, 0.5, 0.5);
+	vec3 specular = _light.specular * spec * _material.specular;
 
 	return ambient + diffuse + specular;
 }
 
-vec3 point(vec4 _tex, PointLight _light, vec3 _normal, vec3 _fragPos, vec3 _viewDir)
+vec3 point(vec4 _tex, PointLight _light, vec3 _normal, vec3 _fragPos, vec3 _viewDir, Material _material)
 {
 	vec3 lightDir = _light.position - _fragPos;
 	float distance = length(lightDir);
@@ -112,11 +124,11 @@ vec3 point(vec4 _tex, PointLight _light, vec3 _normal, vec3 _fragPos, vec3 _view
 	float diff = max(dot(_normal, lightDir), 0.0);
 
 	vec3 halfwayDir = normalize(lightDir + _viewDir);
-	float spec = pow(max(dot(_normal, halfwayDir), 0.0), 128.0);
+	float spec = pow(max(dot(_normal, halfwayDir), 0.0), _material.shininess);
 	
 	vec3 ambient = _light.ambient * vec3(_tex);
 	vec3 diffuse = _light.diffuse * diff * vec3(_tex);
-	vec3 specular = _light.specular * spec * vec3(0.5, 0.5, 0.5);
+	vec3 specular = _light.specular * spec * _material.specular;
 	
 	float denom = d / _light.radius + 1;
 	float attenuation = 1 / (denom * denom);
@@ -128,18 +140,18 @@ vec3 point(vec4 _tex, PointLight _light, vec3 _normal, vec3 _fragPos, vec3 _view
 	return attenuation * (ambient + diffuse + specular);
 }
 
-vec3 spot(vec4 _tex, SpotLight _light, vec3 _normal, vec3 _fragPos, vec3 _viewDir)
+vec3 spot(vec4 _tex, SpotLight _light, vec3 _normal, vec3 _fragPos, vec3 _viewDir, Material _material)
 {
 	vec3 lightDir = normalize(_light.position - _fragPos);
 	
 	float diff = max(dot(_normal, lightDir), 0.0);
 
 	vec3 halfwayDir = normalize(lightDir + _viewDir);
-	float spec = pow(max(dot(_normal, halfwayDir), 0.0), 128.0);
+	float spec = pow(max(dot(_normal, halfwayDir), 0.0), _material.shininess);
 	
 	vec3 ambient = _light.ambient * vec3(_tex);
 	vec3 diffuse = _light.diffuse * diff * vec3(_tex);
-	vec3 specular = _light.specular * spec * vec3(0.5, 0.5, 0.5);
+	vec3 specular = _light.specular * spec * _material.specular;
 	
 	float theta = dot(lightDir, normalize(-_light.direction));
 	float epsilon = _light.innerCutoff - _light.outerCutoff;
