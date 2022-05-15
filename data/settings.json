@@ -7,5 +7,5 @@
   "screenScale" : 2,
   "enableVsync" : false,
 
-  "physicsTimestep" : 0.05
+  "physicsTimestep" : 0.01
 }
