@@ -2,12 +2,15 @@
 #include "IComponent.h"
 #include "IJsonParser.h"
 
-class PlayerInputComponent :
-    public IComponent
+class RigidbodyComponent;
+
+class PlayerInputComponent : public IComponent
 {
 private:
 	static size_t s_horizontalBinding;
 	static size_t s_verticalBinding;
+
+	std::shared_ptr<RigidbodyComponent> m_rigidbody;
 	
 	float m_movementSpeed;
 	float m_turnSpeed;

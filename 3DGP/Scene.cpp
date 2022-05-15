@@ -34,6 +34,8 @@ void Scene::Update(Time& _time, Input& _input)
 		if (!gameObject->GetActive()) { continue; }
 		gameObject->Update(_time, _input);
 	}
+
+	m_physicsSystem.Update(_time, m_gameObjects);
 }
 
 void Scene::Draw()

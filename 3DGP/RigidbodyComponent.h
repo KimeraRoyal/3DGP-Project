@@ -13,6 +13,9 @@ private:
 	glm::vec3 m_torque;
 
 	float m_mass;
+
+	// Integration methods
+	void Euler(float _deltaTime);
 public:
 	class Parser final : public IJsonParser<IComponent>
 	{
@@ -25,7 +28,9 @@ public:
 
 	void Start() override;
 
-	void AddForce(const glm::vec3 _force) { m_force += _force; }
+	void PhysicsStep(float _deltaTime);
+
+	void AddForce(const glm::vec3 _force) { m_force += m_mass * _force; }
 	void AddTorque(const glm::vec3 _torque) { m_torque += _torque; }
 
 	void ClearForce() { SetForce(glm::vec3(0.0f)); }

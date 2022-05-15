@@ -28,6 +28,15 @@ void GameObject::Update(Time& _time, Input& _input)
 	}
 }
 
+void GameObject::FixedUpdate(const float _deltaTime)
+{
+	for (std::shared_ptr<IComponent>& component : m_components)
+	{
+		if (!component->GetActive()) { continue; }
+		component->FixedUpdate(_deltaTime);
+	}
+}
+
 std::shared_ptr<IComponent> GameObject::AddComponent(const std::shared_ptr<IComponent>& _component)
 {
 	_component->SetGameObject(shared_from_this());

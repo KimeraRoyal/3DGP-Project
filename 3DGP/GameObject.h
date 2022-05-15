@@ -46,7 +46,9 @@ public:
 
 	void OnCreate();
 	void Start();
+	
 	void Update(Time& _time, Input& _input);
+	void FixedUpdate(float _deltaTime);
 	
 	template<typename T, typename std::enable_if<std::is_base_of<IComponent, T>::value>::type* = nullptr>
 	std::shared_ptr<T> AddComponent()

@@ -1,8 +1,7 @@
 #include "PlayerInputComponent.h"
 
 #include "GameObject.h"
-
-#include <stdexcept>
+#include "RigidbodyComponent.h"
 
 size_t PlayerInputComponent::s_horizontalBinding = std::hash<std::string>()("horizontal");
 size_t PlayerInputComponent::s_verticalBinding = std::hash<std::string>()("vertical");
@@ -11,6 +10,11 @@ PlayerInputComponent::PlayerInputComponent()
 {
 	m_movementSpeed = 0.0f;
 	m_turnSpeed = 0.0f;
+}
+
+void PlayerInputComponent::Start()
+{
+	m_rigidbody = GetGameObject()->GetComponent<RigidbodyComponent>();
 }
 
 void PlayerInputComponent::Update(Time& _time, Input& _input)

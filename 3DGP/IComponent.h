@@ -37,6 +37,7 @@ public:
 
 	virtual void Start() {}
 	virtual void Update(Time& _time, Input& _input) {}
+	virtual void FixedUpdate(float _deltaTime) {}
 
 	[[nodiscard]] bool GetActive() const { return m_active && m_gameObjectActive; }
 
