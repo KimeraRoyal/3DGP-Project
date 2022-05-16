@@ -35,6 +35,9 @@ protected:
 public:
 	virtual ~IComponent() = default;
 
+	virtual void OnCreate() {}
+	virtual void OnDestroy() {}
+
 	virtual void Start() {}
 	virtual void Update(Time& _time, Input& _input) {}
 	virtual void FixedUpdate(float _deltaTime) {}

@@ -30,6 +30,8 @@ public:
 	void AddRigidbody(const std::shared_ptr<RigidbodyComponent>& _rigidbody) { m_rigidbodies.push_back(_rigidbody); }
 	void AddCollider(const std::shared_ptr<ColliderComponent>& _collider) { m_colliders.push_back(_collider); }
 
+	void RemoveRigidbody(const std::shared_ptr<RigidbodyComponent>& _rigidbody) { m_rigidbodies.erase(std::remove(m_rigidbodies.begin(), m_rigidbodies.end(), _rigidbody)); }
+	void RemoveCollider(const std::shared_ptr<ColliderComponent>& _collider) { m_colliders.erase(std::remove(m_colliders.begin(), m_colliders.end(), _collider)); }
 	
 	[[nodiscard]] float GetTimestep() const { return m_timestep; }
 };

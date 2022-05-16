@@ -14,7 +14,7 @@ PlayerInputComponent::PlayerInputComponent()
 
 void PlayerInputComponent::Start()
 {
-	m_rigidbody = GetGameObject()->GetComponent<RigidbodyComponent>();
+	// Get rigidbody as weak pointer
 }
 
 void PlayerInputComponent::Update(Time& _time, Input& _input)
@@ -28,12 +28,6 @@ void PlayerInputComponent::Update(Time& _time, Input& _input)
 	
 	const float rotation = static_cast<float>(_input.GetTrinaryKeyDown(SDL_SCANCODE_Q, SDL_SCANCODE_E));
 	GetTransform()->Rotate(glm::vec3(0, rotation,  0) * (-m_turnSpeed * _time.GetDeltaTime()));
-
-	if (_input.GetKeyPressed(SDL_SCANCODE_SPACE))
-	{
-		std::printf("Jump\n");
-		m_rigidbody->AddForce(glm::vec3(0.0f, 1.0f, 0.0f) * 500.0f);
-	}
 }
 
 std::shared_ptr<IComponent> PlayerInputComponent::Parser::Parse(rapidjson::Value& _value)

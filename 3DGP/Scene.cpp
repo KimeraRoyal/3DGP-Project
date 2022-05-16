@@ -34,6 +34,7 @@ void Scene::Update(Time& _time, Input& _input)
 		if (!gameObject->GetActive()) { continue; }
 		gameObject->Update(_time, _input);
 	}
+	DisposeGameObjects();
 
 	m_physicsSystem.Update(_time, m_gameObjects);
 }
@@ -82,4 +83,16 @@ std::shared_ptr<GameObject> Scene::CreateGameObject()
 	m_gameObjects.push_back(gameObject);
 	
 	return gameObject;
+}
+
+void Scene::DisposeGameObjects()
+{
+	if (m_toDestroy.empty()) { return; }
+	
+	for (const std::shared_ptr<GameObject>& gameObject : m_toDestroy)
+	{
+		gameObject->OnDestroy();
+		m_gameObjects.erase(std::remove(m_gameObjects.begin(), m_gameObjects.end(), gameObject));
+	}
+	m_toDestroy.clear();
 }

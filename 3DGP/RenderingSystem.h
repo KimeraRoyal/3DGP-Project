@@ -40,6 +40,10 @@ public:
 
 	void AddCamera(const std::shared_ptr<CameraComponent>& _camera) { m_cameras.push_back(_camera); }
 	void AddLight(const std::shared_ptr<LightComponent>& _light) { m_lights.push_back(_light); }
-	void AddRenderable(const std::shared_ptr<RenderableComponent>& _light) { m_renderables.push_back(_light); }
+	void AddRenderable(const std::shared_ptr<RenderableComponent>& _renderable) { m_renderables.push_back(_renderable); }
+
+	void RemoveCamera(const std::shared_ptr<CameraComponent>& _camera) { m_cameras.erase(std::remove(m_cameras.begin(), m_cameras.end(), _camera)); }
+	void RemoveLight(const std::shared_ptr<LightComponent>& _light) { m_lights.erase(std::remove(m_lights.begin(), m_lights.end(), _light)); }
+	void RemoveRenderable(const std::shared_ptr<RenderableComponent>& _renderable) { m_renderables.erase(std::remove(m_renderables.begin(), m_renderables.end(), _renderable)); }
 };
 

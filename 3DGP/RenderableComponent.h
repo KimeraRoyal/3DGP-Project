@@ -7,8 +7,6 @@
 class RenderableComponent : public IComponent
 {
 public:
-	virtual ~RenderableComponent() = default;
-
 	void Start() override;
 	virtual void Draw() = 0;
 

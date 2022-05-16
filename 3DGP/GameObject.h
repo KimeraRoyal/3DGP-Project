@@ -20,6 +20,7 @@ private:
 	std::weak_ptr<Scene> m_scene;
 
 	std::vector<std::shared_ptr<IComponent>> m_components;
+	std::vector<std::shared_ptr<IComponent>> m_toDestroy;
 
 	Transform m_transform;
 
@@ -29,6 +30,10 @@ private:
 	bool m_active = true;
 
 	GameObject() : m_id(s_globalId++) {}
+	
+	void UpdateChildrenActive();
+
+	void DisposeComponents();
 
 	std::shared_ptr<Scene> AccessScene() const;
 
@@ -39,12 +44,12 @@ private:
 	}
 
 	void SetScene(const std::shared_ptr<Scene>& _scene) { m_scene = _scene; }
-	
-	void UpdateChildrenActive();
 public:
 	bool operator==(const GameObject& _gameObject) const { return m_id == _gameObject.m_id; }
 
 	void OnCreate();
+	void OnDestroy();
+	
 	void Start();
 	
 	void Update(Time& _time, Input& _input);
@@ -59,6 +64,7 @@ public:
 	}
 	
 	std::shared_ptr<IComponent> AddComponent(const std::shared_ptr<IComponent>& _component);
+	void RemoveComponent(const std::shared_ptr<IComponent>& _component);
 
 	uint32_t GetId() const { return m_id; }
 
