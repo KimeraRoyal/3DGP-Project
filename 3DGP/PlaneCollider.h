@@ -5,9 +5,9 @@
 class PlaneCollider : public ICollider
 {
 public:
-	void CheckCollision(ICollider* _other) override { _other->CheckCollision(this); }
-	void CheckCollision(SphereCollider* _other) override;
-	void CheckCollision(PlaneCollider* _other) override {} // No Plane v Plane
-	void CheckCollision(CubeCollider* _other) override;
+	CollisionInfo CheckCollision(ICollider* _other) override { return _other->CheckCollision(this); }
+	CollisionInfo CheckCollision(SphereCollider* _other) override;
+	CollisionInfo CheckCollision(PlaneCollider* _other) override { return {}; } // No Plane v Plane
+	CollisionInfo CheckCollision(CubeCollider* _other) override;
 };
 

@@ -9,10 +9,10 @@ private:
 public:
 	SphereCollider();
 	
-	void CheckCollision(ICollider* _other) override { _other->CheckCollision(this); }
-	void CheckCollision(SphereCollider* _other) override;
-	void CheckCollision(PlaneCollider* _other) override;
-	void CheckCollision(CubeCollider* _other) override;
+	CollisionInfo CheckCollision(ICollider* _other) override { return _other->CheckCollision(this); }
+	CollisionInfo CheckCollision(SphereCollider* _other) override;
+	CollisionInfo CheckCollision(PlaneCollider* _other) override;
+	CollisionInfo CheckCollision(CubeCollider* _other) override;
 
 	[[nodiscard]] float GetRadius() const { return m_radius; }
 

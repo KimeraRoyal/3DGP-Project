@@ -6,9 +6,22 @@
 #include "PlaneCollider.h"
 #include "CubeCollider.h"
 
+#include "RigidbodyComponent.h"
+#include "StaticbodyComponent.h"
+
 void ColliderComponent::Start()
 {
-	GetScene()->GetPhysicsSystem()->AddCollider(std::static_pointer_cast<ColliderComponent>(shared_from_this()));
+	m_collider->SetTransform(GetTransform());
+
+	if(GetGameObject()->GetComponent<RigidbodyComponent>() == nullptr)
+	{
+		GetGameObject()->AddComponent<StaticbodyComponent>();
+	}
+}
+
+CollisionInfo ColliderComponent::CheckCollision(const std::shared_ptr<ColliderComponent>& _other) const
+{
+	return m_collider->CheckCollision(_other->GetCollider().get());
 }
 
 std::shared_ptr<IComponent> ColliderComponent::Parser::Parse(rapidjson::Value& _value)
@@ -33,6 +46,8 @@ std::shared_ptr<IComponent> ColliderComponent::Parser::Parse(rapidjson::Value& _
 		component->SetCollider(cube);
 	}
 	else { throw std::runtime_error("Unsupported collider component type."); } // Invalid type value
+
+	if (_value.HasMember("offset")) { component->GetCollider()->SetOffset(ParseVector3(_value["offset"])); }
 
 	return std::static_pointer_cast<IComponent>(component);
 }

@@ -1,16 +1,16 @@
 #include "CubeCollider.h"
 
-void CubeCollider::CheckCollision(SphereCollider* _other)
+CollisionInfo CubeCollider::CheckCollision(SphereCollider* _other)
 {
-
+	return {};
 }
 
-void CubeCollider::CheckCollision(PlaneCollider* _other)
+CollisionInfo CubeCollider::CheckCollision(PlaneCollider* _other)
 {
-
+	return {};
 }
 
-void CubeCollider::CheckCollision(CubeCollider* _other)
+CollisionInfo CubeCollider::CheckCollision(CubeCollider* _other)
 {
-
+	return {};
 }

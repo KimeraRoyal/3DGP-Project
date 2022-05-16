@@ -14,7 +14,7 @@ PlayerInputComponent::PlayerInputComponent()
 
 void PlayerInputComponent::Start()
 {
-	// Get rigidbody as weak pointer
+	m_rigidbody = GetGameObject()->GetComponent<RigidbodyComponent>();
 }
 
 void PlayerInputComponent::Update(Time& _time, Input& _input)
@@ -23,8 +23,14 @@ void PlayerInputComponent::Update(Time& _time, Input& _input)
 	const float vertical = static_cast<float>(_input.GetAxisDown(s_verticalBinding));
 
 	//TODO: Rotate by Quaternion rotation
-	const glm::vec3 movementVector = -GetTransform()->GetLeft() * horizontal + GetTransform()->GetForward() * vertical;
-	GetTransform()->Move(movementVector * (m_movementSpeed * _time.GetDeltaTime()));
+	if(_input.GetAxisDown(s_horizontalBinding) || _input.GetAxisDown(s_verticalBinding))
+	{
+		const glm::vec3 movementVector = -GetTransform()->GetLeft() * horizontal + GetTransform()->GetForward() * vertical;
+		glm::vec3 velocity = m_rigidbody->GetVelocity();
+		velocity.x = movementVector.x * m_movementSpeed;
+		velocity.z = movementVector.z * m_movementSpeed;
+		m_rigidbody->SetVelocity(velocity);
+	}
 	
 	const float rotation = static_cast<float>(_input.GetTrinaryKeyDown(SDL_SCANCODE_Q, SDL_SCANCODE_E));
 	GetTransform()->Rotate(glm::vec3(0, rotation,  0) * (-m_turnSpeed * _time.GetDeltaTime()));

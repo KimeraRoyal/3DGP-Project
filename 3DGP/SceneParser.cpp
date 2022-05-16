@@ -12,6 +12,7 @@
 #include "RigidbodyComponent.h"
 
 #include "PlayerInputComponent.h"
+#include "StaticbodyComponent.h"
 
 SceneParser::SceneParser(Settings* _settings, Resources* _resources)
 {
@@ -25,6 +26,7 @@ SceneParser::SceneParser(Settings* _settings, Resources* _resources)
 
 	// Physics
 	m_parsers.insert(std::make_pair("collider", std::make_unique<ColliderComponent::Parser>(m_resources)));
+	m_parsers.insert(std::make_pair("staticbody", std::make_unique<StaticbodyComponent::Parser>(m_resources)));
 	m_parsers.insert(std::make_pair("rigidbody", std::make_unique<RigidbodyComponent::Parser>(m_resources)));
 
 	// Game

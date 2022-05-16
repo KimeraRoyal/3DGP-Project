@@ -45,6 +45,7 @@ public:
 	Transform* GetParent() const { return m_parent; }
 	std::vector<Transform*>& GetChildren() { return m_children; }
 
+	//TODO: Functions to return global position
 	[[nodiscard]] glm::vec3 GetPosition() const { return m_position; }
 	[[nodiscard]] glm::vec3 GetRotation() const { return m_rotation; }
 	[[nodiscard]] glm::vec3 GetScale() const { return m_scale; }

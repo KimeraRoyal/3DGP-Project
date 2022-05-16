@@ -1,21 +1,23 @@
 #include "SphereCollider.h"
 
+#include "PhysicsHelper.h"
+
 SphereCollider::SphereCollider()
 {
 	m_radius = 0.0f;
 }
 
-void SphereCollider::CheckCollision(SphereCollider* _other)
+CollisionInfo SphereCollider::CheckCollision(SphereCollider* _other)
 {
-	
+	return PhysicsHelper::SphereOnSphere(this, _other);
 }
 
-void SphereCollider::CheckCollision(PlaneCollider* _other)
+CollisionInfo SphereCollider::CheckCollision(PlaneCollider* _other)
 {
-	
+	return {};
 }
 
-void SphereCollider::CheckCollision(CubeCollider* _other)
+CollisionInfo SphereCollider::CheckCollision(CubeCollider* _other)
 {
-	
+	return {};
 }

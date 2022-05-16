@@ -1,7 +1,8 @@
 #pragma once
-
 #include "IComponent.h"
 #include "IJsonParser.h"
+
+#include "CollisionInfo.h"
 
 class ICollider;
 class Resources;
@@ -19,6 +20,8 @@ public:
 	};
 
 	void Start() override;
+
+	CollisionInfo CheckCollision(const std::shared_ptr<ColliderComponent>& _other) const;
 
 	std::shared_ptr<ICollider> GetCollider() const { return m_collider; }
 

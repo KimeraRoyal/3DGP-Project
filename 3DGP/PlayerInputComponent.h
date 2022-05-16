@@ -12,6 +12,8 @@ private:
 	
 	float m_movementSpeed;
 	float m_turnSpeed;
+
+	std::shared_ptr<RigidbodyComponent> m_rigidbody;
 public:
 	PlayerInputComponent();
 

@@ -173,6 +173,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="File.cpp" />
     <ClCompile Include="FXAA.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="ICollider.cpp" />
     <ClCompile Include="IComponent.cpp" />
     <ClCompile Include="JsonParser.cpp" />
     <ClCompile Include="IModel.cpp" />
@@ -183,6 +184,8 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MaterialParser.cpp" />
     <ClCompile Include="ModelComponent.cpp" />
+    <ClCompile Include="PhysicsHelper.cpp" />
+    <ClCompile Include="PhysicsObjectComponent.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="PlaneCollider.cpp" />
     <ClCompile Include="PlayerInputComponent.cpp" />
@@ -200,6 +203,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="StaticbodyComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -216,6 +220,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="BitSet.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
+    <ClInclude Include="CollisionInfo.h" />
     <ClInclude Include="CubeCollider.h" />
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="File.h" />
@@ -229,6 +234,8 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="IModel.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputAxis.h" />
+    <ClInclude Include="PhysicsHelper.h" />
+    <ClInclude Include="PhysicsObjectComponent.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="PlaneCollider.h" />
     <ClInclude Include="RenderableComponent.h" />
@@ -257,6 +264,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="SpotLight.h" />
+    <ClInclude Include="StaticbodyComponent.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Scene.h" />

@@ -237,6 +237,18 @@
     <ClCompile Include="CubeCollider.cpp">
       <Filter>Source Files\Physics\Colliders</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsHelper.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="ICollider.cpp">
+      <Filter>Source Files\Physics\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsObjectComponent.cpp">
+      <Filter>Source Files\Scene\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticbodyComponent.cpp">
+      <Filter>Source Files\Scene\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VertexBuffer.h">
@@ -403,6 +415,18 @@
     </ClInclude>
     <ClInclude Include="CubeCollider.h">
       <Filter>Header Files\Physics\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsHelper.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionInfo.h">
+      <Filter>Header Files\Physics\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsObjectComponent.h">
+      <Filter>Header Files\Scene\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticbodyComponent.h">
+      <Filter>Header Files\Scene\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
