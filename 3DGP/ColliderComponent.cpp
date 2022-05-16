@@ -1,10 +1,15 @@
 #include "ColliderComponent.h"
 
-#include "Resources.h"
+#include "Scene.h"
 
 #include "SphereCollider.h"
 #include "PlaneCollider.h"
 #include "CubeCollider.h"
+
+void ColliderComponent::Start()
+{
+	GetScene()->GetPhysicsSystem()->AddCollider(std::static_pointer_cast<ColliderComponent>(shared_from_this()));
+}
 
 std::shared_ptr<IComponent> ColliderComponent::Parser::Parse(rapidjson::Value& _value)
 {

@@ -18,6 +18,8 @@ public:
 		std::shared_ptr<IComponent> Parse(rapidjson::Value& _value) override;
 	};
 
+	void Start() override;
+
 	std::shared_ptr<ICollider> GetCollider() const { return m_collider; }
 
 	void SetCollider(const std::shared_ptr<ICollider>& _collider) { m_collider = _collider; }
