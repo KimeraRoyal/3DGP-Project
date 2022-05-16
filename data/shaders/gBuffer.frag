@@ -22,6 +22,6 @@ void main()
 {
 	g_Position = vec4(FragPos, 1);
 	g_Normal = vec4(normalize(Normal), 1);
-	g_Specular = vec4(in_Material.specular, in_Material.shininess / 256.0);
+	g_Specular = vec4(in_Material.specular, 1);
 	g_Albedo = texture(in_Texture, TexCoord);
 }

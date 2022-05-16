@@ -66,16 +66,15 @@ vec3 spot(vec4 _tex, SpotLight _light, vec3 _normal, vec3 _fragPos, vec3 _viewDi
 
 void main()
 {
+	Material material;
+	
 	vec3 FragPos = texture(g_Position, TexCoord).rgb;
 	vec3 Normal = texture(g_Normal, TexCoord).rgb;
-	vec4 Specular = texture(g_Specular, TexCoord);
+	material.specular = texture(g_Specular, TexCoord).rgb;
+	material.shininess = 16.0;
 	vec4 Albedo = texture(g_Albedo, TexCoord);
 	
 	vec3 viewDir = normalize(in_ViewPos - FragPos);
-	
-	Material material;
-	material.specular = Specular.rgb;
-	material.shininess = Specular.a * 256.0;
 	
 	vec3 result = vec3(0.0);
 	result += ambient(Albedo, in_AmbientLight);
