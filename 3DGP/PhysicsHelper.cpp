@@ -38,10 +38,15 @@ CollisionInfo PhysicsHelper::SphereOnPlane(SphereCollider* _a, PlaneCollider* _b
 	const glm::vec3 aPos = _a->GetPosition(), bPos = _b->GetPosition();
 	collision.SetDifference(aPos - bPos); //Returning 0,0
 	collision.SetDistance(glm::dot(collision.GetDifference(), _b->GetNormal()));
-	collision.SetCollisionNormal(_b->GetNormal());
+	collision.SetCollisionNormal(-_b->GetNormal());
 
 	// Calculate whether collision has happened
 	collision.SetHasCollision(collision.GetDistance() <= _a->GetRadius());
+
+	if (collision.GetHasCollision())
+	{
+		std::printf("c\n");
+	}
 	
 	return collision;
 }

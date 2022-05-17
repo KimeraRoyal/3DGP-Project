@@ -21,7 +21,7 @@ public:
 
 	virtual glm::vec3 GetVelocity() { return glm::vec3(0.0f); }
 	virtual float GetMass() { return 1.0f; }
-	virtual float GetElasticity () { return 1.0f; }
+	virtual float GetElasticity () { return 0.0f; }
 
 	virtual float GetStaticFriction() { return 0.0f; }
 	virtual float GetDynamicFriction() { return 0.0f; }

@@ -55,11 +55,11 @@ void PhysicsSystem::ResolveCollision(const std::shared_ptr<PhysicsObjectComponen
 	const glm::vec3 collisionNormal = _collision.GetCollisionNormal();
 
 	glm::vec3 aVelocity = _a->GetVelocity(), bVelocity = _b->GetVelocity();
+	const float aMass = _a->GetMass(), bMass = _b->GetMass();
+
 	glm::vec3 velocityDiff = bVelocity - aVelocity;
 	float negativeSpeed = glm::dot(velocityDiff, collisionNormal);
 	if (negativeSpeed >= 0) { return; }
-
-	const float aMass = _a->GetMass(), bMass = _b->GetMass();
 
 	// Impulse
 	const float combinedElasticity = _a->GetElasticity() * _b->GetElasticity();
@@ -73,7 +73,8 @@ void PhysicsSystem::ResolveCollision(const std::shared_ptr<PhysicsObjectComponen
 	velocityDiff = bVelocity - aVelocity;
 	negativeSpeed = glm::dot(velocityDiff, collisionNormal);
 
-	const glm::vec3 tangent = glm::normalize(velocityDiff - negativeSpeed * collisionNormal);
+	glm::vec3 tangent = velocityDiff - negativeSpeed * collisionNormal;
+	if (glm::length(tangent) > 0.0001f) { tangent = glm::normalize(tangent); }
 	const float frictionVelocity = glm::dot(velocityDiff, tangent);
 
 	const float aStaticFriction = _a->GetStaticFriction(), bStaticFriction = _b->GetStaticFriction();
@@ -91,5 +92,5 @@ void PhysicsSystem::ResolveCollision(const std::shared_ptr<PhysicsObjectComponen
 	}
 
 	if (_a->GetIsDynamic()) { _a->SetVelocity(aVelocity - friction * aMass); }
-	if (_b->GetIsDynamic()) { _b->SetVelocity(bVelocity + friction * bMass); }
+	if (_b->GetIsDynamic()) { _b->SetVelocity(bVelocity + friction * bMass); } 
 }
