@@ -52,7 +52,7 @@ void PhysicsSystem::ResolveCollisions(const std::shared_ptr<RigidbodyComponent>&
 void PhysicsSystem::ResolveCollision(const std::shared_ptr<PhysicsObjectComponent>& _a, const std::shared_ptr<PhysicsObjectComponent>& _b, const CollisionInfo& _collision) const
 {
 	// Initial values
-	const glm::vec3 collisionNormal = glm::normalize(_collision.GetDifference());
+	const glm::vec3 collisionNormal = _collision.GetCollisionNormal();
 
 	glm::vec3 aVelocity = _a->GetVelocity(), bVelocity = _b->GetVelocity();
 	glm::vec3 velocityDiff = bVelocity - aVelocity;
