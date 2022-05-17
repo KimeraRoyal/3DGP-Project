@@ -91,6 +91,11 @@ void PhysicsSystem::ResolveCollision(const std::shared_ptr<PhysicsObjectComponen
 		friction = -impulseStrength * tangent * mu;
 	}
 
+	//TODO: Fix friction not applying properly with contact forces?
 	if (_a->GetIsDynamic()) { _a->SetVelocity(aVelocity - friction * aMass); }
-	if (_b->GetIsDynamic()) { _b->SetVelocity(bVelocity + friction * bMass); } 
+	if (_b->GetIsDynamic()) { _b->SetVelocity(bVelocity + friction * bMass); }
+	
+	// Contact force
+	const glm::vec3 contactForce = glm::normalize(collisionNormal) *  m_gravity;
+	if (_a->GetIsDynamic() && !_b->GetIsDynamic()) { _a->AddForce(contactForce); } // Contact force is extremely wacky with two rigidbodies so I do not do it
 }

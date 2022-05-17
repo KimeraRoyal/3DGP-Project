@@ -42,11 +42,6 @@ CollisionInfo PhysicsHelper::SphereOnPlane(SphereCollider* _a, PlaneCollider* _b
 
 	// Calculate whether collision has happened
 	collision.SetHasCollision(collision.GetDistance() <= _a->GetRadius());
-
-	if (collision.GetHasCollision())
-	{
-		std::printf("c\n");
-	}
 	
 	return collision;
 }

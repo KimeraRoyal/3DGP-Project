@@ -23,8 +23,8 @@ public:
 	virtual float GetMass() { return 1.0f; }
 	virtual float GetElasticity () { return 0.0f; }
 
-	virtual float GetStaticFriction() { return 0.0f; }
-	virtual float GetDynamicFriction() { return 0.0f; }
+	virtual float GetStaticFriction() { return 0.5f; }
+	virtual float GetDynamicFriction() { return 0.5f; }
 
 	virtual void SetVelocity(const glm::vec3 _velocity) {}
 };
