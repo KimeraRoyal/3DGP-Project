@@ -25,14 +25,14 @@ void RigidbodyComponent::Start()
 
 void RigidbodyComponent::PhysicsStep(const float _deltaTime)
 {
-	if (GetTransform()->GetPosition().y <= 0.5f)
+	/*if (GetTransform()->GetPosition().y <= 0.5f)
 	{
 		const float collisionImpulse = -(1 + m_elasticity) * glm::dot(m_velocity, glm::vec3(0, 1, 0));
 		AddForce(collisionImpulse * glm::vec3(0, 1, 0) / _deltaTime);
 
 		const glm::vec3 contactForce = glm::vec3(0.0f, 9.8f, 0.0f);
 		AddForce(contactForce);
-	}
+	}*/
 	
 	Euler(_deltaTime);
 }

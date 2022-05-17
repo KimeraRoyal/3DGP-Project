@@ -106,7 +106,9 @@
       "transform" : { "position" : [ 0.0, 0.0, 0.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 3.0, 1.0, 3.0 ] },
       "components" :
       [
-        { "componentType" : "model", "model" : "data/models/level/test_level.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/level.json" }
+        { "componentType" : "model", "model" : "data/models/level/test_level.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/level.json" },
+        { "componentType" : "collider", "type" : "plane", "size" : [ 1.0, 1.0 ] },
+        { "componentType" : "staticbody" }
       ]
     }
   ]

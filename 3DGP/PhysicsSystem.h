@@ -26,7 +26,7 @@ private:
 	void PhysicsStep();
 
 	void ResolveCollisions(const std::shared_ptr<RigidbodyComponent>& _rigidbody);
-	void ResolveCollision(const std::shared_ptr<PhysicsObjectComponent>& _a, const std::shared_ptr<PhysicsObjectComponent>& _b, const CollisionInfo& _collision);
+	void ResolveCollision(const std::shared_ptr<PhysicsObjectComponent>& _a, const std::shared_ptr<PhysicsObjectComponent>& _b, const CollisionInfo& _collision) const;
 public:
 	explicit PhysicsSystem(const float _timestep, const glm::vec3 _gravity = glm::vec3(0.0f, -9.8f, 0.0f))
 		: m_timestep(_timestep), m_gravity(_gravity), m_fixedTimer(0.0f) {}

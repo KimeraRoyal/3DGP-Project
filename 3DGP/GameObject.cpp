@@ -69,6 +69,7 @@ std::shared_ptr<IComponent> GameObject::AddComponent(const std::shared_ptr<IComp
 {
 	_component->SetGameObject(shared_from_this());
 	m_components.push_back(_component);
+	//if (m_started) { _component->Start(); } //TODO: Implement to add vector and start check
 	return _component;
 }
 

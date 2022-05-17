@@ -14,10 +14,10 @@ CollisionInfo SphereCollider::CheckCollision(SphereCollider* _other)
 
 CollisionInfo SphereCollider::CheckCollision(PlaneCollider* _other)
 {
-	return {};
+	return PhysicsHelper::SphereOnPlane(this, _other);
 }
 
 CollisionInfo SphereCollider::CheckCollision(CubeCollider* _other)
 {
-	return {};
+	return PhysicsHelper::SphereOnCube(this, _other);
 }

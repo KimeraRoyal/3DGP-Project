@@ -6,17 +6,9 @@
 #include "PlaneCollider.h"
 #include "CubeCollider.h"
 
-#include "RigidbodyComponent.h"
-#include "StaticbodyComponent.h"
-
 void ColliderComponent::Start()
 {
 	m_collider->SetTransform(GetTransform());
-
-	if(GetGameObject()->GetComponent<RigidbodyComponent>() == nullptr)
-	{
-		GetGameObject()->AddComponent<StaticbodyComponent>();
-	}
 }
 
 CollisionInfo ColliderComponent::CheckCollision(const std::shared_ptr<ColliderComponent>& _other) const
