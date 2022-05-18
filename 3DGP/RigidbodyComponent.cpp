@@ -28,12 +28,6 @@ void RigidbodyComponent::PhysicsStep(const float _deltaTime)
 	Euler(_deltaTime);
 }
 
-CollisionInfo RigidbodyComponent::CheckCollision(const std::shared_ptr<ColliderComponent>& _collider) const
-{
-	if (_collider == GetCollider()) { return {}; }
-	return GetCollider()->CheckCollision(_collider);
-}
-
 void RigidbodyComponent::Euler(const float _deltaTime)
 {
 	// Position

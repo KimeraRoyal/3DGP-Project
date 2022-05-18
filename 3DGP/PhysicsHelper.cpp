@@ -8,7 +8,7 @@
 
 #include "Transform.h"
 
-CollisionInfo PhysicsHelper::SphereOnSphere(SphereCollider* _a, SphereCollider* _b)
+CollisionInfo PhysicsHelper::SphereOnSphere(SphereCollider* _a, SphereCollider* _b, const glm::vec3 _velocity, const glm::vec3 _otherVelocity)
 {
 	CollisionInfo collision;
 
@@ -30,7 +30,7 @@ CollisionInfo PhysicsHelper::SphereOnSphere(SphereCollider* _a, SphereCollider* 
 }
 
 //TODO: Plane bounds check
-CollisionInfo PhysicsHelper::SphereOnPlane(SphereCollider* _a, PlaneCollider* _b)
+CollisionInfo PhysicsHelper::SphereOnPlane(SphereCollider* _a, PlaneCollider* _b, const glm::vec3 _velocity, const glm::vec3 _otherVelocity)
 {
 	CollisionInfo collision;
 
@@ -46,21 +46,21 @@ CollisionInfo PhysicsHelper::SphereOnPlane(SphereCollider* _a, PlaneCollider* _b
 	return collision;
 }
 
-CollisionInfo PhysicsHelper::SphereOnCube(SphereCollider* _a, CubeCollider* _b)
+CollisionInfo PhysicsHelper::SphereOnCube(SphereCollider* _a, CubeCollider* _b, const glm::vec3 _velocity, const glm::vec3 _otherVelocity)
 {
 	CollisionInfo collision;
 	throw std::runtime_error("Sphere v Cube collision is not implemented.");
 	return collision;
 }
 
-CollisionInfo PhysicsHelper::CubeOnCube(CubeCollider* _a, CubeCollider* _b)
+CollisionInfo PhysicsHelper::CubeOnCube(CubeCollider* _a, CubeCollider* _b, const glm::vec3 _velocity, const glm::vec3 _otherVelocity)
 {
 	CollisionInfo collision;
 	throw std::runtime_error("Cube v Cube collision is not implemented.");
 	return collision;
 }
 
-CollisionInfo PhysicsHelper::CubeOnPlane(CubeCollider* _a, PlaneCollider* _b)
+CollisionInfo PhysicsHelper::CubeOnPlane(CubeCollider* _a, PlaneCollider* _b, const glm::vec3 _velocity, const glm::vec3 _otherVelocity)
 {
 	CollisionInfo collision;
 	throw std::runtime_error("Cube v Plane collision is not implemented.");

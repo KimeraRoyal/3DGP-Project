@@ -34,6 +34,8 @@ void PhysicsSystem::PhysicsStep()
 
 		rigidbody->ClearForce();
 		rigidbody->ClearTorque();
+
+		rigidbody->SetSkipCollisionCheck(true);
 	}
 }
 
@@ -41,9 +43,9 @@ void PhysicsSystem::ResolveCollisions(const std::shared_ptr<RigidbodyComponent>&
 {
 	for (const std::shared_ptr<PhysicsObjectComponent>& physicsObject : m_physicsObjects)
 	{
-		if (_rigidbody == physicsObject) { continue; }
+		if (_rigidbody == physicsObject || physicsObject->GetSkipCollisionCheck()) { continue; }
 
-		CollisionInfo collision = _rigidbody->CheckCollision(physicsObject->GetCollider());
+		CollisionInfo collision = _rigidbody->CheckCollision(physicsObject->GetCollider(), _rigidbody->GetVelocity(), physicsObject->GetVelocity());
 		if (!collision.GetHasCollision()) { continue; }
 		ResolveCollision(_rigidbody, physicsObject, collision);
 	}

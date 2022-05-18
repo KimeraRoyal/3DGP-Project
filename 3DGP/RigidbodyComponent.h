@@ -36,7 +36,6 @@ public:
 	void Start() override;
 
 	void PhysicsStep(float _deltaTime);
-	CollisionInfo CheckCollision(const std::shared_ptr<ColliderComponent>& _collider) const;
 
 	void AddForce(const glm::vec3 _force) override { m_force += m_mass * _force; }
 	void AddTorque(const glm::vec3 _torque) { m_torque += _torque; }

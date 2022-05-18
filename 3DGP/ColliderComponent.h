@@ -21,7 +21,7 @@ public:
 
 	void Start() override;
 
-	CollisionInfo CheckCollision(const std::shared_ptr<ColliderComponent>& _other) const;
+	CollisionInfo CheckCollision(const std::shared_ptr<ColliderComponent>& _other, glm::vec3 _velocity, glm::vec3 _otherVelocity) const;
 
 	std::shared_ptr<ICollider> GetCollider() const { return m_collider; }
 

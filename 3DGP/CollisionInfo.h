@@ -5,8 +5,6 @@
 struct CollisionInfo
 {
 private:
-	friend class PhysicsHelper;
-	
 	bool m_hasCollision;
 
 	float m_distance;
@@ -14,14 +12,7 @@ private:
 	glm::vec3 m_collisionNormal;
 	
 	glm::vec3 m_collisionPoint;
-
-	void SetHasCollision(const bool _hasCollision) { m_hasCollision = _hasCollision; }
 	
-	void SetDistance(const float _distance) { m_distance = _distance; }
-	void SetDifference(const glm::vec3 _positionDifference) { m_difference = _positionDifference; }
-	void SetCollisionNormal(const glm::vec3 _collisionNormal) { m_collisionNormal = _collisionNormal; }
-
-	void SetCollisionPoint(const glm::vec3 _collisionPoint) { m_collisionPoint = _collisionPoint; }
 public:
 	CollisionInfo() :
 		m_hasCollision(false), m_distance(0.0f),
@@ -35,4 +26,12 @@ public:
 	[[nodiscard]] glm::vec3 GetCollisionNormal() const { return m_collisionNormal; }
 	
 	[[nodiscard]] glm::vec3 GetCollisionPoint() const { return m_collisionPoint; }
+
+	void SetHasCollision(const bool _hasCollision) { m_hasCollision = _hasCollision; }
+
+	void SetDistance(const float _distance) { m_distance = _distance; }
+	void SetDifference(const glm::vec3 _positionDifference) { m_difference = _positionDifference; }
+	void SetCollisionNormal(const glm::vec3 _collisionNormal) { m_collisionNormal = _collisionNormal; }
+
+	void SetCollisionPoint(const glm::vec3 _collisionPoint) { m_collisionPoint = _collisionPoint; }
 };

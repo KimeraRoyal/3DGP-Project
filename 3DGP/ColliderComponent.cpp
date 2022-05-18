@@ -11,9 +11,9 @@ void ColliderComponent::Start()
 	m_collider->SetTransform(GetTransform());
 }
 
-CollisionInfo ColliderComponent::CheckCollision(const std::shared_ptr<ColliderComponent>& _other) const
+CollisionInfo ColliderComponent::CheckCollision(const std::shared_ptr<ColliderComponent>& _other, const glm::vec3 _velocity, const glm::vec3 _otherVelocity) const
 {
-	return m_collider->CheckCollision(_other->GetCollider().get());
+	return m_collider->CheckCollision(_other->GetCollider().get(), _velocity, _otherVelocity);
 }
 
 std::shared_ptr<IComponent> ColliderComponent::Parser::Parse(rapidjson::Value& _value)
