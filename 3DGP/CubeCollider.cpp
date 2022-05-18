@@ -4,7 +4,7 @@
 
 CollisionInfo CubeCollider::CheckCollision(SphereCollider* _other, const glm::vec3 _velocity, const glm::vec3 _otherVelocity)
 {
-	return PhysicsHelper::SphereOnCube(_other, this);
+	return ReverseCollision(PhysicsHelper::SphereOnCube(_other, this, _otherVelocity, _velocity));
 }
 
 CollisionInfo CubeCollider::CheckCollision(PlaneCollider* _other, const glm::vec3 _velocity, const glm::vec3 _otherVelocity)

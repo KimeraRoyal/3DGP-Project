@@ -11,12 +11,12 @@ PlaneCollider::PlaneCollider()
 
 CollisionInfo PlaneCollider::CheckCollision(SphereCollider* _other, const glm::vec3 _velocity, const glm::vec3 _otherVelocity)
 {
-	return PhysicsHelper::SphereOnPlane(_other, this);
+	return ReverseCollision(PhysicsHelper::SphereOnPlane(_other, this, _otherVelocity, _velocity));
 }
 
 CollisionInfo PlaneCollider::CheckCollision(CubeCollider* _other, const glm::vec3 _velocity, const glm::vec3 _otherVelocity)
 {
-	return PhysicsHelper::CubeOnPlane(_other, this);
+	return ReverseCollision(PhysicsHelper::CubeOnPlane(_other, this, _otherVelocity, _velocity));
 }
 
 glm::vec3 PlaneCollider::GetNormal() const
