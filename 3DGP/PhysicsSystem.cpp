@@ -63,6 +63,10 @@ void PhysicsSystem::ResolveCollision(const std::shared_ptr<PhysicsObjectComponen
 	float negativeSpeed = glm::dot(velocityDiff, collisionNormal);
 	if (negativeSpeed >= 0) { return; }
 
+	// Enforce constraints
+	if (_a->GetIsDynamic()) { _a->GetTransform()->Move(_collision.GetCollisionPoint() - _collision.GetBClipPoint()); }
+	if (_b->GetIsDynamic()) { _b->GetTransform()->Move(_collision.GetCollisionPoint() - _collision.GetAClipPoint()); }
+
 	// Impulse
 	const float combinedElasticity = _a->GetElasticity() * _b->GetElasticity();
 	const float impulseStrength = -(1.0f + combinedElasticity) * negativeSpeed / (aMass + bMass);

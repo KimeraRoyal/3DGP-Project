@@ -24,7 +24,13 @@ CollisionInfo PhysicsHelper::SphereOnSphere(SphereCollider* _a, SphereCollider* 
 	collision.SetHasCollision(collision.GetDistance() <= radiusSum);
 
 	// Calculate the position of the collision (will be the midpoint of overlapping masses if distance < radiusSum)
-	if(collision.GetHasCollision()) { collision.SetCollisionPoint(aPos + (bPos - aPos) * aRadius / (aRadius + bRadius)); }
+	if(collision.GetHasCollision())
+	{
+		collision.SetCollisionPoint(aPos + (bPos - aPos) * aRadius / (aRadius + bRadius));
+
+		collision.SetAClipPoint(glm::normalize(collision.GetCollisionPoint() - aPos) * aRadius + aPos);
+		collision.SetBClipPoint(glm::normalize(collision.GetCollisionPoint() - bPos) * bRadius + bPos);
+	}
 
 	return collision;
 }
@@ -38,11 +44,18 @@ CollisionInfo PhysicsHelper::SphereOnPlane(SphereCollider* _a, PlaneCollider* _b
 	const glm::vec3 aPos = _a->GetPosition(), bPos = _b->GetPosition();
 	collision.SetDifference(aPos - bPos); //Returning 0,0
 	collision.SetDistance(glm::dot(collision.GetDifference(), _b->GetNormal()));
-	collision.SetCollisionNormal(-_b->GetNormal());
+	collision.SetCollisionNormal(_b->GetNormal());
 
 	// Calculate whether collision has happened
 	collision.SetHasCollision(collision.GetDistance() <= _a->GetRadius());
-	
+
+	if(collision.GetHasCollision())
+	{
+		collision.SetCollisionPoint(-collision.GetCollisionNormal() * collision.GetDistance() + aPos);
+		collision.SetAClipPoint(-collision.GetCollisionNormal() * _a->GetRadius() + aPos);
+		collision.SetBClipPoint(-collision.GetCollisionPoint());
+	}
+
 	return collision;
 }
 

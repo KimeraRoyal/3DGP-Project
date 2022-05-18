@@ -34,6 +34,7 @@ public:
 	RigidbodyComponent();
 
 	void Start() override;
+	void FixedUpdate(float _deltaTime) override;
 
 	void PhysicsStep(float _deltaTime);
 

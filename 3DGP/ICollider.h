@@ -26,6 +26,10 @@ protected:
 	{
 		_collision.SetCollisionNormal(-_collision.GetCollisionNormal());
 		_collision.SetDifference(-_collision.GetDifference());
+
+		const glm::vec3 aClipPoint = _collision.GetAClipPoint();
+		_collision.SetAClipPoint(_collision.GetBClipPoint());
+		_collision.SetBClipPoint(aClipPoint);
 		
 		return _collision;
 	}

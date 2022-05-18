@@ -23,6 +23,11 @@ void RigidbodyComponent::Start()
 	GetScene()->GetPhysicsSystem()->AddRigidbody(std::static_pointer_cast<RigidbodyComponent>(shared_from_this()));
 }
 
+void RigidbodyComponent::FixedUpdate(float _deltaTime)
+{
+	SetSkipCollisionCheck(false);
+}
+
 void RigidbodyComponent::PhysicsStep(const float _deltaTime)
 {
 	Euler(_deltaTime);

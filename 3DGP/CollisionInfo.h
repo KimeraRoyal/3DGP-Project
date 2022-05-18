@@ -12,12 +12,14 @@ private:
 	glm::vec3 m_collisionNormal;
 	
 	glm::vec3 m_collisionPoint;
+	glm::vec3 m_aClipPoint;
+	glm::vec3 m_bClipPoint;
 	
 public:
 	CollisionInfo() :
 		m_hasCollision(false), m_distance(0.0f),
 		m_difference(glm::vec3(0.0f)), m_collisionNormal(glm::vec3(0.0f)),
-		m_collisionPoint(glm::vec3(0.0f)) {}
+		m_collisionPoint(glm::vec3(0.0f)), m_aClipPoint(glm::vec3(0.0f)), m_bClipPoint(glm::vec3(0.0f)) {}
 	
 	[[nodiscard]] bool GetHasCollision() const { return m_hasCollision; }
 	
@@ -26,6 +28,8 @@ public:
 	[[nodiscard]] glm::vec3 GetCollisionNormal() const { return m_collisionNormal; }
 	
 	[[nodiscard]] glm::vec3 GetCollisionPoint() const { return m_collisionPoint; }
+	[[nodiscard]] glm::vec3 GetAClipPoint() const { return m_aClipPoint; }
+	[[nodiscard]] glm::vec3 GetBClipPoint() const { return m_bClipPoint; }
 
 	void SetHasCollision(const bool _hasCollision) { m_hasCollision = _hasCollision; }
 
@@ -34,4 +38,6 @@ public:
 	void SetCollisionNormal(const glm::vec3 _collisionNormal) { m_collisionNormal = _collisionNormal; }
 
 	void SetCollisionPoint(const glm::vec3 _collisionPoint) { m_collisionPoint = _collisionPoint; }
+	void SetAClipPoint(const glm::vec3 _aClipPoint) { m_aClipPoint = _aClipPoint; }
+	void SetBClipPoint(const glm::vec3 _bClipPoint) { m_bClipPoint = _bClipPoint; }
 };
