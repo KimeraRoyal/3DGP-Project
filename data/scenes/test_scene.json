@@ -107,7 +107,7 @@
       "components" :
       [
         { "componentType" : "model", "model" : "data/models/level/test_level.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/level.json" },
-        { "componentType" : "collider", "type" : "plane", "size" : [ 1.0, 1.0 ] },
+        { "componentType" : "collider", "type" : "plane", "size" : [ 3.0, 3.0 ] },
         { "componentType" : "staticbody" }
       ]
     }

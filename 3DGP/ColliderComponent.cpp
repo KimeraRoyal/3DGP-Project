@@ -30,6 +30,7 @@ std::shared_ptr<IComponent> ColliderComponent::Parser::Parse(rapidjson::Value& _
 	else if (colliderType == "plane") // Plane
 	{
 		const std::shared_ptr<PlaneCollider> plane = std::make_unique<PlaneCollider>();
+		plane->SetSize(ParseVector2(_value["size"]));
 		component->SetCollider(plane);
 	}
 	else if (colliderType == "cube") // Cube

@@ -43,18 +43,17 @@ CollisionInfo PhysicsHelper::SphereOnPlane(SphereCollider* _a, PlaneCollider* _b
 	// Calculate distance of colliding objects from each other
 	const glm::vec3 aPos = _a->GetPosition(), bPos = _b->GetPosition();
 	collision.SetDifference(aPos - bPos); //Returning 0,0
-	collision.SetDistance(glm::dot(collision.GetDifference(), _b->GetNormal()));
+	collision.SetDistance(abs(glm::dot(collision.GetDifference(), _b->GetNormal())));
 	collision.SetCollisionNormal(_b->GetNormal());
 
 	// Calculate whether collision has happened
-	collision.SetHasCollision(collision.GetDistance() <= _a->GetRadius());
+	collision.SetCollisionPoint(-collision.GetCollisionNormal() * collision.GetDistance() + aPos);
+	collision.SetAClipPoint(-collision.GetCollisionNormal() * _a->GetRadius() + aPos);
+	collision.SetBClipPoint(-collision.GetCollisionPoint());
 
-	if(collision.GetHasCollision())
-	{
-		collision.SetCollisionPoint(-collision.GetCollisionNormal() * collision.GetDistance() + aPos);
-		collision.SetAClipPoint(-collision.GetCollisionNormal() * _a->GetRadius() + aPos);
-		collision.SetBClipPoint(-collision.GetCollisionPoint());
-	}
+	const bool xCheck = collision.GetAClipPoint().x <= bPos.x + _b->GetSize().x && collision.GetAClipPoint().x >= bPos.x - _b->GetSize().x;
+	const bool zCheck = collision.GetAClipPoint().z <= bPos.z + _b->GetSize().y && collision.GetAClipPoint().z >= bPos.y - _b->GetSize().y;
+	collision.SetHasCollision(collision.GetDistance() <= _a->GetRadius() && xCheck && zCheck);
 
 	return collision;
 }

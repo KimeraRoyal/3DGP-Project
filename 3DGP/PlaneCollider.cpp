@@ -19,6 +19,12 @@ CollisionInfo PlaneCollider::CheckCollision(CubeCollider* _other, const glm::vec
 	return ReverseCollision(PhysicsHelper::CubeOnPlane(_other, this, _otherVelocity, _velocity));
 }
 
+glm::vec2 PlaneCollider::GetSize() const
+{
+	return m_size * glm::vec2(GetTransform()->GetScale().x, GetTransform()->GetScale().z);
+}
+
+
 glm::vec3 PlaneCollider::GetNormal() const
 {
 	return GetTransform()->GetUp();

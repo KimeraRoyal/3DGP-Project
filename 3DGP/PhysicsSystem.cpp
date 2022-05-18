@@ -72,8 +72,16 @@ void PhysicsSystem::ResolveCollision(const std::shared_ptr<PhysicsObjectComponen
 	const float impulseStrength = -(1.0f + combinedElasticity) * negativeSpeed / (aMass + bMass);
 	const glm::vec3 impulse = impulseStrength * collisionNormal;
 
-	if (_a->GetIsDynamic()) { aVelocity -= impulse * aMass; }
-	if (_b->GetIsDynamic()) { bVelocity += impulse * bMass; }
+	if (_a->GetIsDynamic())
+	{
+		aVelocity -= impulse * aMass;
+		_a->AddForce(-impulse * aMass / m_timestep);
+	}
+	if (_b->GetIsDynamic())
+	{
+		bVelocity += impulse * bMass;
+		_b->AddForce(impulse * bMass / m_timestep);
+	}
 
 	// Apply friction
 	velocityDiff = bVelocity - aVelocity;
@@ -98,8 +106,8 @@ void PhysicsSystem::ResolveCollision(const std::shared_ptr<PhysicsObjectComponen
 	}
 
 	//TODO: Fix friction not applying properly with contact forces?
-	if (_a->GetIsDynamic()) { _a->SetVelocity(aVelocity - friction * aMass); }
-	if (_b->GetIsDynamic()) { _b->SetVelocity(bVelocity + friction * bMass); }
+	if (_a->GetIsDynamic()) { _a->AddForce( -friction * aMass / m_timestep); }
+	if (_b->GetIsDynamic()) { _b->AddForce(friction * bMass / m_timestep); }
 	
 	// Contact force
 	const glm::vec3 contactForce = glm::normalize(collisionNormal) *  m_gravity;

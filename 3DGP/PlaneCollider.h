@@ -16,7 +16,7 @@ public:
 	CollisionInfo CheckCollision(PlaneCollider* _other, glm::vec3 _velocity, glm::vec3 _otherVelocity) override { return {}; } // No Plane v Plane
 	CollisionInfo CheckCollision(CubeCollider* _other, glm::vec3 _velocity, glm::vec3 _otherVelocity) override;
 
-	[[nodiscard]] glm::vec2 GetSize() const { return m_size; }
+	[[nodiscard]] glm::vec2 GetSize() const;
 
 	[[nodiscard]] glm::vec3 GetNormal() const;
 
