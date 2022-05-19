@@ -85,33 +85,30 @@ void PhysicsSystem::ResolveCollision(const std::shared_ptr<PhysicsObjectComponen
 	
 	// Contact force
 	const glm::vec3 contactForce = glm::normalize(collisionNormal) *  m_gravity;
-	if (_a->GetIsDynamic() && !_b->GetIsDynamic())
-	{
-		aVelocity += contactForce * m_timestep;
-		_a->AddForce(contactForce);
-	} // Contact force is extremely wacky with two rigidbodies so I do not do it
+	if (_a->GetIsDynamic() && !_b->GetIsDynamic()) { _a->AddForce(contactForce); } // Contact force is extremely wacky with two rigidbodies so I do not do it
 
 	// Apply friction
-	velocityDiff = bVelocity - aVelocity;
-	negativeSpeed = glm::dot(velocityDiff, collisionNormal);
+	const glm::vec3 forwardRelativeVelocity = velocityDiff - glm::dot(velocityDiff, collisionNormal) * collisionNormal;
 
-	glm::vec3 tangent = velocityDiff - negativeSpeed * collisionNormal;
-	if (glm::length(tangent) > 0.0001f) { tangent = glm::normalize(tangent); }const float frictionVelocity = glm::dot(velocityDiff, tangent);
+	glm::vec3 forwardRelativeDirection = glm::vec3(0.0f);
+	if (glm::length(forwardRelativeVelocity) > 0.0001f) { forwardRelativeDirection = glm::normalize(forwardRelativeVelocity); }
 
-	const float aStaticFriction = _a->GetStaticFriction(), bStaticFriction = _b->GetStaticFriction();
-	const float aDynamicFriction = _a->GetDynamicFriction(), bDynamicFriction = _b->GetDynamicFriction();
-	float mu = glm::length(glm::vec2(aStaticFriction, bStaticFriction));
-
-	const float f = -frictionVelocity / (aMass + bMass);
-
-	const glm::vec3 friction = f * tangent;
-	if (_a->GetIsDynamic()) { _a->AddForce(friction * aMass); }
-	if (_b->GetIsDynamic()) { _b->AddForce(-friction * bMass); }
+	const float frictionMultiplier = glm::length(_a->GetStaticFriction() + _b->GetStaticFriction());
+	const glm::vec3 frictionDirection = -forwardRelativeDirection;
+	glm::vec3 friction = frictionDirection * glm::length(collisionNormal) * frictionMultiplier;
 	
-	/*if (abs(f) < impulseStrength * mu) { friction = f * tangent; }
-	else
-	{
-		mu = glm::length(glm::vec2(aDynamicFriction, bDynamicFriction));
-		friction = -impulseStrength * tangent * mu;
-	}*/
+	if (_a->GetIsDynamic()) { _a->AddForce(-friction * aMass); }
+	if (_b->GetIsDynamic()) { _b->AddForce(friction * bMass); }
+
+	// Add torque
+	const glm::vec3 aPos = _a->GetTransform()->GetPosition(), bPos = _b->GetTransform()->GetPosition();
+	const glm::vec3 aOffset = _collision.GetAClipPoint() - aPos, bOffset = _collision.GetBClipPoint() - bPos;
+	glm::vec3 aTorque = (glm::cross(abs(aOffset), contactForce)) + glm::cross(aOffset, -friction);
+	glm::vec3 bTorque = (glm::cross(abs(bOffset), -contactForce)) + glm::cross(bOffset, friction);
+
+	aTorque -= _a->GetAngularMomentum() * 0.5f;
+	bTorque -= _b->GetAngularMomentum() * 0.5f;
+
+	if (_a->GetIsDynamic()) { _a->AddTorque(aTorque); }
+	if (_b->GetIsDynamic()) { _b->AddTorque(bTorque); }
 }

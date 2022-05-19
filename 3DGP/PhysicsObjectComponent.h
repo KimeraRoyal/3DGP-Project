@@ -20,6 +20,8 @@ public:
 	CollisionInfo CheckCollision(const std::shared_ptr<ColliderComponent>& _collider, glm::vec3 _velocity, glm::vec3 _otherVelocity) const;
 
 	virtual void AddForce(const glm::vec3 _force) {}
+	virtual void AddTorque(const glm::vec3 _torque) {}
+	
 	virtual	glm::vec3 GetForce() { return glm::vec3(0.0f); }
 
 	std::shared_ptr<ColliderComponent> GetCollider() const { return m_collider; }
@@ -28,7 +30,10 @@ public:
 	virtual bool GetIsDynamic() = 0;
 
 	virtual glm::vec3 GetVelocity() { return glm::vec3(0.0f); }
-	virtual float GetMass() { return 1.0f; }
+
+	virtual glm::vec3 GetAngularMomentum() { return glm::vec3(0.0f); }
+	
+	virtual float GetMass() { return 100.0f; }
 	virtual float GetElasticity () { return 0.0f; }
 
 	virtual float GetStaticFriction() { return 0.5f; }

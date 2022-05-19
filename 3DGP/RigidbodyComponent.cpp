@@ -31,7 +31,8 @@ void RigidbodyComponent::Start()
 {
 	PhysicsObjectComponent::Start();
 	GetScene()->GetPhysicsSystem()->AddRigidbody(std::static_pointer_cast<RigidbodyComponent>(shared_from_this()));
-
+	m_rotationMatrix = glm::mat3_cast(GetTransform()->GetRotation());
+	
 	// Calculate inverse inertia tensor
 	m_bodyInertia = GetCollider()->GetCollider()->CalculateBodyInertia(m_mass);
 	CalculateInverseInertiaTensor();
@@ -130,6 +131,7 @@ void RigidbodyComponent::UpdateRotation(const float _deltaTime)
 		-m_angularVelocity.y, m_angularVelocity.x, 0.0f);
 
 	m_rotationMatrix += omegaStar * m_rotationMatrix * _deltaTime;
+	GetTransform()->SetRotation(glm::normalize(glm::quat_cast(m_rotationMatrix)));
 }
 
 std::shared_ptr<IComponent> RigidbodyComponent::Parser::Parse(rapidjson::Value& _value)

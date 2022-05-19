@@ -12,8 +12,8 @@ PlayerInputComponent::PlayerInputComponent()
 	m_movementSpeed = 0.0f;
 	m_turnSpeed = 0.0f;
 
-	m_jumpHeight = glm::vec3(0.0f, 50.0f, 0.0f);
-	m_jumpDelay = 0.2f;
+	m_jumpHeight = glm::vec3(0.0f, 5.0f, 0.0f);
+	m_jumpDelay = 0.1f;
 	m_jumpTimer = 0.0f;
 }
 
@@ -27,30 +27,29 @@ void PlayerInputComponent::Update(Time& _time, Input& _input)
 	const float horizontal = static_cast<float>(_input.GetAxisDown(s_horizontalBinding));
 	const float vertical = static_cast<float>(_input.GetAxisDown(s_verticalBinding));
 
-	//TODO: Rotate by Quaternion rotation
-
 	const glm::vec3 movementVector = -GetTransform()->GetLeft() * horizontal + GetTransform()->GetForward() * vertical;
 	glm::vec3 velocity = m_rigidbody->GetVelocity();
 	velocity.x = movementVector.x * m_movementSpeed;
 	velocity.z = movementVector.z * m_movementSpeed;
-	m_rigidbody->SetVelocity(velocity);
 	
 	const float rotation = static_cast<float>(_input.GetTrinaryKeyDown(SDL_SCANCODE_Q, SDL_SCANCODE_E));
-	GetTransform()->Rotate(glm::vec3(0, rotation,  0) * (-m_turnSpeed * _time.GetDeltaTime()));
+	m_rigidbody->SetAngularMomentum(glm::vec3(0, rotation,  0) * (m_turnSpeed * _time.GetDeltaTime()));
 
 	if(m_jumpTimer <= 0.001f)
 	{
-		if(_input.GetBindingDown(s_jumpBinding) && GetTransform()->GetPosition().y <= 0.05f)
+		if(_input.GetBindingDown(s_jumpBinding) && GetTransform()->GetPosition().y <= 0.1f)
 		{
 			m_jumpTimer = m_jumpDelay;
 
-			m_rigidbody->AddForce(m_jumpHeight * m_rigidbody->GetMass() / 0.02f);
+			velocity +=m_jumpHeight * m_rigidbody->GetMass();
 		}
 	}
 	else
 	{
 		m_jumpTimer -= _time.GetDeltaTime();
 	}
+	
+	m_rigidbody->SetVelocity(velocity);
 }
 
 std::shared_ptr<IComponent> PlayerInputComponent::Parser::Parse(rapidjson::Value& _value)

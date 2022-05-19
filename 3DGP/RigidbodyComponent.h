@@ -59,7 +59,7 @@ public:
 	void PhysicsStep(float _deltaTime);
 
 	void AddForce(const glm::vec3 _force) override { m_force += m_mass * _force; }
-	void AddTorque(const glm::vec3 _torque) { m_torque += _torque; }
+	void AddTorque(const glm::vec3 _torque) override { m_torque += _torque; }
 
 	void ClearForce() { SetForce(glm::vec3(0.0f)); }
 	void ClearTorque() { SetTorque(glm::vec3(0.0f)); }
@@ -69,6 +69,8 @@ public:
 	glm::vec3 GetForce() override { return m_force; }
 	glm::vec3 GetVelocity() override { return m_velocity; }
 	glm::vec3 GetTorque() const { return m_torque; }
+
+	glm::vec3 GetAngularMomentum() override { return m_angularMomentum; }
 	
 	float GetMass() override { return m_mass; }
 	float GetElasticity() override { return m_elasticity; }
@@ -79,6 +81,8 @@ public:
 	void SetForce(const glm::vec3 _force) { m_force = _force; }
 	void SetVelocity(const glm::vec3 _velocity) override { m_velocity = _velocity; }
 	void SetTorque(const glm::vec3 _torque) { m_torque = _torque; }
+
+	void SetAngularMomentum(const glm::vec3 _angularMomentum) { m_angularMomentum = _angularMomentum; }
 	
 	void SetMass(const float _mass) { m_mass = _mass; }
 	void SetElasticity(const float _elasticity) { m_elasticity = _elasticity; }

@@ -37,9 +37,9 @@
       "transform" : { "position" : [ 0.0, 6.0, 0.0 ], "rotation" : [ 0.0, 180.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
       "components" :
       [
-        { "componentType" : "playerInput", "speed" : 9.0, "turnSpeed" : 70.0 },
+        { "componentType" : "playerInput", "speed" : 9.0, "turnSpeed" : 40.0 },
         { "componentType" : "collider", "type" : "sphere", "radius" : 0.5, "offset" : [ 0.0, 0.5, 0.0 ] },
-        { "componentType" : "rigidbody", "mass" : 1.5, "elasticity" : 0.4, "staticFriction" : 0.05, "dynamicFriction" : 0.05 }
+        { "componentType" : "rigidbody", "mass" : 1.5, "elasticity" : 0.4, "staticFriction" : 0.3, "dynamicFriction" : 0.5 }
       ],
       "children" :
       [
@@ -68,7 +68,7 @@
       [
         { "componentType" : "model", "model" : "data/models/level/crate.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/crate.json" },
         { "componentType" : "collider", "type" : "sphere", "radius" : 0.5 },
-        { "componentType" : "rigidbody", "mass" : 1.0, "elasticity" : 0.2, "staticFriction" : 0.5, "dynamicFriction" : 0.5 }
+        { "componentType" : "rigidbody", "mass" : 1.0, "elasticity" : 0.2, "staticFriction" : 0.5, "dynamicFriction" : 0.8 }
       ]
     },
     {
@@ -78,7 +78,7 @@
       [
         { "componentType" : "model", "model" : "data/models/level/crate.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/crate.json" },
         { "componentType" : "collider", "type" : "sphere", "radius" : 0.5 },
-        { "componentType" : "rigidbody", "mass" : 0.1, "elasticity" : 0.4, "staticFriction" : 0.5, "dynamicFriction" : 0.5 }
+        { "componentType" : "rigidbody", "mass" : 0.1, "elasticity" : 0.4, "staticFriction" : 0.5, "dynamicFriction" : 0.8 }
       ]
     },
     {
@@ -88,7 +88,7 @@
       [
         { "componentType" : "model", "model" : "data/models/level/crate.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/crate.json" },
         { "componentType" : "collider", "type" : "sphere", "radius" : 0.5 },
-        { "componentType" : "rigidbody", "mass" : 1.5, "elasticity" : 0.1, "staticFriction" : 0.5, "dynamicFriction" : 0.5 }
+        { "componentType" : "rigidbody", "mass" : 1.5, "elasticity" : 0.1, "staticFriction" : 0.5, "dynamicFriction" : 0.8 }
       ]
     },
     {
@@ -98,7 +98,7 @@
       [
         { "componentType" : "model", "model" : "data/models/level/crate.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/crate.json" },
         { "componentType" : "collider", "type" : "sphere", "radius" : 0.5 },
-        { "componentType" : "rigidbody", "mass" : 0.5, "elasticity" : 0.2, "staticFriction" : 0.5, "dynamicFriction" : 0.5 }
+        { "componentType" : "rigidbody", "mass" : 0.5, "elasticity" : 0.2, "staticFriction" : 0.5, "dynamicFriction" : 0.8 }
       ]
     },
     {
