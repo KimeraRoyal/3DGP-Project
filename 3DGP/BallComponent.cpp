@@ -7,8 +7,18 @@
 
 void BallComponent::Start()
 {
+	m_rigidbody = GetGameObject()->GetComponent<RigidbodyComponent>();
+
 	const float torqueBounds = 50.0f;
-	GetGameObject()->GetComponent<RigidbodyComponent>()->AddTorque(glm::linearRand(glm::vec3(-torqueBounds), glm::vec3(torqueBounds)));
+	m_rigidbody->AddTorque(glm::linearRand(glm::vec3(-torqueBounds), glm::vec3(torqueBounds)));
+}
+
+void BallComponent::FixedUpdate(const float _deltaTime)
+{
+	if (glm::length(m_rigidbody->GetAngularMomentum()) >= 50.0f) { return; }
+
+	const float torqueBounds = 2.0f;
+	m_rigidbody->AddTorque(glm::linearRand(glm::vec3(-torqueBounds), glm::vec3(torqueBounds)));
 }
 
 std::shared_ptr<IComponent> BallComponent::GenerateClone()
