@@ -9,7 +9,19 @@
   "prefabs" :
   [
     {
-      "name" : "orbbPrefab",
+      "name" : "orbbPrefab1",
+      "transform" : { "position" : [ 0.0, 0.0, 0.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 0.5, 0.5, 0.5 ] },
+      "components" :
+      [
+        { "componentType" : "model", "model" : "data/models/level/orb.obj", "vert" : "data/shaders/simple.vert", "frag" : "data/shaders/gBuffer.frag", "material" : "data/materials/crate.json" },
+        { "componentType" : "collider", "type" : "sphere", "radius" : 0.5 },
+        { "componentType" : "rigidbody", "mass" : 0.5, "elasticity" : 0.8, "staticFriction" : 0.3, "dynamicFriction" : 0.8 },
+        { "componentType" : "outOfBoundsCheck", "minHeight" : -20.0, "minResetPosition" : [ -5.0, 10.0, -25.0 ], "maxResetPosition" : [ 5.0, 12.0, -15.0 ] },
+        { "componentType" : "ball" }
+      ]
+    },
+    {
+      "name" : "orbbPrefab2",
       "transform" : { "position" : [ 0.0, 0.0, 0.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
       "components" :
       [
@@ -101,7 +113,15 @@
       "transform" : { "position" : [ 0.0, 6.0, -20.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
       "components" :
       [
-        { "componentType" : "objectSpawner", "maxObjects" : 75, "prefab" : "orbbPrefab", "minSpawnPosition" : [ -6.0, 10.0, -26.0 ], "maxSpawnPosition" : [ 6.0, 12.0, -14.0 ], "spawnTime" : 0.05 }
+        { "componentType" : "objectSpawner", "maxObjects" : 100, "prefab" : "orbbPrefab1", "minSpawnPosition" : [ -6.0, 10.0, -26.0 ], "maxSpawnPosition" : [ 6.0, 12.0, -14.0 ], "spawnTime" : 0.04 }
+      ]
+    },
+    {
+      "name" : "orbSpawner2",
+      "transform" : { "position" : [ 0.0, 6.0, -20.0 ], "rotation" : [ 0.0, 0.0, 0.0 ], "scale" : [ 1.0, 1.0, 1.0 ] },
+      "components" :
+      [
+        { "componentType" : "objectSpawner", "maxObjects" : 50, "prefab" : "orbbPrefab2", "minSpawnPosition" : [ -6.0, 10.0, -26.0 ], "maxSpawnPosition" : [ 6.0, 12.0, -14.0 ], "spawnTime" : 0.03 }
       ]
     },
     {

@@ -110,7 +110,7 @@ bool Window::Update()
 
 	if (m_lastFPS != m_time.GetFPS())
 	{
-		m_windowTitle = "3D Game (" + std::to_string(m_time.GetFPS()) +")";
+		m_windowTitle = "3D Game (" + std::to_string(m_time.GetFPS()) +"FPS)";
 		SDL_SetWindowTitle(m_window, m_windowTitle.c_str());
 
 		m_lastFPS = m_time.GetFPS();
