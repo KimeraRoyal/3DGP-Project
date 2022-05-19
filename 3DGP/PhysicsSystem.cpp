@@ -101,7 +101,7 @@ void PhysicsSystem::ResolveCollision(const std::shared_ptr<PhysicsObjectComponen
 	if (_b->GetIsDynamic()) { _b->AddForce(friction * bMass); }
 
 	// Add torque
-	const glm::vec3 aPos = _a->GetTransform()->GetPosition(), bPos = _b->GetTransform()->GetPosition();
+	/*const glm::vec3 aPos = _a->GetTransform()->GetPosition(), bPos = _b->GetTransform()->GetPosition();
 	const glm::vec3 aOffset = _collision.GetAClipPoint() - aPos, bOffset = _collision.GetBClipPoint() - bPos;
 	glm::vec3 aTorque = (glm::cross(abs(aOffset), contactForce)) + glm::cross(aOffset, -friction);
 	glm::vec3 bTorque = (glm::cross(abs(bOffset), -contactForce)) + glm::cross(bOffset, friction);
@@ -110,5 +110,5 @@ void PhysicsSystem::ResolveCollision(const std::shared_ptr<PhysicsObjectComponen
 	bTorque -= _b->GetAngularMomentum() * 0.5f;
 
 	if (_a->GetIsDynamic()) { _a->AddTorque(aTorque); }
-	if (_b->GetIsDynamic()) { _b->AddTorque(bTorque); }
+	if (_b->GetIsDynamic()) { _b->AddTorque(bTorque); }*/
 }
