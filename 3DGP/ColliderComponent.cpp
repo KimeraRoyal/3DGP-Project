@@ -11,6 +11,13 @@ void ColliderComponent::Start()
 	m_collider->SetTransform(GetTransform());
 }
 
+std::shared_ptr<IComponent> ColliderComponent::GenerateClone()
+{
+	const std::shared_ptr<ColliderComponent> component = std::make_shared<ColliderComponent>();
+	component->m_collider = m_collider->GenerateClone();
+	return component;
+}
+
 CollisionInfo ColliderComponent::CheckCollision(const std::shared_ptr<ColliderComponent>& _other, const glm::vec3 _velocity, const glm::vec3 _otherVelocity) const
 {
 	return m_collider->CheckCollision(_other->GetCollider().get(), _velocity, _otherVelocity);

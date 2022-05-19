@@ -52,7 +52,7 @@ CollisionInfo PhysicsHelper::SphereOnPlane(SphereCollider* _a, PlaneCollider* _b
 	collision.SetBClipPoint(-collision.GetCollisionPoint());
 
 	const bool xCheck = collision.GetAClipPoint().x <= bPos.x + _b->GetSize().x && collision.GetAClipPoint().x >= bPos.x - _b->GetSize().x;
-	const bool zCheck = collision.GetAClipPoint().z <= bPos.z + _b->GetSize().y && collision.GetAClipPoint().z >= bPos.y - _b->GetSize().y;
+	const bool zCheck = collision.GetAClipPoint().z <= bPos.z + _b->GetSize().y && collision.GetAClipPoint().z >= bPos.z - _b->GetSize().y;
 	collision.SetHasCollision(collision.GetDistance() <= _a->GetRadius() && xCheck && zCheck);
 
 	return collision;

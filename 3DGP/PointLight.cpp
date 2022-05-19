@@ -11,6 +11,15 @@ size_t PointLight::s_specularKey = std::hash<std::string>()("in_PointLight.specu
 
 size_t PointLight::s_radiusKey = std::hash<std::string>()("in_PointLight.radius");
 
+std::shared_ptr<ILight> PointLight::GenerateClone()
+{
+	std::shared_ptr<PointLight> clone = std::make_shared<PointLight>();
+	clone->SetLightColor(GetLightColor());
+	clone->SetLightStrength(GetLightStrength());
+	clone->m_radius = m_radius;
+	return clone;
+}
+
 void PointLight::AssignUniforms(const std::shared_ptr<ShaderProgram>& _program)
 {
 	_program->SetUniformValueByKey(s_positionKey, GetTransform()->GetPosition());

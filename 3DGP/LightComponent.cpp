@@ -19,6 +19,13 @@ void LightComponent::Start()
 	GetScene()->GetRenderingSystem()->AddLight(std::dynamic_pointer_cast<LightComponent>(shared_from_this()));
 }
 
+std::shared_ptr<IComponent> LightComponent::GenerateClone()
+{
+	const std::shared_ptr<LightComponent> component = std::make_shared<LightComponent>();
+	component->m_light = m_light->GenerateClone();
+	return component;
+}
+
 void LightComponent::AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const
 {
 	m_light->AssignUniforms(_program);

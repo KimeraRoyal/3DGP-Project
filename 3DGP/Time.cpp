@@ -2,6 +2,14 @@
 
 void Time::Update()
 {
+	m_frames++;
+
+	CalculateTime();
+	CalculateFPS();
+}
+
+void Time::CalculateTime()
+{
 	const Uint64 currentCounterValue = SDL_GetPerformanceCounter();
 
 	if (m_lastCounterValue)
@@ -13,12 +21,16 @@ void Time::Update()
 	m_lastCounterValue = currentCounterValue;
 }
 
-float Time::GetDeltaTime() const
+void Time::CalculateFPS()
 {
-	return m_deltaTime;
-}
+	m_fpsTimer += m_deltaTime;
+	m_framesInSecond++;
 
-float Time::GetTime() const
-{
-	return m_time;
+	if (m_fpsTimer >= 1.0f)
+	{
+		m_fps = m_framesInSecond;
+		m_framesInSecond = 0;
+
+		m_fpsTimer -= 1.0f;
+	}
 }

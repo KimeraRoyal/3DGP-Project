@@ -75,8 +75,6 @@ void Window::Start()
 {
 	SceneParser sceneParser(&m_settings, &m_resources);
 	m_scene = sceneParser.Parse("data/scenes/test_scene.json");
-
-	m_scene->Start();
 }
 
 bool Window::PollEvents()
@@ -109,6 +107,14 @@ bool Window::Update()
 	m_audio.Update();
 	
 	m_input.PostUpdate();
+
+	if (m_lastFPS != m_time.GetFPS())
+	{
+		m_windowTitle = "3D Game (" + std::to_string(m_time.GetFPS()) +")";
+		SDL_SetWindowTitle(m_window, m_windowTitle.c_str());
+
+		m_lastFPS = m_time.GetFPS();
+	}
 
 	return true;
 }

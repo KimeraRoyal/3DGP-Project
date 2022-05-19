@@ -30,6 +30,8 @@ public:
 	
 	ModelComponent();
 
+	std::shared_ptr<IComponent> GenerateClone() override;
+
 	void Draw() override;
 
 	[[nodiscard]] std::shared_ptr<IModel> GetModel() const { return m_model; }

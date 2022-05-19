@@ -28,6 +28,9 @@ private:
 	glm::uvec2 m_resolution;
 	unsigned int m_scale;
 
+	std::string m_windowTitle;
+	int m_lastFPS;
+
 	SDL_Window* m_window;
 	SDL_GLContext m_context;
 

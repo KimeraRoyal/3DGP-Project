@@ -33,6 +33,8 @@ public:
 
 	void Clear() const;
 
+	std::shared_ptr<IComponent> GenerateClone() override;
+
 	[[nodiscard]] glm::mat4 GetViewMatrix() const;
 	
 	[[nodiscard]] glm::vec3 GetClearColor() const { return m_clearColor; }

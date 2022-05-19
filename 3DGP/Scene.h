@@ -24,7 +24,11 @@ private:
 	
 	static size_t s_lightPosKey;
 
+	std::vector<std::shared_ptr<GameObject>> m_prefabs;
+
 	std::vector<std::shared_ptr<GameObject>> m_gameObjects;
+
+	std::vector<std::shared_ptr<GameObject>> m_toSpawn;
 	std::vector<std::shared_ptr<GameObject>> m_toDestroy;
 
 	PhysicsSystem m_physicsSystem;
@@ -32,16 +36,23 @@ private:
 	
 	std::shared_ptr<Screen> m_screen;
 
+	void InitializeGameObjects();
 	void DisposeGameObjects();
 public:
 	Scene(Settings* _settings, Resources* _resources);
 
-	void Start();
 	void Update(Time& _time, Input& _input);
 	void Draw();
 
+	std::shared_ptr<GameObject> CreatePrefab();
+
 	std::shared_ptr<GameObject> CreateGameObject();
+	std::shared_ptr<GameObject> CloneGameObject(const std::shared_ptr<GameObject>& _original);
+
 	void DestroyGameObject(const std::shared_ptr<GameObject>& _gameObject) { m_toDestroy.push_back(_gameObject); }
+
+	std::shared_ptr<GameObject> FindPrefabByName(const std::string& _name);
+	std::shared_ptr<GameObject> FindGameObjectByName(const std::string& _name);
 
 	template<typename T>
 	std::shared_ptr<T> FindComponent()

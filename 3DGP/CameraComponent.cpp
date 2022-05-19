@@ -24,6 +24,16 @@ void CameraComponent::Start()
 	GetScene()->GetRenderingSystem()->AddCamera(std::dynamic_pointer_cast<CameraComponent>(shared_from_this()));
 }
 
+std::shared_ptr<IComponent> CameraComponent::GenerateClone()
+{
+	const std::shared_ptr<CameraComponent> component = std::make_shared<CameraComponent>();
+	component->m_clearColor = m_clearColor;
+	component->m_fov = m_fov;
+	component->m_nearPlane = m_nearPlane;
+	component->m_farPlane = m_farPlane;
+	return component;
+}
+
 void CameraComponent::DrawRenderables(const std::vector<std::shared_ptr<RenderableComponent>>& _renderables) const
 {
 	const glm::mat4 projection = glm::perspective(glm::radians(m_fov), static_cast<float>(Window::GetInstance()->GetResolution().x) / static_cast<float>(Window::GetInstance()->GetResolution().y), m_nearPlane, m_farPlane);

@@ -24,6 +24,8 @@ public:
 
 	void Start() override;
 
+	std::shared_ptr<IComponent> GenerateClone() override;
+
 	void AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) const;
 
 	[[nodiscard]] std::shared_ptr<ILight> GetLight() const { return m_light; }

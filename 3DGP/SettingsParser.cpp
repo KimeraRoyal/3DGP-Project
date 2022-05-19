@@ -14,5 +14,8 @@ void SettingsParser::Parse(const std::string& _path, Settings& _settings) const
 	_settings.SetWindowScale(document["screenScale"].GetUint());
 	_settings.SetEnableVsync(document["enableVsync"].GetBool());
 
+	_settings.SetEnableSrgb(document["srgbEnabled"].GetBool());
+	_settings.SetEnableFxaa(document["fxaaEnabled"].GetBool());
+
 	_settings.SetPhysicsTimestep(document["physicsTimestep"].GetFloat());
 }

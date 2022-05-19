@@ -135,7 +135,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
       <AdditionalLibraryDirectories>../Libraries/libs/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)Libraries\dlls\x86\ $(OutDir) /e /i /d /y
+      <Command>xcopy $(SolutionDir)Libraries\dlls\x86 $(OutDir) /e /i /d /y
 xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -165,6 +165,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="AmbientLight.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="AudioEvent.cpp" />
+    <ClCompile Include="BallComponent.cpp" />
     <ClCompile Include="BitSet.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
@@ -184,6 +185,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MaterialParser.cpp" />
     <ClCompile Include="ModelComponent.cpp" />
+    <ClCompile Include="OutOfBoundsCheckComponent.cpp" />
     <ClCompile Include="PhysicsHelper.cpp" />
     <ClCompile Include="PhysicsObjectComponent.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
@@ -201,6 +203,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ObjectSpawnerComponent.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="StaticbodyComponent.cpp" />
@@ -217,6 +220,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="AmbientLight.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="AudioEvent.h" />
+    <ClInclude Include="BallComponent.h" />
     <ClInclude Include="BitSet.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
@@ -234,6 +238,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="IModel.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputAxis.h" />
+    <ClInclude Include="OutOfBoundsCheckComponent.h" />
     <ClInclude Include="PhysicsHelper.h" />
     <ClInclude Include="PhysicsObjectComponent.h" />
     <ClInclude Include="PhysicsSystem.h" />
@@ -262,6 +267,7 @@ xcopy $(SolutionDir)data $(OutDir)data /e /i /d /y</Command>
     <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ObjectSpawnerComponent.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="StaticbodyComponent.h" />

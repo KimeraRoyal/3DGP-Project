@@ -19,16 +19,9 @@ Scene::Scene(Settings* _settings, Resources* _resources)
 	m_screen = std::make_unique<Screen>(m_resources->GetProgram("data/shaders/screen/screen.vert", "data/shaders/screen/screen.frag"));
 }
 
-void Scene::Start()
-{
-	for (const std::shared_ptr<GameObject>& gameObject : m_gameObjects)
-	{
-		gameObject->Start();
-	}
-}
-
 void Scene::Update(Time& _time, Input& _input)
 {
+	InitializeGameObjects();
 	for (const std::shared_ptr<GameObject>& gameObject : m_gameObjects)
 	{
 		if (!gameObject->GetActive()) { continue; }
@@ -42,7 +35,7 @@ void Scene::Update(Time& _time, Input& _input)
 void Scene::Draw()
 {
 	/*												*
-	 * PASS 1: RENDERING PASS	*
+	 * PASS 1: RENDERING PASS						*
 	 *												*/
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -58,7 +51,7 @@ void Scene::Draw()
 	glDisable(GL_DEPTH_TEST);
 	
 	/*												*
-	 * PASS 2: LIGHTING PASS	*
+	 * PASS 2: LIGHTING PASS						*
 	 *												*/
 	glViewport(0, 0, Window::GetInstance()->GetScaledResolution().x, Window::GetInstance()->GetScaledResolution().y);
 	m_screen->Bind();
@@ -67,10 +60,21 @@ void Scene::Draw()
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glEnable(GL_FRAMEBUFFER_SRGB);
+	if (Window::GetInstance()->GetSettings()->GetEnableSrgb()) { glEnable(GL_FRAMEBUFFER_SRGB); }
 	m_screen->Draw();
 	glDisable(GL_FRAMEBUFFER_SRGB);
 	glDisable(GL_CULL_FACE);
+}
+
+std::shared_ptr<GameObject> Scene::CreatePrefab()
+{
+	std::shared_ptr<GameObject> prefab = std::shared_ptr<GameObject>(new GameObject);
+
+	prefab->SetScene(shared_from_this());
+
+	m_prefabs.push_back(prefab);
+
+	return prefab;
 }
 
 std::shared_ptr<GameObject> Scene::CreateGameObject()
@@ -80,9 +84,57 @@ std::shared_ptr<GameObject> Scene::CreateGameObject()
 	gameObject->SetScene(shared_from_this());
 	gameObject->OnCreate();
 	
-	m_gameObjects.push_back(gameObject);
+	m_toSpawn.push_back(gameObject);
 	
 	return gameObject;
+}
+
+std::shared_ptr<GameObject> Scene::CloneGameObject(const std::shared_ptr<GameObject>& _original)
+{
+	std::shared_ptr<GameObject> clone = std::shared_ptr<GameObject>(new GameObject);
+	clone->Clone(_original);
+
+	clone->SetScene(shared_from_this());
+	clone->OnCreate();
+
+	m_toSpawn.push_back(clone);
+
+	return clone;
+}
+
+std::shared_ptr<GameObject> Scene::FindPrefabByName(const std::string& _name)
+{
+	for (const std::shared_ptr<GameObject>& gameObject : m_prefabs)
+	{
+		if (gameObject->GetName() == _name) { return gameObject; }
+	}
+	return nullptr;
+}
+
+std::shared_ptr<GameObject> Scene::FindGameObjectByName(const std::string& _name)
+{
+	for (const std::shared_ptr<GameObject>& gameObject : m_gameObjects)
+	{
+		if (gameObject->GetName() == _name) { return gameObject; }
+	}
+	return nullptr;
+}
+
+void Scene::InitializeGameObjects()
+{
+	if (m_toSpawn.empty()) { return; }
+
+	for (const std::shared_ptr<GameObject>& gameObject : m_toSpawn)
+	{
+		m_gameObjects.push_back(gameObject);
+	}
+
+	for (const std::shared_ptr<GameObject>& gameObject : m_toSpawn)
+	{
+		gameObject->Start();
+	}
+
+	m_toSpawn.clear();
 }
 
 void Scene::DisposeGameObjects()

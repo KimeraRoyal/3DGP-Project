@@ -3,6 +3,7 @@
 #include <memory>
 
 #include <glm/vec3.hpp>
+#include <memory>
 
 class Transform;
 class ShaderProgram;
@@ -23,6 +24,8 @@ protected:
 public:
 	ILight() : m_transform(nullptr), m_lightColor(glm::vec3(0.0f)), m_lightStrength(0.0f) {}
 	virtual ~ILight() = default;
+
+	virtual std::shared_ptr<ILight> GenerateClone() = 0;
 	
 	virtual void AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) = 0;
 

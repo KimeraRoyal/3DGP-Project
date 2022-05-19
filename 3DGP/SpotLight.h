@@ -22,6 +22,8 @@ public:
 	SpotLight() : ILight(), m_innerCutoff(0.0f), m_outerCutoff(0.0f) {}
 	~SpotLight() override = default;
 
+	std::shared_ptr<ILight> GenerateClone() override;
+
 	void AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) override;
 
 	void SetInnerCutoff(const float _angle) { m_innerCutoff = glm::cos(glm::radians(_angle)); }

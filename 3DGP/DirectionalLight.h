@@ -14,6 +14,8 @@ public:
 	DirectionalLight() : ILight() {}
 	~DirectionalLight() override = default;
 
+	std::shared_ptr<ILight> GenerateClone() override;
+
 	void AssignUniforms(const std::shared_ptr<ShaderProgram>& _program) override;
 };
 

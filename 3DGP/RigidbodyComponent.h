@@ -56,6 +56,8 @@ public:
 	void Start() override;
 	void FixedUpdate(float _deltaTime) override;
 
+	std::shared_ptr<IComponent> GenerateClone() override;
+
 	void PhysicsStep(float _deltaTime);
 
 	void AddForce(const glm::vec3 _force) override { m_force += m_mass * _force; }

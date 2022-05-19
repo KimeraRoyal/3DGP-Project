@@ -34,9 +34,6 @@ private:
 public:
 	explicit Transform(glm::vec3 _position = glm::vec3(0.0f), glm::quat _rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3 _scale = glm::vec3(1.0f));
 	explicit Transform(glm::vec3 _position = glm::vec3(0.0f), glm::vec3 _rotation = glm::vec3(0.0f), glm::vec3 _scale = glm::vec3(1.0f));
-	
-	Transform(const Transform& _copy) = delete;
-	Transform& operator=(const Transform& _other) = delete;
 
 	void Move(const glm::vec3 _amount){ SetPosition(m_position + _amount); }
 	void Rotate(const glm::quat _amount) { SetRotation(m_rotation = m_rotation * _amount); }

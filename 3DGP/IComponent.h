@@ -13,7 +13,7 @@ class Transform;
 class IComponent : public std::enable_shared_from_this<IComponent>
 {
 private:
-	friend GameObject;
+	friend class GameObject;
 
 	std::weak_ptr<GameObject> m_gameObject;
 
@@ -41,6 +41,8 @@ public:
 	virtual void Start() {}
 	virtual void Update(Time& _time, Input& _input) {}
 	virtual void FixedUpdate(float _deltaTime) {}
+
+	virtual std::shared_ptr<IComponent> GenerateClone() = 0;
 
 	[[nodiscard]] bool GetActive() const { return m_active && m_gameObjectActive; }
 

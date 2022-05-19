@@ -27,6 +27,8 @@ private:
 
 	uint32_t m_id;
 
+	std::string m_name;
+
 	bool m_parentActive = true;
 	bool m_active = true;
 
@@ -48,6 +50,8 @@ private:
 public:
 	bool operator==(const GameObject& _gameObject) const { return m_id == _gameObject.m_id; }
 
+	void Clone(const std::shared_ptr<GameObject> other);
+
 	void OnCreate();
 	void OnDestroy();
 	
@@ -68,6 +72,8 @@ public:
 	void RemoveComponent(const std::shared_ptr<IComponent>& _component);
 
 	uint32_t GetId() const { return m_id; }
+
+	std::string GetName() const { return m_name; }
 
 	bool GetActive() const { return m_active; }
 
@@ -94,6 +100,8 @@ public:
 			if (castComponent) { o_components.push_back(castComponent); }
 		}
 	}
+
+	void SetName(const std::string& _name) { m_name = _name; }
 
 	void SetActive(const bool _active)
 	{

@@ -13,6 +13,16 @@ size_t SpotLight::s_specularKey = std::hash<std::string>()("in_SpotLight.specula
 size_t SpotLight::s_innerKey = std::hash<std::string>()("in_SpotLight.innerCutoff");
 size_t SpotLight::s_outerKey = std::hash<std::string>()("in_SpotLight.outerCutoff");
 
+std::shared_ptr<ILight> SpotLight::GenerateClone()
+{
+	std::shared_ptr<SpotLight> clone = std::make_shared<SpotLight>();
+	clone->SetLightColor(GetLightColor());
+	clone->SetLightStrength(GetLightStrength());
+	clone->m_innerCutoff = m_innerCutoff;
+	clone->m_outerCutoff = m_outerCutoff;
+	return clone;
+}
+
 void SpotLight::AssignUniforms(const std::shared_ptr<ShaderProgram>& _program)
 {
 	_program->SetUniformValueByKey(s_positionKey, GetTransform()->GetPosition());

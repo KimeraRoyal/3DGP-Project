@@ -38,6 +38,16 @@ void RigidbodyComponent::Start()
 	CalculateInverseInertiaTensor();
 }
 
+std::shared_ptr<IComponent> RigidbodyComponent::GenerateClone()
+{
+	const std::shared_ptr<RigidbodyComponent> component = std::make_shared<RigidbodyComponent>();
+	component->m_mass = m_mass;
+	component->m_elasticity = m_elasticity;
+	component->m_staticFriction = m_staticFriction;
+	component->m_dynamicFriction = m_dynamicFriction;
+	return component;
+}
+
 void RigidbodyComponent::FixedUpdate(float _deltaTime)
 {
 	SetSkipCollisionCheck(false);

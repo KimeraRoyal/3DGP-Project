@@ -9,10 +9,13 @@
 #include "ModelComponent.h"
 
 #include "ColliderComponent.h"
+#include "StaticbodyComponent.h"
 #include "RigidbodyComponent.h"
 
 #include "PlayerInputComponent.h"
-#include "StaticbodyComponent.h"
+#include "OutOfBoundsCheckComponent.h"
+#include "ObjectSpawnerComponent.h"
+#include "BallComponent.h"
 
 SceneParser::SceneParser(Settings* _settings, Resources* _resources)
 {
@@ -31,7 +34,9 @@ SceneParser::SceneParser(Settings* _settings, Resources* _resources)
 
 	// Game
 	m_parsers.insert(std::make_pair("playerInput", std::make_unique<PlayerInputComponent::Parser>(m_resources)));
-	m_parsers.insert(std::make_pair("playerInput", std::make_unique<PlayerInputComponent::Parser>(m_resources)));
+	m_parsers.insert(std::make_pair("outOfBoundsCheck", std::make_unique<OutOfBoundsCheckComponent::Parser>(m_resources)));
+	m_parsers.insert(std::make_pair("objectSpawner", std::make_unique<ObjectSpawnerComponent::Parser>(m_resources)));
+	m_parsers.insert(std::make_pair("ball", std::make_unique<BallComponent::Parser>(m_resources)));
 }
 
 std::shared_ptr<Scene> SceneParser::Parse(const std::string& _path)
@@ -52,8 +57,18 @@ std::shared_ptr<Scene> SceneParser::Parse(const std::string& _path)
 #ifdef _DEBUG
 	printf("\n");
 #endif
-	
-	if(document.HasMember("objects"))
+
+	if (document.HasMember("prefabs"))
+	{
+		rapidjson::Value& objects = document["prefabs"];
+		assert(objects.IsArray());
+		for (rapidjson::SizeType i = 0; i < objects.Size(); i++)
+		{
+			ParsePrefab(scene, objects[i]);
+		}
+	}
+
+	if (document.HasMember("objects"))
 	{
 		rapidjson::Value& objects = document["objects"];
 		assert(objects.IsArray());
@@ -130,6 +145,8 @@ std::shared_ptr<GameObject> SceneParser::ParseObject(const std::shared_ptr<Scene
 {
 	std::shared_ptr<GameObject> gameObject = _scene->CreateGameObject();
 
+	gameObject->SetName(_objectValue["name"].GetString());
+
 	if(_objectValue.HasMember("transform"))
 	{
 		rapidjson::Value& transform = _objectValue["transform"];
@@ -155,6 +172,44 @@ std::shared_ptr<GameObject> SceneParser::ParseObject(const std::shared_ptr<Scene
 		for(rapidjson::SizeType i = 0; i < children.Size(); i++)
 		{
 			std::shared_ptr<GameObject> child = ParseObject(_scene, children[i]);
+			child->GetTransform()->SetParent(gameObject->GetTransform());
+		}
+	}
+
+	return gameObject;
+}
+
+std::shared_ptr<GameObject> SceneParser::ParsePrefab(const std::shared_ptr<Scene>& _scene, rapidjson::Value& _objectValue)
+{
+	std::shared_ptr<GameObject> gameObject = _scene->CreatePrefab();
+
+	gameObject->SetName(_objectValue["name"].GetString());
+
+	if(_objectValue.HasMember("transform"))
+	{
+		rapidjson::Value& transform = _objectValue["transform"];
+		gameObject->GetTransform()->SetPosition(ParseVector3(transform["position"]));
+		gameObject->GetTransform()->SetEulerAngles(ParseVector3(transform["rotation"]));
+		gameObject->GetTransform()->SetScale(ParseVector3(transform["scale"]));
+	}
+
+	if(_objectValue.HasMember("components"))
+	{
+		rapidjson::Value& components = _objectValue["components"];
+		assert(components.IsArray());
+		for (rapidjson::SizeType i = 0; i < components.Size(); i++)
+		{
+			ParseComponent(gameObject, components[i]);
+		}
+	}
+
+	if(_objectValue.HasMember("children"))
+	{
+		rapidjson::Value& children = _objectValue["children"];
+		assert(children.IsArray());
+		for(rapidjson::SizeType i = 0; i < children.Size(); i++)
+		{
+			std::shared_ptr<GameObject> child = ParsePrefab(_scene, children[i]);
 			child->GetTransform()->SetParent(gameObject->GetTransform());
 		}
 	}

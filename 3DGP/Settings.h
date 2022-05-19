@@ -15,6 +15,9 @@ private:
 	unsigned int m_windowScale;
 	bool m_enableVsync;
 
+	bool m_enableSrgb;
+	bool m_enableFxaa;
+
 	float m_physicsTimestep;
 
 	void SetControlWindowMovement(const bool _controlMovement) { m_controlWindowMovement = _controlMovement; }
@@ -25,11 +28,15 @@ private:
 	void SetWindowScale(const unsigned int _scale) { m_windowScale = _scale; }
 	void SetEnableVsync(const bool _enableVsync) { m_enableVsync = _enableVsync; }
 
+	void SetEnableFxaa(const bool _enableFxaa) { m_enableFxaa = _enableFxaa; }
+	void SetEnableSrgb(const bool _enableSrgb) { m_enableSrgb = _enableSrgb; }
+
 	void SetPhysicsTimestep(const float _timestep) { m_physicsTimestep = _timestep; }
 public:
 	Settings()
 	: m_controlWindowMovement(false), m_windowAnchor(0.5f), m_windowPosition(0.0f),
 		m_windowResolution(glm::uvec2(1)), m_windowScale(1), m_enableVsync(true),
+		m_enableFxaa(true), m_enableSrgb(true),
 		m_physicsTimestep(0.1f) {}
 
 	[[nodiscard]] bool GetControlWindowMovement() const { return m_controlWindowMovement; }
@@ -40,6 +47,9 @@ public:
 	[[nodiscard]] glm::uvec2 GetScaledWindowResolution() const { return m_windowResolution * m_windowScale; }
 	[[nodiscard]] unsigned int GetWindowScale() const { return m_windowScale; }
 	[[nodiscard]] bool GetEnableVsync() const { return m_enableVsync; }
+
+	[[nodiscard]] bool GetEnableFxaa() const { return m_enableFxaa; }
+	[[nodiscard]] bool GetEnableSrgb() const { return m_enableSrgb; }
 
 	[[nodiscard]] float GetPhysicsTimestep() const { return m_physicsTimestep; }
 };

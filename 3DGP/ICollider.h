@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/mat3x3.hpp>
+#include <memory>
 
 #include "CollisionInfo.h"
 
@@ -39,6 +40,8 @@ protected:
 public:
 	ICollider() : m_transform(nullptr), m_offset(glm::vec3(0.0f)) {}
 	virtual ~ICollider() = default;
+
+	virtual std::shared_ptr<ICollider> GenerateClone() = 0;
 
 	// Child classes use double dispatch to eliminate the need to know what kind of collider is being checked.
 	virtual CollisionInfo CheckCollision(ICollider* _other, glm::vec3 _velocity, glm::vec3 _otherVelocity) = 0;

@@ -18,6 +18,8 @@ public:
 	PointLight() : ILight(), m_radius(0.0f) {}
 	~PointLight() override = default;
 
+	std::shared_ptr<ILight> GenerateClone() override;
+
 	void AssignUniforms(const std::shared_ptr<ShaderProgram>&_program) override;
 
 	[[nodiscard]] float GetRadius() const { return m_radius; }

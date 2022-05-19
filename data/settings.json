@@ -7,5 +7,8 @@
   "screenScale" : 2,
   "enableVsync" : false,
 
+  "srgbEnabled" : true,
+  "fxaaEnabled" : true,
+
   "physicsTimestep" : 0.01
 }

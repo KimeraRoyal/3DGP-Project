@@ -6,6 +6,18 @@
 
 uint32_t GameObject::s_globalId = 0;
 
+void GameObject::Clone(const std::shared_ptr<GameObject> other)
+{
+	for (const std::shared_ptr<IComponent>& component : other->m_components)
+	{
+		AddComponent(component->GenerateClone());
+	}
+
+	m_transform = other->m_transform;
+	m_name = other->m_name;
+	m_active = other->m_active;
+}
+
 void GameObject::OnCreate()
 {
 	m_transform.SetGameObject(shared_from_this());
@@ -69,7 +81,6 @@ std::shared_ptr<IComponent> GameObject::AddComponent(const std::shared_ptr<IComp
 {
 	_component->SetGameObject(shared_from_this());
 	m_components.push_back(_component);
-	//if (m_started) { _component->Start(); } //TODO: Implement to add vector and start check
 	return _component;
 }
 

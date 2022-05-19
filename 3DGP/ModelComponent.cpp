@@ -12,6 +12,15 @@ ModelComponent::ModelComponent()
 	m_material = nullptr;
 }
 
+std::shared_ptr<IComponent> ModelComponent::GenerateClone()
+{
+	const std::shared_ptr<ModelComponent> component = std::make_shared<ModelComponent>();
+	component->m_model = m_model;
+	component->m_program = m_program;
+	component->m_material = m_material;
+	return component;
+}
+
 void ModelComponent::Draw()
 {
 	m_program->SetUniformValueByKey(s_modelMatrixKey, GetTransform()->GetModelMatrix());

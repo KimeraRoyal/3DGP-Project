@@ -168,9 +168,6 @@
     <ClCompile Include="Material.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialParser.cpp">
-      <Filter>Source Files\JSON</Filter>
-    </ClCompile>
     <ClCompile Include="JsonParser.cpp">
       <Filter>Source Files\JSON</Filter>
     </ClCompile>
@@ -248,6 +245,18 @@
     </ClCompile>
     <ClCompile Include="StaticbodyComponent.cpp">
       <Filter>Source Files\Scene\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="OutOfBoundsCheckComponent.cpp">
+      <Filter>Source Files\Scene\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialParser.cpp">
+      <Filter>Source Files\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectSpawnerComponent.cpp">
+      <Filter>Source Files\Scene\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="BallComponent.cpp">
+      <Filter>Source Files\Scene\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -427,6 +436,15 @@
     </ClInclude>
     <ClInclude Include="StaticbodyComponent.h">
       <Filter>Header Files\Scene\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="OutOfBoundsCheckComponent.h">
+      <Filter>Header Files\Scene\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectSpawnerComponent.h">
+      <Filter>Header Files\Scene\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="BallComponent.h">
+      <Filter>Header Files\Scene\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
