@@ -119,7 +119,7 @@ bool Window::Update()
 	return true;
 }
 
-void Window::Draw() 
+void Window::Draw() const
 {
 	if(m_controlPosition)
 	{
