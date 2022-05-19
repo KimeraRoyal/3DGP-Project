@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm/mat3x3.hpp>
+
 #include "PhysicsObjectComponent.h"
 #include "IJsonParser.h"
 
@@ -11,10 +13,20 @@ class ColliderComponent;
 class RigidbodyComponent : public PhysicsObjectComponent
 {
 private:
+	// Movement
 	glm::vec3 m_force;
 	glm::vec3 m_velocity;
-	glm::vec3 m_torque;
 
+	// Rotation
+	glm::vec3 m_torque;
+	glm::vec3 m_angularVelocity;
+	glm::vec3 m_angularMomentum;
+
+	glm::mat3 m_rotationMatrix;
+	glm::mat3 m_bodyInertia;
+	glm::mat3 m_inverseInertiaTensor;
+
+	// Material properties
 	float m_mass;
 	float m_elasticity;
 
@@ -23,6 +35,14 @@ private:
 
 	// Integration methods
 	void Euler(float _deltaTime);
+	void RungeKutta2(float _deltaTime);
+	void RungeKutta4(float _deltaTime);
+
+	glm::vec3 EvaluateRungeKuttaStep(glm::vec3& _acceleration, glm::vec3 _previousStep, float _deltaTime) const;
+
+	void UpdateRotation(float _deltaTime);
+
+	void CalculateInverseInertiaTensor() { m_inverseInertiaTensor = m_rotationMatrix * glm::inverse(m_bodyInertia) * glm::transpose(m_rotationMatrix); }
 public:
 	class Parser final : public IJsonParser<IComponent>
 	{
@@ -46,7 +66,7 @@ public:
 
 	bool GetIsDynamic() override { return true; }
 
-	glm::vec3 GetForce() const { return m_force; }
+	glm::vec3 GetForce() override { return m_force; }
 	glm::vec3 GetVelocity() override { return m_velocity; }
 	glm::vec3 GetTorque() const { return m_torque; }
 	

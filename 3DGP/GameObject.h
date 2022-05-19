@@ -30,7 +30,7 @@ private:
 	bool m_parentActive = true;
 	bool m_active = true;
 
-	GameObject() : m_id(s_globalId++) {}
+	GameObject() : m_transform(glm::vec3(0.0f), glm::vec3(0.0f), glm::vec3(1.0f)), m_id(s_globalId++){}
 	
 	void UpdateChildrenActive();
 

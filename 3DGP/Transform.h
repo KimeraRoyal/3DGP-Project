@@ -21,7 +21,7 @@ private:
 	std::vector<Transform*> m_children;
 	
 	glm::vec3 m_position;
-	glm::vec3 m_rotation;
+	glm::quat m_rotation;
 	glm::vec3 m_scale;
 
 	mutable glm::mat4 m_model;
@@ -32,13 +32,15 @@ private:
 	void AddChild(Transform* _child);
 	void RemoveChild(Transform* _child);
 public:
+	explicit Transform(glm::vec3 _position = glm::vec3(0.0f), glm::quat _rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3 _scale = glm::vec3(1.0f));
 	explicit Transform(glm::vec3 _position = glm::vec3(0.0f), glm::vec3 _rotation = glm::vec3(0.0f), glm::vec3 _scale = glm::vec3(1.0f));
 	
 	Transform(const Transform& _copy) = delete;
 	Transform& operator=(const Transform& _other) = delete;
 
 	void Move(const glm::vec3 _amount){ SetPosition(m_position + _amount); }
-	void Rotate(const glm::vec3 _amount) { SetRotation(m_rotation += _amount); }
+	void Rotate(const glm::quat _amount) { SetRotation(m_rotation = m_rotation * _amount); }
+	void Rotate(const glm::vec3 _amount) { Rotate(glm::quat(glm::radians(_amount))); }
 
 	std::shared_ptr<GameObject> GetGameObject() const { return m_gameObject; }
 	
@@ -47,7 +49,8 @@ public:
 
 	//TODO: Functions to return global position
 	[[nodiscard]] glm::vec3 GetPosition() const { return m_position; }
-	[[nodiscard]] glm::vec3 GetRotation() const { return m_rotation; }
+	[[nodiscard]] glm::quat GetRotation() const { return m_rotation; }
+	[[nodiscard]] glm::vec3 GetEulerAngles() const { return glm::degrees(glm::eulerAngles(m_rotation)); }
 	[[nodiscard]] glm::vec3 GetScale() const { return m_scale; }
 
 	[[nodiscard]] glm::mat4 GetModelMatrix() const;
@@ -64,10 +67,15 @@ public:
 		SetDirty();
 	}
 
-	void SetRotation(const glm::vec3 _rotation)
+	void SetRotation(const glm::quat _rotation)
 	{
 		m_rotation = _rotation;
 		SetDirty();
+	}
+
+	void SetEulerAngles(const glm::vec3 _rotation)
+	{
+		SetRotation(glm::quat(glm::radians(_rotation)));
 	}
 
 	void SetScale(const glm::vec3 _scale)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/vec2.hpp>
+#include <glm/ext/matrix_transform.hpp>
 
 #include "ICollider.h"
 
@@ -21,5 +22,10 @@ public:
 	[[nodiscard]] glm::vec3 GetNormal() const;
 
 	void SetSize(const glm::vec2 _size) { m_size = _size; }
+
+	glm::mat3 CalculateBodyInertia(float _mass) override
+	{
+		return glm::identity<glm::mat3>();
+	}
 };
 

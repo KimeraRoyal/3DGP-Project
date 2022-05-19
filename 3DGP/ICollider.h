@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm/mat3x3.hpp>
+
 #include "CollisionInfo.h"
 
 class Transform;
@@ -48,4 +50,6 @@ public:
 
 	[[nodiscard]] glm::vec3 GetOffset() const { return m_offset; }
 	[[nodiscard]] glm::vec3 GetPosition() const;
+
+	virtual glm::mat3 CalculateBodyInertia(float _mass) = 0;
 };

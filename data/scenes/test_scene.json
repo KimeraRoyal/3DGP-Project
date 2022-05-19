@@ -39,7 +39,7 @@
       [
         { "componentType" : "playerInput", "speed" : 9.0, "turnSpeed" : 70.0 },
         { "componentType" : "collider", "type" : "sphere", "radius" : 0.5, "offset" : [ 0.0, 0.5, 0.0 ] },
-        { "componentType" : "rigidbody", "mass" : 1.5, "elasticity" : 0.4, "staticFriction" : 0.5, "dynamicFriction" : 0.5 }
+        { "componentType" : "rigidbody", "mass" : 1.5, "elasticity" : 0.4, "staticFriction" : 0.05, "dynamicFriction" : 0.05 }
       ],
       "children" :
       [

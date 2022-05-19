@@ -17,4 +17,13 @@ public:
 	[[nodiscard]] float GetRadius() const { return m_radius; }
 
 	void SetRadius(const float _radius) { m_radius = _radius; }
+
+	glm::mat3 CalculateBodyInertia(const float _mass) override
+	{
+		const float radiusSquared = static_cast<float>(std::pow(m_radius, 2));
+		return glm::mat3(
+			2.0f / 5.0f * _mass * radiusSquared, 0, 0,
+			0, 2.0f / 5.0f * _mass * radiusSquared, 0,
+			0, 0, 2.0f / 5.0f * _mass * radiusSquared);
+	}
 };

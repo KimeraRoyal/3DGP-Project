@@ -134,7 +134,7 @@ std::shared_ptr<GameObject> SceneParser::ParseObject(const std::shared_ptr<Scene
 	{
 		rapidjson::Value& transform = _objectValue["transform"];
 		gameObject->GetTransform()->SetPosition(ParseVector3(transform["position"]));
-		gameObject->GetTransform()->SetRotation(ParseVector3(transform["rotation"]));
+		gameObject->GetTransform()->SetEulerAngles(ParseVector3(transform["rotation"]));
 		gameObject->GetTransform()->SetScale(ParseVector3(transform["scale"]));
 	}
 

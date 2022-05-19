@@ -9,9 +9,14 @@ class PlayerInputComponent : public IComponent
 private:
 	static size_t s_horizontalBinding;
 	static size_t s_verticalBinding;
+	static size_t s_jumpBinding;
 	
 	float m_movementSpeed;
 	float m_turnSpeed;
+
+	glm::vec3 m_jumpHeight;
+	float m_jumpDelay;
+	float m_jumpTimer;
 
 	std::shared_ptr<RigidbodyComponent> m_rigidbody;
 public:

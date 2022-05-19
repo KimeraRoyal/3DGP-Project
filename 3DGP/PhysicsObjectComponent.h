@@ -20,6 +20,7 @@ public:
 	CollisionInfo CheckCollision(const std::shared_ptr<ColliderComponent>& _collider, glm::vec3 _velocity, glm::vec3 _otherVelocity) const;
 
 	virtual void AddForce(const glm::vec3 _force) {}
+	virtual	glm::vec3 GetForce() { return glm::vec3(0.0f); }
 
 	std::shared_ptr<ColliderComponent> GetCollider() const { return m_collider; }
 	bool GetSkipCollisionCheck() const { return m_skipCollisionCheck; }

@@ -82,14 +82,21 @@ void PhysicsSystem::ResolveCollision(const std::shared_ptr<PhysicsObjectComponen
 		bVelocity += impulse * bMass;
 		_b->AddForce(impulse * bMass / m_timestep);
 	}
+	
+	// Contact force
+	const glm::vec3 contactForce = glm::normalize(collisionNormal) *  m_gravity;
+	if (_a->GetIsDynamic() && !_b->GetIsDynamic())
+	{
+		aVelocity += contactForce * m_timestep;
+		_a->AddForce(contactForce);
+	} // Contact force is extremely wacky with two rigidbodies so I do not do it
 
 	// Apply friction
 	velocityDiff = bVelocity - aVelocity;
 	negativeSpeed = glm::dot(velocityDiff, collisionNormal);
 
 	glm::vec3 tangent = velocityDiff - negativeSpeed * collisionNormal;
-	if (glm::length(tangent) > 0.0001f) { tangent = glm::normalize(tangent); }
-	const float frictionVelocity = glm::dot(velocityDiff, tangent);
+	if (glm::length(tangent) > 0.0001f) { tangent = glm::normalize(tangent); }const float frictionVelocity = glm::dot(velocityDiff, tangent);
 
 	const float aStaticFriction = _a->GetStaticFriction(), bStaticFriction = _b->GetStaticFriction();
 	const float aDynamicFriction = _a->GetDynamicFriction(), bDynamicFriction = _b->GetDynamicFriction();
@@ -97,19 +104,14 @@ void PhysicsSystem::ResolveCollision(const std::shared_ptr<PhysicsObjectComponen
 
 	const float f = -frictionVelocity / (aMass + bMass);
 
-	glm::vec3 friction;
-	if (abs(f) < impulseStrength * mu) { friction = f * tangent; }
+	const glm::vec3 friction = f * tangent;
+	if (_a->GetIsDynamic()) { _a->AddForce(friction * aMass); }
+	if (_b->GetIsDynamic()) { _b->AddForce(-friction * bMass); }
+	
+	/*if (abs(f) < impulseStrength * mu) { friction = f * tangent; }
 	else
 	{
 		mu = glm::length(glm::vec2(aDynamicFriction, bDynamicFriction));
 		friction = -impulseStrength * tangent * mu;
-	}
-
-	//TODO: Fix friction not applying properly with contact forces?
-	if (_a->GetIsDynamic()) { _a->AddForce( -friction * aMass / m_timestep); }
-	if (_b->GetIsDynamic()) { _b->AddForce(friction * bMass / m_timestep); }
-	
-	// Contact force
-	const glm::vec3 contactForce = glm::normalize(collisionNormal) *  m_gravity;
-	if (_a->GetIsDynamic() && !_b->GetIsDynamic()) { _a->AddForce(contactForce); } // Contact force is extremely wacky with two rigidbodies so I do not do it
+	}*/
 }

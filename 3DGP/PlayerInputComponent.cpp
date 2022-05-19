@@ -5,11 +5,16 @@
 
 size_t PlayerInputComponent::s_horizontalBinding = std::hash<std::string>()("horizontal");
 size_t PlayerInputComponent::s_verticalBinding = std::hash<std::string>()("vertical");
+size_t PlayerInputComponent::s_jumpBinding = std::hash<std::string>()("jump");
 
 PlayerInputComponent::PlayerInputComponent()
 {
 	m_movementSpeed = 0.0f;
 	m_turnSpeed = 0.0f;
+
+	m_jumpHeight = glm::vec3(0.0f, 50.0f, 0.0f);
+	m_jumpDelay = 0.2f;
+	m_jumpTimer = 0.0f;
 }
 
 void PlayerInputComponent::Start()
@@ -32,6 +37,20 @@ void PlayerInputComponent::Update(Time& _time, Input& _input)
 	
 	const float rotation = static_cast<float>(_input.GetTrinaryKeyDown(SDL_SCANCODE_Q, SDL_SCANCODE_E));
 	GetTransform()->Rotate(glm::vec3(0, rotation,  0) * (-m_turnSpeed * _time.GetDeltaTime()));
+
+	if(m_jumpTimer <= 0.001f)
+	{
+		if(_input.GetBindingDown(s_jumpBinding) && GetTransform()->GetPosition().y <= 0.05f)
+		{
+			m_jumpTimer = m_jumpDelay;
+
+			m_rigidbody->AddForce(m_jumpHeight * m_rigidbody->GetMass() / 0.02f);
+		}
+	}
+	else
+	{
+		m_jumpTimer -= _time.GetDeltaTime();
+	}
 }
 
 std::shared_ptr<IComponent> PlayerInputComponent::Parser::Parse(rapidjson::Value& _value)
